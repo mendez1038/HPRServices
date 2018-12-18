@@ -12,5 +12,7 @@ public interface PaisDAO {
 	public List<Pais> findAll()
 	throws Exception;
 	
+	public String findByNombre(String nombre)
+	throws Exception;
 
 }
