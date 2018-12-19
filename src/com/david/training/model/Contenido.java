@@ -2,13 +2,13 @@ package com.david.training.model;
 
 import java.util.Date;
 
-public class Contenido extends ValueObject{
+public abstract class Contenido extends AbstractValueObject  implements Comparable<Contenido>{
 	
 	private Integer idContenido = null;
 	private String titulo = null;
 	private String restriccionEdad = null;
 	private String descripcionContenido = null;
-	private Integer ano = null;
+	
 	private String portada = null;
 	private Date fechaLanzamiento = null;
 	private Integer idDescuento = null;
@@ -27,7 +27,6 @@ public class Contenido extends ValueObject{
 		setTitulo(titulo);
 		setRestriccionEdad(restriccionEdad);
 		setDescripcionContenido(descripcionContenido);
-		setAno(ano);
 		setPortada(portada);
 		setFechaLanzamiento(fechaLanzamiento);
 		setIdDescuento(idDescuento);
@@ -35,7 +34,7 @@ public class Contenido extends ValueObject{
 		
 	}
 
-
+	
 
 
 	public Integer getIdContenido() {
@@ -78,16 +77,6 @@ public class Contenido extends ValueObject{
 	}
 
 
-	public Integer getAno() {
-		return ano;
-	}
-
-
-	public void setAno(Integer ano) {
-		this.ano = ano;
-	}
-
-
 	public Date getFechaLanzamiento() {
 		return fechaLanzamiento;
 	}
@@ -126,6 +115,10 @@ public class Contenido extends ValueObject{
 		this.tipoContenido = tipoContenido;
 	}
 	
+	@Override
+	public int compareTo(Contenido c) {
+		return this.getFechaLanzamiento().compareTo(c.getFechaLanzamiento());
+	}
 	
 	
 	//@Override
