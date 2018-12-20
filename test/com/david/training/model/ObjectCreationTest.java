@@ -63,7 +63,7 @@ public class ObjectCreationTest {
 		c3.setTitulo("asa");
 		contenidos.add(c3);
 		
-		Collections.sort(contenidos, new ContendioByTituloComparator());
+		Collections.sort(contenidos, new ContendioByTituloComparator().);
 		
 		
 		System.out.println("\nOrdenado por titulo:");
