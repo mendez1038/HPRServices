@@ -2,7 +2,7 @@ package com.david.training.model;
 
 import java.util.Date;
 
-public abstract class Contenido extends AbstractValueObject  implements Comparable<Contenido>{
+public class Contenido extends AbstractValueObject  implements Comparable<Contenido>{
 	
 	private Integer idContenido = null;
 	private String titulo = null;
@@ -115,10 +115,15 @@ public abstract class Contenido extends AbstractValueObject  implements Comparab
 		this.tipoContenido = tipoContenido;
 	}
 	
+	
 	@Override
 	public int compareTo(Contenido c) {
+		
+		System.out.println("Comparando " +this.titulo+ " con" + c.getTitulo());
 		return this.getFechaLanzamiento().compareTo(c.getFechaLanzamiento());
 	}
+
+	
 	
 	
 	//@Override
@@ -128,8 +133,14 @@ public abstract class Contenido extends AbstractValueObject  implements Comparab
 	//+this.idDescuento+","+this.tipoContenido;
 		
 	//}
-
-
 	
+
+	/*	for (Usuario: usuarios) {
+	*		System.out.println(u.getNombre());
+	*	}
+	*	for (int i =0; i<usuarios.size(); i++) {
+	*		System.out.println(usuarios.get(i).getNombre());
+	*	}
+	*/	
 
 }

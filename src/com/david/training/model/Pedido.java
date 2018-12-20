@@ -3,7 +3,7 @@ import java.util.Date;
 
 import com.david.training.model.ValueObject;
 
-public class Pedido extends ValueObject{
+public  class Pedido implements ValueObject{
 	
 	private Integer idPedido = null;
 	private Date fechaPedido = null;
@@ -11,7 +11,7 @@ public class Pedido extends ValueObject{
 	private Double precioTotal = null;
 	
 	
-	public Pedido(Integer idPedido, Date fechaPedido, String email, Double precioTotal) {
+	public Pedido() {
 		
 	}
 
@@ -53,6 +53,12 @@ public class Pedido extends ValueObject{
 		return this.idPedido+","+this.fechaPedido+","+this.precioTotal+","+
 	this.email;
 		
+	}
+
+	@Override
+	public int compareTo(Contenido c) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 

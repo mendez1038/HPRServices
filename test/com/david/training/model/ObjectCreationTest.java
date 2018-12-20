@@ -1,6 +1,11 @@
 package com.david.training.model;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
+
+import com.david.training.model.util.ContendioByTituloComparator;
 
 public class ObjectCreationTest {
 	
@@ -10,6 +15,7 @@ public class ObjectCreationTest {
 		
 		
 		Pedido u1 = new Pedido();
+		
 		u1.setIdPedido(1);
 		u1.setEmail("AA@A.COM");
 		
@@ -40,7 +46,30 @@ public class ObjectCreationTest {
 		System.out.println(u.toString());
 		}
 		
+		List<Contenido> contenidos = new ArrayList<Contenido>();
 		
+		Contenido c1 = new Contenido();
+		c1.setIdContenido(1);
+		c1.setTitulo("abc");
+		contenidos.add(c1);
+		
+		Contenido c2 = new Contenido();
+		c2.setIdContenido(2);
+		c2.setTitulo("bado");
+		contenidos.add(c2);
+		
+		Contenido c3= new Contenido();
+		c3.setIdContenido(3);
+		c3.setTitulo("asa");
+		contenidos.add(c3);
+		
+		Collections.sort(contenidos, new ContendioByTituloComparator());
+		
+		
+		System.out.println("\nOrdenado por titulo:");
+		for (Contenido c: contenidos) {
+			System.out.println(c.getIdContenido());
+		}
 		
 		
 	}
