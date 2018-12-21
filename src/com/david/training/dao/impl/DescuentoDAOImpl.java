@@ -7,12 +7,13 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Date;
 
+import com.david.training.dao.DescuentoDAO;
 import com.david.training.dao.util.ConnectionManager;
 import com.david.training.dao.util.JDBCUtils;
 import com.david.training.exceptions.DataException;
 import com.david.training.model.Descuento;
 
-public class DescuentoDAOImpl {
+public class DescuentoDAOImpl implements DescuentoDAO{
 	
 	
 	public DescuentoDAOImpl() {

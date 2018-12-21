@@ -6,12 +6,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import com.david.training.dao.CategoriaDAO;
 import com.david.training.dao.util.ConnectionManager;
 import com.david.training.dao.util.JDBCUtils;
 import com.david.training.exceptions.DataException;
 import com.david.training.model.Categoria;
 
-public class CategoriaDAOImpl {
+public class CategoriaDAOImpl implements CategoriaDAO{
 
 public CategoriaDAOImpl() {
 		
@@ -129,5 +130,13 @@ public CategoriaDAOImpl() {
 			ca.setNombreCategoria(nombreCategoria);
 			
 			return ca;
+		}
+
+	
+
+		@Override
+		public Categoria findAll() throws Exception {
+			// TODO Auto-generated method stub
+			return null;
 		}
 }

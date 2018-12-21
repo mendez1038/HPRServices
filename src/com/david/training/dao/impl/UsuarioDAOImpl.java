@@ -1,5 +1,7 @@
 package com.david.training.dao.impl;
 
-public class UsuarioDAOImpl {
+import com.david.training.dao.UsuarioDAO;
+
+public class UsuarioDAOImpl implements UsuarioDAO{
 
 }

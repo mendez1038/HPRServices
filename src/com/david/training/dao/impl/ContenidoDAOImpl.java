@@ -10,7 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.david.training.dao.ContenidoDAO;
-import com.david.training.dao.DescuentoDAO;
+
 import com.david.training.dao.util.ConnectionManager;
 import com.david.training.dao.util.JDBCUtils;
 import com.david.training.exceptions.DataException;
@@ -18,10 +18,10 @@ import com.david.training.model.Contenido;
 
 public class ContenidoDAOImpl implements ContenidoDAO{
 
-private DescuentoDAO descuentoDAO = null;
+
 	
 	public ContenidoDAOImpl() {
-		 descuentoDAO = new DescuentoDAO(); 
+		 
 	}
 
 	public Contenido findById(Integer id)
@@ -89,7 +89,7 @@ private DescuentoDAO descuentoDAO = null;
 		ResultSet resultSet = null;
 		try {
 			connection = ConnectionManager.getConnection();
-			String sql = "SELECT  ID_CONTENIDO, TITULO, RESTRICCION_EDAD, DESCRIPCCION_CONTENIDO, ANO, PORTADA, FECHA_LANZAMIENTO, ID_DESCUENTO "
+			String sql = "SELECT  ID_CONTENIDO, TITULO, RESTRICCION_EDAD, DESCRIPCCION_CONTENIDO, PORTADA, FECHA_LANZAMIENTO, ID_DESCUENTO "
 					+ "FROM CONTENIDO "
 					+ "WHERE "
 					+ "TITULO LIKE ? ";
@@ -130,8 +130,8 @@ private DescuentoDAO descuentoDAO = null;
 			connection = ConnectionManager.getConnection();
 			
 			String sql = "INSERT INTO CONTENIDO(ID_CONTENIDO, TITULO, RESTRICCION_EDAD, "
-					+ "DESCRIPCCION_CONTENIDO, ANO, PORTADA, FECHA_LANZAMIENTO, ID_DESCUENTO )"
-					+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+					+ "DESCRIPCCION_CONTENIDO, PORTADA, FECHA_LANZAMIENTO, ID_DESCUENTO )"
+					+ "VALUES (?, ?, ?, ?, ?, ?, ?)";
 			
 			preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			int i = 1;
@@ -139,7 +139,7 @@ private DescuentoDAO descuentoDAO = null;
 			preparedStatement.setString(i++, c.getTitulo());
 			preparedStatement.setString(i++, c.getRestriccionEdad());
 			preparedStatement.setString(i++, c.getDescripcionContenido());
-			preparedStatement.setInt(i++, c.getAno());
+			
 			preparedStatement.setString(i++, c.getPortada());
 			preparedStatement.setDate(i++, new java.sql.Date(c.getFechaLanzamiento().getTime()));
 			//preparedStatement.setInt(i++, c. );
@@ -177,7 +177,7 @@ private DescuentoDAO descuentoDAO = null;
 		String titulo = resultSet.getString(i++);
 		String restriccionEdad = resultSet.getString(i++);
 		String descripcionContenido = resultSet.getString(i++);
-		Integer ano = resultSet.getInt(i++);
+		
 		String portada = resultSet.getString(i++);
 		Date fechaLanzamiento = resultSet.getDate(i++);
 		
@@ -188,7 +188,7 @@ private DescuentoDAO descuentoDAO = null;
 		c.setTitulo(titulo);
 		c.setRestriccionEdad(restriccionEdad);
 		c.setDescripcionContenido(descripcionContenido);
-		c.setAno(ano);
+		
 		c.setPortada(portada);
 		c.setFechaLanzamiento(fechaLanzamiento);
 		
@@ -198,4 +198,8 @@ private DescuentoDAO descuentoDAO = null;
 		//c.se
 		return c;
 	}
+
+	
+
+	
 }

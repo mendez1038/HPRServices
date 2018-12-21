@@ -1,5 +1,7 @@
 package com.david.training.dao.impl;
 
-public class PedidoDAOImpl {
+import com.david.training.dao.PedidoDAO;
+
+public class PedidoDAOImpl implements PedidoDAO{
 
 }
