@@ -2,7 +2,7 @@ package com.david.training.model;
 
 import java.util.Date;
 
-public class Descuento extends ValueObject {
+public class Descuento extends AbstractValueObject {
 	
 	private Integer idDescuento = null;
 	private Integer porcentaje = null;

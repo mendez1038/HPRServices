@@ -2,11 +2,10 @@ package com.david.training.model;
 
 import java.util.Date;
 
-public class Artista extends ValueObject{
+public class Artista extends AbstractValueObject{
 	
 	private Integer idArtista = null;
 	private String nombreArtista = null;
-	private String descripcionArtista = null;
 	private Date fechaNacimiento = null;
 	
 	
@@ -43,23 +42,10 @@ public class Artista extends ValueObject{
 	public void setFechaNacimiento(Date fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
 	}
-
-
-
-
-	public String getDescripcionArtista() {
-		return descripcionArtista;
-	}
-
-
-	public void setDescripcionArtista(String descripcionArtista) {
-		this.descripcionArtista = descripcionArtista;
-	}
 	
 	@Override
 	public String toString() {
-		return this.idArtista+","+this.nombreArtista+","+this.fechaNacimiento+","+
-	this.descripcionArtista;
+		return this.idArtista+","+this.nombreArtista+","+this.fechaNacimiento;
 		
 	}
 

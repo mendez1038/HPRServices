@@ -2,7 +2,11 @@ package com.david.training.model;
 
 
 
-public interface ValueObject  extends Comparable<Contenido> {
+public interface ValueObject {
+
+	@Override
+	public String toString();
+	
 
 }
 
