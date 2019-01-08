@@ -7,11 +7,10 @@ public class Contenido extends AbstractValueObject  implements Comparable<Conten
 	private Integer idContenido = null;
 	private String titulo = null;
 	private String restriccionEdad = null;
+	private String descripcionContenido = null;
+	
 	private String portada = null;
 	private Date fechaLanzamiento = null;
-	private String descripcionContenido = null;
-	private Double precio = null;
-	private Integer duracion = null;
 	private Integer idDescuento = null;
 	private String tipoContenido = null;
 	
@@ -97,21 +96,6 @@ public class Contenido extends AbstractValueObject  implements Comparable<Conten
 		this.idDescuento = idDescuento;
 	}
 
-	public Double getPrecio() {
-		return precio;
-	}
-
-	public void setPrecio(Double precio) {
-		this.precio = precio;
-	}
-
-	public Integer getDuracion() {
-		return duracion;
-	}
-
-	public void setDuracion(Integer duracion) {
-		this.duracion = duracion;
-	}
 
 	public String getPortada() {
 		return portada;
@@ -142,13 +126,13 @@ public class Contenido extends AbstractValueObject  implements Comparable<Conten
 	
 	
 	
-	@Override
-	public String toString() {
-		return this.idContenido+","+this.titulo+","+this.restriccionEdad+","
-	+this.portada+","+this.fechaLanzamiento+","+this.descripcionContenido+","
-	+this.precio+","+this.duracion+","+this.idDescuento+","+this.tipoContenido;
+	//@Override
+	//public String toString() {
+		//return this.idContenido+","+this.titulo+","+this.restriccionEdad+","+
+	//this.descripcionContenido+","+this.ano+","+this.portada+","+this.fechaLanzamiento+","
+	//+this.idDescuento+","+this.tipoContenido;
 		
-	}
+	//}
 	
 
 	/*	for (Usuario: usuarios) {

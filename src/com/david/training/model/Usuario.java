@@ -2,7 +2,7 @@ package com.david.training.model;
 
 import java.util.Date;
 
-public class Usuario extends AbstractValueObject{
+public class Usuario extends ValueObject{
 
 	private String email = null ;
 	private String contrasena = null;

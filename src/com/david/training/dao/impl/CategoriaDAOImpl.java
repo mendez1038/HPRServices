@@ -139,4 +139,10 @@ public CategoriaDAOImpl() {
 			// TODO Auto-generated method stub
 			return null;
 		}
+
+		@Override
+		public Categoria testCreate(Categoria c) throws Exception {
+			// TODO Auto-generated method stub
+			return null;
+		}
 }

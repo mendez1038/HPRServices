@@ -9,4 +9,9 @@ public abstract class AbstractValueObject  implements ValueObject {
 	}
 	
 	
+
+	public int compareTo(Contenido c) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }

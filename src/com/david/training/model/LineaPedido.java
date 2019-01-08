@@ -1,6 +1,6 @@
 package com.david.training.model;
 
-public class LineaPedido extends AbstractValueObject{
+public class LineaPedido extends ValueObject{
 	
 	private Integer idPedido = null;
 	private Integer idContenido = null;

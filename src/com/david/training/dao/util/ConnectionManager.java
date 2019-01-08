@@ -14,7 +14,7 @@ public class ConnectionManager	 {
 
 	//  Database credentials
 	static final String USER = "root";
-	static final String PASS = "calquera";
+	static final String PASS = "123456";
 
 	static {
 

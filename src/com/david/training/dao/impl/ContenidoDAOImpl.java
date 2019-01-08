@@ -32,21 +32,22 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
-		StringBuilder sql = null;
 		try{
 
 			//metodo connectionmanager
 			connection = ConnectionManager.getConnection();
 
 
-			sql = new StringBuilder("SELECT ID_CONTENIDO, TITULO, RESTRICCION_EDAD, DESCRIPCCION_CONTENIDO, ANO, PORTADA, FECHA_LANZAMIENTO, ID_DESCUENTO "
+
+			String sql;
+			sql ="SELECT ID_CONTENIDO, TITULO, RESTRICCION_EDAD, DESCRIPCCION_CONTENIDO, ANO, PORTADA, FECHA_LANZAMIENTO, ID_DESCUENTO "
 					+"FROM CONTENIDO "
-					+"WHERE ID_CONTENIDO = ? ");
+					+"WHERE ID_CONTENIDO = ? ";
 
 			//STEP 4: Execute a query
 
 			System.out.println("Creating statement...");
-			preparedStatement = connection.prepareStatement(sql.toString(), ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			preparedStatement = connection.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 
 
 			// Establecer parametros

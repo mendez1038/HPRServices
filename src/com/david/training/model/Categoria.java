@@ -1,10 +1,10 @@
 package com.david.training.model;
 
-public class Categoria extends AbstractValueObject{
+public class Categoria extends ValueObject{
 	
-	private Integer idCategoria = null;
+	
 	private String nombreCategoria = null;
-	
+	private Integer idCategoria = null;
 	
 	public Categoria(Integer idCategoria, String nombreCategoria) {
 		

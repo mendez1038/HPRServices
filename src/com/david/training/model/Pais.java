@@ -1,6 +1,6 @@
 package com.david.training.model;
 
-public class Pais extends AbstractValueObject {
+public class Pais extends ValueObject {
 	
 	private Integer idPais = null;
 	private String nombrePais = null;

@@ -3,12 +3,12 @@ import java.util.Date;
 
 import com.david.training.model.ValueObject;
 
-public  class Pedido extends AbstractValueObject{
+public  class Pedido implements ValueObject{
 	
 	private Integer idPedido = null;
 	private Date fechaPedido = null;
-	private Double precioTotal = null;
 	private String email = null;
+	private Double precioTotal = null;
 	
 	
 	public Pedido() {
@@ -55,7 +55,11 @@ public  class Pedido extends AbstractValueObject{
 		
 	}
 
-	
+	@Override
+	public int compareTo(Contenido c) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 
 
 }

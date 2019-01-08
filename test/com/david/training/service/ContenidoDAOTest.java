@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.david.training.dao.ContenidoDAO;
+import com.david.training.dao.impl.ContenidoDAOImpl;
 import com.david.training.model.Contenido;
 
 public class ContenidoDAOTest {
@@ -11,7 +12,7 @@ public class ContenidoDAOTest {
 	private ContenidoDAO dao = null;
 	
 	public ContenidoDAOTest() {
-		dao = new ContenidoDAO();
+		dao = new ContenidoDAOImpl();
 	}
 	
 	public void testFindById()
@@ -37,7 +38,6 @@ public class ContenidoDAOTest {
 		c.setTitulo("No Crossover");
 		c.setRestriccionEdad("TP");
 		c.setDescripcionContenido("La vida de Allen Iverson");
-		c.setAno(2010);
 		c.setPortada("URL");
 		c.setFechaLanzamiento(new Date());
 		c.setIdDescuento(1);
@@ -46,14 +46,15 @@ public class ContenidoDAOTest {
 		dao.create(c);
 	}
 	
-	public static void main(String args[]) {
-		try {
-			ContenidoDAOTest test = new ContenidoDAOTest();
-			//test.testFindById();
-			//test.testFindByTitulo();
-			test.testCreate();
-		} catch (Exception c) {
-			c.printStackTrace();
-		}
-	}
+	/*public static void main(String args[]) {
+	*	try {
+	*		ContenidoDAOTest test = new ContenidoDAOTest();
+	*		//test.testFindById();
+	*		//test.testFindByTitulo();
+	*		test.testCreate();
+	*	} catch (Exception c) {
+	*		c.printStackTrace();
+	*	}
+	*}
+	*/
 }

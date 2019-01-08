@@ -1,6 +1,7 @@
 package com.david.training.service;
 
 import com.david.training.dao.CategoriaDAO;
+import com.david.training.dao.impl.CategoriaDAOImpl;
 import com.david.training.model.Categoria;
 
 public class CategoriaDAOTest {
@@ -8,7 +9,7 @@ public class CategoriaDAOTest {
 	private CategoriaDAO dao = null;
 	
 	public CategoriaDAOTest() {
-		dao = new CategoriaDAO();
+		dao = new CategoriaDAOImpl();
 	}
 
 	public void testFindById()
@@ -28,7 +29,7 @@ public class CategoriaDAOTest {
 		Categoria ca = new Categoria();
 		
 		ca.setNombreCategoria("Terror");
-		dao.create(ca);
+		dao.testCreate(ca);
 	}
 	
 	public static void main(String args[]) {
@@ -36,7 +37,7 @@ public class CategoriaDAOTest {
 			CategoriaDAOTest test = new CategoriaDAOTest();
 			
 			test.testCreate();
-			test.testFindById();
+			//test.testFindById();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
