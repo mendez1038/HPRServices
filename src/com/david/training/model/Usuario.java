@@ -84,7 +84,7 @@ public class Usuario extends AbstractValueObject{
 	}
 
 
-	public Usuario (String email, String contrasena, String nombre, String apellidos, String genero, Date fechaNacimiento, String telefono) {
+	public Usuario () {
 		
 	}
 	

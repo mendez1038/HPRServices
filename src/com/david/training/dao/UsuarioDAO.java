@@ -8,7 +8,7 @@ import com.david.training.model.Usuario;
 
 public interface UsuarioDAO {
 	
-	public Usuario findByEmail(Connection connection, Usuario u)
+	public Usuario findByEmail(Connection connection, String email)
 	throws DataException;
 	
 	public Usuario exists(Connection connection, Usuario u)
