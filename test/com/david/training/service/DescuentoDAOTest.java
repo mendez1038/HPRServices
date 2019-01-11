@@ -41,8 +41,7 @@ public class DescuentoDAOTest {
 		try {
 			DescuentoDAOTest test = new DescuentoDAOTest();
 			test.testFindById();
-			test.testCreate();
-			//test.testFindById();
+			//test.testCreate();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

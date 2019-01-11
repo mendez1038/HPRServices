@@ -13,6 +13,23 @@ public class Usuario extends AbstractValueObject{
 	private String telefono = null;
 	
 	
+	public Usuario () {
+		
+	}
+	
+	public Usuario(String email) {
+		this(email,null);
+	}
+	
+	public Usuario(String email, String contrasena) {
+		this(email, contrasena, null);
+	}
+	
+	public Usuario(String email, String contrasena, String nombre) {
+		setEmail(email);
+		setContrasena(contrasena);
+		setNombre(nombre);
+	}
 	
 	public String getEmail() {
 		return email;
@@ -84,9 +101,7 @@ public class Usuario extends AbstractValueObject{
 	}
 
 
-	public Usuario () {
-		
-	}
+	
 	
 	public String toString() {
 		return "Email: "+email+", Contraseña: "+contrasena+", Nombre: "+nombre+", Apellidos: "+

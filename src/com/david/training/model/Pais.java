@@ -1,6 +1,6 @@
 package com.david.training.model;
 
-public class Pais extends ValueObject {
+public class Pais extends AbstractValueObject {
 	
 	private Integer idPais = null;
 	private String nombrePais = null;
@@ -8,7 +8,9 @@ public class Pais extends ValueObject {
 
 	
 	public Pais(Integer idPais, String nombrePais, String capitalPais) {
-		
+		this.idPais = idPais;
+		this.nombrePais = nombrePais;
+		this.capitalPais = capitalPais;
 	}
 
 
@@ -43,7 +45,7 @@ public class Pais extends ValueObject {
 	
 	@Override
 	public String toString() {
-		return this.idPais+","+this.nombrePais+","+this.capitalPais;
+		return idPais+","+nombrePais+","+capitalPais;
 		
 	}
 

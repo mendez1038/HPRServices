@@ -1,5 +1,5 @@
 package com.david.training.model;
 
-public class Documental {
+public class TipoContenido {
 
 }

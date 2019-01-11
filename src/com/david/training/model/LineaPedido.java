@@ -1,6 +1,6 @@
 package com.david.training.model;
 
-public class LineaPedido extends ValueObject{
+public class LineaPedido extends AbstractValueObject{
 	
 	private Integer idPedido = null;
 	private Integer idContenido = null;
@@ -38,11 +38,13 @@ public class LineaPedido extends ValueObject{
 
 
 	public LineaPedido (Integer idPedido, Integer idContenido, Double precioUnidad) {
-		
+		this.idPedido = idPedido;
+		this.idContenido= idContenido;
+		this.precioUnidad = precioUnidad;
 	}
 	@Override
 	public String toString() {
-		return this.idPedido+","+this.idContenido+","+this.precioUnidad;
+		return idPedido+","+idContenido+","+precioUnidad;
 		
 	}
 
