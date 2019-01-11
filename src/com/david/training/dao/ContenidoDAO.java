@@ -20,7 +20,6 @@ public interface ContenidoDAO {
 	public Contenido create (Contenido c)
 			throws Exception;
 	
-	public boolean update (Contenido c)
-			throws Exception;
+	
 }
 

@@ -1,30 +1,32 @@
 package com.david.training.dao;
 
-import java.sql.Connection;
-
 import com.david.training.exceptions.DataException;
 import com.david.training.model.Usuario;
 
 public interface UsuarioDAO {
 	
 
-	public Usuario findByEmail(Connection connection, String email)
+
+	public Usuario findByEmail( String email)
 	throws DataException;
 
 
-	
-	public Usuario exists(Connection connection, Usuario u)
+	public Usuario exists( Usuario u)
 	throws Exception;
 	
+
 	public Usuario create( Usuario u)
 	throws Exception;
 	
-	public void update(Connection connection, Usuario u) 
+	public void update( Usuario u) 
 			throws DataException; 
 		
 		
-	public long delete(Connection connection, Long id)
+	public long delete(String email)
 			throws DataException; 
+
+
+
 }
 		
 		

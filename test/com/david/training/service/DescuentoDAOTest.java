@@ -3,6 +3,7 @@ package com.david.training.service;
 import java.util.Date;
 
 import com.david.training.dao.DescuentoDAO;
+import com.david.training.dao.impl.DescuentoDAOImpl;
 import com.david.training.model.Descuento;
 
 public class DescuentoDAOTest {
@@ -10,7 +11,7 @@ public class DescuentoDAOTest {
 	private DescuentoDAO dao = null;
 
 	public DescuentoDAOTest() {
-		dao = new DescuentoDAO();
+		dao = new DescuentoDAOImpl();
 	}
 
 	public void testFindById()

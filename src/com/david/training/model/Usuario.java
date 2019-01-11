@@ -2,7 +2,7 @@ package com.david.training.model;
 
 import java.util.Date;
 
-public class Usuario extends ValueObject{
+public class Usuario extends AbstractValueObject{
 
 	private String email = null ;
 	private String contrasena = null;
@@ -89,8 +89,8 @@ public class Usuario extends ValueObject{
 	}
 	
 	public String toString() {
-		return this.email+","+this.contrasena+","+this.nombre+","+
-	this.apellidos+","+this.genero+","+this.fechaNacimiento+","+this.telefono;
+		return "Email: "+email+", Contraseña: "+contrasena+", Nombre: "+nombre+", Apellidos: "+
+	apellidos+", Genero: "+genero+", Fecha de nacimiento: "+fechaNacimiento+" y Telefono: "+telefono;
 		
 	}
 }

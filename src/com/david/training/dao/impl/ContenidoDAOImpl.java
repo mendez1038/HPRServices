@@ -40,7 +40,7 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 
 
 			String sql;
-			sql ="SELECT ID_CONTENIDO, TITULO, RESTRICCION_EDAD, DESCRIPCCION_CONTENIDO, ANO, PORTADA, FECHA_LANZAMIENTO, ID_DESCUENTO "
+			sql ="SELECT ID_CONTENIDO, TITULO, RESTRICCION_EDAD, PORTADA, FECHA_LANZAMIENTO, DESCRIPCION_BREVE, PRECIO, DURACION, ID_DESCUENTO, ID_TIPO_CONTENIDO "
 					+"FROM CONTENIDO "
 					+"WHERE ID_CONTENIDO = ? ";
 
@@ -89,7 +89,7 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 		ResultSet resultSet = null;
 		try {
 			connection = ConnectionManager.getConnection();
-			String sql = "SELECT  ID_CONTENIDO, TITULO, RESTRICCION_EDAD, DESCRIPCCION_CONTENIDO, PORTADA, FECHA_LANZAMIENTO, ID_DESCUENTO "
+			String sql = "SELECT ID_CONTENIDO, TITULO, RESTRICCION_EDAD, PORTADA, FECHA_LANZAMIENTO, DESCRIPCION_BREVE, PRECIO, DURACION, ID_DESCUENTO, ID_TIPO_CONTENIDO "
 					+ "FROM CONTENIDO "
 					+ "WHERE "
 					+ "TITULO LIKE ? ";
@@ -130,19 +130,21 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 			connection = ConnectionManager.getConnection();
 			
 			String sql = "INSERT INTO CONTENIDO(ID_CONTENIDO, TITULO, RESTRICCION_EDAD, "
-					+ "DESCRIPCCION_CONTENIDO, PORTADA, FECHA_LANZAMIENTO, ID_DESCUENTO )"
-					+ "VALUES (?, ?, ?, ?, ?, ?, ?)";
+					+ "PORTADA, FECHA_LANZAMIENTO, DESCRIPCION_BREVE, PRECIO, DURACION, ID_DESCUENTO, ID_TIPO_CONTENIDO )"
+					+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			
 			preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			int i = 1;
 			preparedStatement.setInt(i++, c.getIdContenido());
 			preparedStatement.setString(i++, c.getTitulo());
 			preparedStatement.setString(i++, c.getRestriccionEdad());
-			preparedStatement.setString(i++, c.getDescripcionContenido());
-			
 			preparedStatement.setString(i++, c.getPortada());
 			preparedStatement.setDate(i++, new java.sql.Date(c.getFechaLanzamiento().getTime()));
-			//preparedStatement.setInt(i++, c. );
+			preparedStatement.setString(i++, c.getDescripcionBreve());
+			preparedStatement.setDouble(i++, c.getPrecio());
+			preparedStatement.setInt(i++, c.getDuracion());
+			preparedStatement.setInt(i++, c.getIdDescuento());
+			preparedStatement.setString(i++, c.getTipoContenido() );
 			
 			
 			int insertedRows = preparedStatement.executeUpdate();
@@ -165,10 +167,7 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 		
 	}
 
-	public boolean update (Contenido c)
-			throws Exception {
-		return false;
-	}
+	
 	
 	private Contenido loadNext(ResultSet resultSet) throws Exception {
 		Contenido c = new Contenido();
@@ -176,10 +175,13 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 		Integer idContenido = resultSet.getInt(i++);
 		String titulo = resultSet.getString(i++);
 		String restriccionEdad = resultSet.getString(i++);
-		String descripcionContenido = resultSet.getString(i++);
-		
 		String portada = resultSet.getString(i++);
 		Date fechaLanzamiento = resultSet.getDate(i++);
+		String descripcionBreve = resultSet.getString(i++);
+		Double precio = resultSet.getDouble(i++);
+		Integer duracion = resultSet.getInt(i++);
+		Integer idDescuento = resultSet.getInt(i++);
+		String tipoContenido = resultSet.getString(i++);
 		
 
 		c = new Contenido();
@@ -187,10 +189,14 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 		c.setIdContenido(idContenido);
 		c.setTitulo(titulo);
 		c.setRestriccionEdad(restriccionEdad);
-		c.setDescripcionContenido(descripcionContenido);
-		
 		c.setPortada(portada);
 		c.setFechaLanzamiento(fechaLanzamiento);
+		c.setDescripcionBreve(descripcionBreve);
+		c.setPrecio(precio);
+		c.setDuracion(duracion);
+		c.setIdDescuento(idDescuento);
+		c.setTipoContenido(tipoContenido);
+		
 		
 		
 		

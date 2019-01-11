@@ -11,22 +11,22 @@ import com.david.training.dao.UsuarioDAO;
 import com.david.training.dao.util.ConnectionManager;
 import com.david.training.dao.util.JDBCUtils;
 import com.david.training.exceptions.DataException;
-import com.david.training.exceptions.DuplicateInstanceException;
 import com.david.training.model.Usuario;
 
 
 public class UsuarioDAOImpl implements UsuarioDAO{
 
 	@Override
-	public Usuario findByEmail(Connection connection, String email) throws DataException {
+	public Usuario findByEmail( String email) throws DataException {
 		// TODO Auto-generated method stub
-		
+		Connection connection = null; 
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		
 		try {
+			connection = ConnectionManager.getConnection();
 			String queryString = 
-					"SELECT U.EMAIL, U.CONTRASENA, U.NOMBRE, U.APELLIDOS, U.GENERO, U.FECHA_NACIMIENTO, U.TELEFONO" +
+					"SELECT U.EMAIL, U.CONTRASENA, U.NOMBRE, U.APELLIDOS, U.GENERO, U.FECHA_NACIMIENTO, U.TELEFONO " +
 							"FROM USUARIO U " +
 							"WHERE U.EMAIL = ? ";
 			preparedStatement = connection.prepareStatement(queryString,
@@ -80,7 +80,7 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 	}
 
 	@Override
-	public Usuario exists(Connection connection, Usuario u) throws DataException  {
+	public Usuario exists( Usuario u) throws DataException  {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -122,15 +122,39 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 		}
 	
 	@Override
-	public void update(Connection connection, Usuario u) throws DataException {
+	public void update( Usuario u) throws DataException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public long delete(Connection connection, Long id) throws DataException {
+	public   long delete( String email) throws DataException {
 		// TODO Auto-generated method stub
-		return 0;
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		
+		
+		try {
+			connection = ConnectionManager.getConnection();
+			
+			String queryString = "DELETE FROM USUARIO "
+					+ "WHERE EMAIL = ? ";
+		
+			preparedStatement = connection.prepareStatement(queryString);
+			
+			int i =1;
+			preparedStatement.setString(i++, email);
+			
+			long removedRows = preparedStatement.executeUpdate(); 
+			
+			return removedRows;
+			
+		} catch (SQLException e) {
+			throw new DataException(e);
+		} finally {
+			JDBCUtils.closeStatement(preparedStatement);
+		}
+		
 	}
 
 }

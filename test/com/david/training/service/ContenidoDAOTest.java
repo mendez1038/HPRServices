@@ -24,7 +24,7 @@ public class ContenidoDAOTest {
 	
 	public void testFindByTitulo()
 		throws Exception {
-	List<Contenido> contenidos = dao.findByTitulo("a");
+	List<Contenido> contenidos = dao.findByTitulo("s");
 	for(Contenido c: contenidos) {
 		System.out.println(c);
 	}
@@ -37,24 +37,27 @@ public class ContenidoDAOTest {
 		c.setIdContenido(205);
 		c.setTitulo("No Crossover");
 		c.setRestriccionEdad("TP");
-		c.setDescripcionContenido("La vida de Allen Iverson");
 		c.setPortada("URL");
 		c.setFechaLanzamiento(new Date());
+		c.setDescripcionBreve("La vida de Allen Iverson");
+		c.setPrecio(1.50);
+		c.setDuracion(50);
 		c.setIdDescuento(1);
-		c.setTipoContenido("Documental");
+		c.setTipoContenido("DOC");
 		
 		dao.create(c);
+		System.out.println(c);
 	}
 	
-	/*public static void main(String args[]) {
-	*	try {
-	*		ContenidoDAOTest test = new ContenidoDAOTest();
-	*		//test.testFindById();
-	*		//test.testFindByTitulo();
-	*		test.testCreate();
-	*	} catch (Exception c) {
-	*		c.printStackTrace();
-	*	}
-	*}
-	*/
+	public static void main(String args[]) {
+		try {
+			ContenidoDAOTest test = new ContenidoDAOTest();
+			//test.testFindById();
+			//test.testFindByTitulo();
+			test.testCreate();
+		} catch (Exception c) {
+			c.printStackTrace();
+		}
+	}
+	
 }

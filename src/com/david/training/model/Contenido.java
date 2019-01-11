@@ -1,120 +1,132 @@
-package com.david.training.model;
+ package com.david.training.model;
 
 import java.util.Date;
 
 public class Contenido extends AbstractValueObject  implements Comparable<Contenido>{
 	
+
+
 	private Integer idContenido = null;
 	private String titulo = null;
 	private String restriccionEdad = null;
-	private String descripcionContenido = null;
-	
 	private String portada = null;
 	private Date fechaLanzamiento = null;
+	private String descripcionBreve = null;
+	private Double precio = null;
+	private Integer duracion = null;
 	private Integer idDescuento = null;
 	private String tipoContenido = null;
 	
 	
 	public Contenido() {
 		
-		//this(idContenido, titulo, restriccionEdad, descripcionContenido, ano, fechaLanzamiento, null, idDescuento);
+		//this.idContenido = idContenido;
+		//this.titulo = titulo;
+		//this.restriccionEdad= restriccionEdad;
 	}
 	
 	public Contenido( Integer idContenido, String titulo, 
-			String restriccionEdad, String descripcionContenido, Integer ano, Date fechaLanzamiento
-			, Integer idPais, Integer idDescuento, String tipoContenido) {
+			String restriccionEdad, String portada, 
+			Date fechaLanzamiento, String descripcionBreve,
+			Double precio, Integer duracion, 
+			Integer idDescuento, String tipoContenido) {
 		setIdContenido(idContenido);
 		setTitulo(titulo);
 		setRestriccionEdad(restriccionEdad);
-		setDescripcionContenido(descripcionContenido);
 		setPortada(portada);
 		setFechaLanzamiento(fechaLanzamiento);
+		setDescripcionBreve(descripcionBreve);
+		setPrecio(precio);
 		setIdDescuento(idDescuento);
 		setTipoContenido(tipoContenido);
 		
 	}
 
-	
-
-
 	public Integer getIdContenido() {
 		return idContenido;
 	}
-
 
 	public void setIdContenido(Integer idContenido) {
 		this.idContenido = idContenido;
 	}
 
-
 	public String getTitulo() {
 		return titulo;
 	}
-
 
 	public void setTitulo(String titulo) {
 		this.titulo = titulo;
 	}
 
-
 	public String getRestriccionEdad() {
 		return restriccionEdad;
 	}
-
 
 	public void setRestriccionEdad(String restriccionEdad) {
 		this.restriccionEdad = restriccionEdad;
 	}
 
-
-	public String getDescripcionContenido() {
-		return descripcionContenido;
+	public String getPortada() {
+		return portada;
 	}
 
-
-	public void setDescripcionContenido(String descripcion) {
-		this.descripcionContenido = descripcion;
+	public void setPortada(String portada) {
+		this.portada = portada;
 	}
-
 
 	public Date getFechaLanzamiento() {
 		return fechaLanzamiento;
 	}
 
-
 	public void setFechaLanzamiento(Date fechaLanzamiento) {
 		this.fechaLanzamiento = fechaLanzamiento;
 	}
 
+	public String getDescripcionBreve() {
+		return descripcionBreve;
+	}
+
+	public void setDescripcionBreve(String descripcionBreve) {
+		this.descripcionBreve = descripcionBreve;
+	}
+
+	public Double getPrecio() {
+		return precio;
+	}
+
+	public void setPrecio(Double precio) {
+		this.precio = precio;
+	}
+
+	public Integer getDuracion() {
+		return duracion;
+	}
+
+	public void setDuracion(Integer duracion) {
+		this.duracion = duracion;
+	}
 
 	public Integer getIdDescuento() {
 		return idDescuento;
 	}
 
-
 	public void setIdDescuento(Integer idDescuento) {
 		this.idDescuento = idDescuento;
 	}
 
-
-	public String getPortada() {
-		return portada;
-	}
-
-
-	public void setPortada(String portada) {
-		this.portada = portada;
-	}
-	
 	public String getTipoContenido() {
 		return tipoContenido;
 	}
 
-
 	public void setTipoContenido(String tipoContenido) {
 		this.tipoContenido = tipoContenido;
 	}
-	
+
+
+
+
+
+
 	
 	@Override
 	public int compareTo(Contenido c) {
@@ -127,12 +139,13 @@ public class Contenido extends AbstractValueObject  implements Comparable<Conten
 	
 	
 	//@Override
-	//public String toString() {
-		//return this.idContenido+","+this.titulo+","+this.restriccionEdad+","+
-	//this.descripcionContenido+","+this.ano+","+this.portada+","+this.fechaLanzamiento+","
-	//+this.idDescuento+","+this.tipoContenido;
+	public String toString() {
+		return "ID:"+idContenido+" Titulo:"+titulo+" Restriccion de edad:"+restriccionEdad+" "
+				+ "Link de la portada:"+portada+" Fecha de lanzamiento:"+fechaLanzamiento+" "
+				+ "Descripcion:"+descripcionBreve+" Precio:"+precio+", con una duracion de "+duracion+" "
+				+ "minutos, Descuento:"+idDescuento+" Tipo contenido:"+tipoContenido;
 		
-	//}
+	}
 	
 
 	/*	for (Usuario: usuarios) {
