@@ -63,7 +63,7 @@ public CategoriaDAOImpl() {
 		}
 			
 				
-		public Categoria create(Categoria ca)
+		public Categoria testCreate(Categoria ca)
 				throws Exception {
 			Connection connection = null; 
 			PreparedStatement preparedStatement = null;
@@ -113,20 +113,16 @@ public CategoriaDAOImpl() {
 			}
 			
 		}
-		public boolean update (Categoria ca)
-				throws Exception {
-			return false;
-		}
+		
 		
 		private Categoria loadNext(ResultSet resultSet) throws Exception {
-			Categoria ca = new Categoria();
-			int i = 1;
 			
+			int i = 1;
+			Integer idCategoria = resultSet.getInt(i++);
 			String nombreCategoria = resultSet.getString(i++);
 			
-			ca = new Categoria();
-			
-			
+			Categoria ca = new Categoria();
+			ca.setIdCategoria(idCategoria);
 			ca.setNombreCategoria(nombreCategoria);
 			
 			return ca;
@@ -140,9 +136,4 @@ public CategoriaDAOImpl() {
 			return null;
 		}
 
-		@Override
-		public Categoria testCreate(Categoria c) throws Exception {
-			// TODO Auto-generated method stub
-			return null;
-		}
 }

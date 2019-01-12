@@ -49,7 +49,7 @@ public  class Pedido extends AbstractValueObject{
 	
 	@Override
 	public String toString() {
-		return idPedido+","+fechaPedido+","+email+","+precioTotal;
+		return "ID:"+idPedido+", Fecha:"+fechaPedido+", Precio:"+precioTotal+" realizado por:"+email;
 		
 	}
 

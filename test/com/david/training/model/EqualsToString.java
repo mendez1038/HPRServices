@@ -4,13 +4,13 @@ public class EqualsToString {
 
 	public static void main(String[] args) {
 		
-		Matchup u = new Matchup();
+		Contenido u = new Contenido();
 		
-		u.setIdEquipo1(2);
-		u.setIdEquipo2(3);
+		u.setIdContenido(2);
+		u.setIdDescuento(2);
 		
-		String idEquipo1 = u.getIdEquipo1().toString();
-		String idEquipo2 = u.getIdEquipo2().toString();
+		String idEquipo1 = u.getIdContenido().toString();
+		String idEquipo2 = u.getIdDescuento().toString();
 		
 		System.out.println(idEquipo1.equals(idEquipo2));
 	}

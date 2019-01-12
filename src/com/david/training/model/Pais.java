@@ -45,7 +45,7 @@ public class Pais extends AbstractValueObject {
 	
 	@Override
 	public String toString() {
-		return idPais+","+nombrePais+","+capitalPais;
+		return "ID:"+idPais+", Nombre:"+nombrePais+" y capital "+capitalPais;
 		
 	}
 

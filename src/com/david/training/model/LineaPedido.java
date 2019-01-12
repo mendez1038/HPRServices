@@ -7,6 +7,11 @@ public class LineaPedido extends AbstractValueObject{
 	private Double precioUnidad = null;
 	
 	
+	public LineaPedido () {
+		
+	}
+	
+	
 	public Integer getIdPedido() {
 		return idPedido;
 	}
@@ -37,14 +42,10 @@ public class LineaPedido extends AbstractValueObject{
 	}
 
 
-	public LineaPedido (Integer idPedido, Integer idContenido, Double precioUnidad) {
-		this.idPedido = idPedido;
-		this.idContenido= idContenido;
-		this.precioUnidad = precioUnidad;
-	}
+	
 	@Override
 	public String toString() {
-		return idPedido+","+idContenido+","+precioUnidad;
+		return "Pedido "+idPedido+", contenido "+idContenido+", precio:"+precioUnidad+"€";
 		
 	}
 

@@ -18,7 +18,7 @@ public interface UsuarioDAO {
 	public Usuario create( Usuario u)
 	throws Exception;
 	
-	public void update( Usuario u) 
+	public boolean update( Usuario u) 
 			throws DataException; 
 		
 		

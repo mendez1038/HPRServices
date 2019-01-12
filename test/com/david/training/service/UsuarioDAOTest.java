@@ -4,6 +4,7 @@ package com.david.training.service;
 
 import com.david.training.dao.UsuarioDAO;
 import com.david.training.dao.impl.UsuarioDAOImpl;
+import com.david.training.exceptions.DataException;
 import com.david.training.model.Usuario;
 
 
@@ -51,12 +52,27 @@ public class UsuarioDAOTest {
 		
 	}
 	
+	
+	public void testUpdate()
+		throws DataException {
+		Usuario u = new  Usuario();
+		u.setContrasena("123456");
+		u.setNombre(null);
+		u.setApellidos(null);
+		u.setGenero(null);
+		u.setFechaNacimiento(null);
+		u.setTelefono(null);
+		dao.update(u);
+		System.out.println(u);
+	}	
+	
 	public static void main(String args[]) {
 		try {
 			UsuarioDAOTest test = new UsuarioDAOTest();
 			//test.testFindByEmail();
-			test.testDelete();
+			//test.testDelete();
 			//test.testCreate();
+			test.testUpdate();
 		} catch (Exception u) {
 			u.printStackTrace();
 		}

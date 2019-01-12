@@ -36,8 +36,8 @@ public class CategoriaDAOTest {
 		try {
 			CategoriaDAOTest test = new CategoriaDAOTest();
 			
-			test.testCreate();
-			//test.testFindById();
+			
+			test.testFindById();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

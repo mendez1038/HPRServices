@@ -20,9 +20,7 @@ public class Contenido extends AbstractValueObject  implements Comparable<Conten
 	
 	public Contenido() {
 		
-		//this.idContenido = idContenido;
-		//this.titulo = titulo;
-		//this.restriccionEdad= restriccionEdad;
+		
 	}
 	
 	public Contenido( Integer idContenido, String titulo, 
@@ -30,6 +28,7 @@ public class Contenido extends AbstractValueObject  implements Comparable<Conten
 			Date fechaLanzamiento, String descripcionBreve,
 			Double precio, Integer duracion, 
 			Integer idDescuento, String tipoContenido) {
+		
 		setIdContenido(idContenido);
 		setTitulo(titulo);
 		setRestriccionEdad(restriccionEdad);

@@ -11,7 +11,7 @@ public interface CategoriaDAO {
 	
 	public Categoria findAll() 
 		throws Exception;
-	
+	//innecesario
 	public Categoria testCreate(Categoria c) 
 		throws Exception;
 

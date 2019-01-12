@@ -100,6 +100,20 @@ public class Usuario extends AbstractValueObject{
 		this.fechaNacimiento = fechaNacimiento;
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		boolean error = false;
+		if (obj == null) {
+			return error;
+		} else {
+		Usuario u= (Usuario)obj;
+		 
+		return u.getEmail().equals(this.getEmail());
+		
+		}
+		//con "equalsIgnoreCase" podemos comparar cadenas sen importar se ten mayusculas ou minusculas
+		
+	}
 
 	
 	

@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import com.david.training.model.util.ContendioByTituloComparator;
+import com.david.training.model.utils.ContenidoByTituloComparator;
 
 public class ObjectCreationTest {
 	
@@ -17,9 +17,11 @@ public class ObjectCreationTest {
 		Pedido u1 = new Pedido();
 		
 		u1.setIdPedido(1);
+		u1.setFechaPedido(new Date());
+		u1.setPrecioTotal(2.0);
 		u1.setEmail("AA@A.COM");
 		
-		u1.setFechaPedido(new Date());
+		
 		
 		//System.out.println("Pedido= "+u1);
 		
@@ -31,9 +33,9 @@ public class ObjectCreationTest {
 		
 		Pedido u2 = new Pedido();
 		u2.setIdPedido(2);
-		u2.setEmail("BB@B.COM");
 		u2.setFechaPedido(new Date());
-		
+		u2.setPrecioTotal(4.0);
+		u2.setEmail("BB@B.COM");
 		//System.out.println("Pedido= "+u2);
 		
 		//System.out.println("El pedido "+u2.getIdPedido()+" realizado por "+u2.getEmail()+" se pidió en la fecha"+u2.getFechaPedido());
@@ -63,15 +65,14 @@ public class ObjectCreationTest {
 		c3.setTitulo("asa");
 		contenidos.add(c3);
 		
-		Collections.sort(contenidos, new ContendioByTituloComparator());
+		Collections.sort(contenidos, new ContenidoByTituloComparator());
 		
 		
 		System.out.println("\nOrdenado por titulo:");
 		for (Contenido c: contenidos) {
-			System.out.println(c.getIdContenido());
+			System.out.println(c);
 		}
 		
 		
 	}
-
 }

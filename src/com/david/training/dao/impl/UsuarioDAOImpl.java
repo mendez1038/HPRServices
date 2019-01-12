@@ -15,10 +15,17 @@ import com.david.training.model.Usuario;
 
 
 public class UsuarioDAOImpl implements UsuarioDAO{
+	
+	
+	public UsuarioDAOImpl () {
+		
+	}
 
 	@Override
-	public Usuario findByEmail( String email) throws DataException {
+	public Usuario findByEmail( String email) 
+			throws DataException {
 		// TODO Auto-generated method stub
+		Usuario e = null;
 		Connection connection = null; 
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -29,6 +36,9 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 					"SELECT U.EMAIL, U.CONTRASENA, U.NOMBRE, U.APELLIDOS, U.GENERO, U.FECHA_NACIMIENTO, U.TELEFONO " +
 							"FROM USUARIO U " +
 							"WHERE U.EMAIL = ? ";
+			
+			
+			System.out.println("Creating statement...");
 			preparedStatement = connection.prepareStatement(queryString,
 					ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 
@@ -37,24 +47,29 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 
 			resultSet = preparedStatement.executeQuery();
 
-			Usuario e = null;
+			
 
 			if (resultSet.next()) {
-				e = loadNext(connection, resultSet);				
-			}else {}
+				e = loadNext(resultSet);				
+			}else {
+				throw new DataException("Non se atopou usuario con email = "+email);
+			} if (resultSet.next()) {
+				throw new DataException("Usuario con email  "+email+" duplicado");
+			}
 
 			return e;
 
-		} catch (SQLException e) {
-			throw new DataException(e);
+		} catch (SQLException e1) {
+			throw new DataException(e1);
 		} finally {
 			JDBCUtils.closeResultSet(resultSet);
 			JDBCUtils.closeStatement(preparedStatement);
+			JDBCUtils.closeConnection(connection);
 		}
 		
 	}
 
-	private Usuario loadNext(Connection connection, ResultSet resultSet) 
+	private Usuario loadNext( ResultSet resultSet) 
 		// TODO Auto-generated method stub
 		throws DataException, SQLException {
 			
@@ -86,7 +101,8 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 	}
 
 	@Override
-	public Usuario create( Usuario u) throws DataException {
+	public Usuario create( Usuario u)
+			throws DataException {
 		// TODO Auto-generated method stub
 		Connection connection = null; 
 		PreparedStatement preparedStatement = null;
@@ -122,11 +138,13 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 		}
 	
 	@Override
-	public void update( Usuario u) throws DataException {
+	public boolean update( Usuario u) 
+			throws DataException {
+				return false;
 		// TODO Auto-generated method stub
 		
 	}
-
+	
 	@Override
 	public   long delete( String email) throws DataException {
 		// TODO Auto-generated method stub

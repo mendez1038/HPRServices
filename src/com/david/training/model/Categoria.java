@@ -1,25 +1,14 @@
 package com.david.training.model;
 
-public class Categoria extends ValueObject{
+public class Categoria extends AbstractValueObject{
 	
-	
-	private String nombreCategoria = null;
 	private Integer idCategoria = null;
+	private String nombreCategoria = null;
 	
-	public Categoria(Integer idCategoria, String nombreCategoria) {
-		
-		setIdCategoria(idCategoria);
-		setNombreCategoria(nombreCategoria);
-		
-		
-	}
-
-
-
+	
 	public Categoria() {
-		// TODO Auto-generated constructor stub
+		
 	}
-
 
 
 	public String getNombreCategoria() {
@@ -40,7 +29,7 @@ public class Categoria extends ValueObject{
 	
 	@Override
 	public String toString() {
-		return this.idCategoria+","+this.nombreCategoria;
+		return "ID:"+idCategoria+", Nombre:"+nombreCategoria;
 		
 	}
 }

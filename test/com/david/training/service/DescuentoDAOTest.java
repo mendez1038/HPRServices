@@ -16,15 +16,16 @@ public class DescuentoDAOTest {
 
 	public void testFindById()
 			throws Exception {
-		Descuento d = dao.findById(1);
-		System.out.println(d);
+		
+		Descuento d2 = dao.findById(2);
+		
+		
+		System.out.println(d2);
+		
 
 	}
 
-	public void testFindByNombre() 
-			throws Exception {
-
-	}
+	
 
 	public void testCreate()
 			throws Exception{
@@ -35,13 +36,14 @@ public class DescuentoDAOTest {
 		d.setFechaInicio(new Date());
 		d.setFechaFin(new Date());
 		dao.create(d);
+		System.out.println(d);
 	}
 
 	public static void main(String args[]) {
 		try {
 			DescuentoDAOTest test = new DescuentoDAOTest();
 			test.testFindById();
-			//test.testCreate();
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

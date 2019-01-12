@@ -55,7 +55,7 @@ public class DescuentoDAOImpl implements DescuentoDAO{
 			if (resultSet.next()) {
 				d = loadNext(resultSet);
 			} else {
-				throw new Exception("Non se encontrou o dscuento "+id);
+				throw new Exception("Non se encontrou o descuento "+id);
 			}
 			if (resultSet.next()) {
 				throw new Exception("Descuento"+id+" duplicado");
@@ -134,6 +134,7 @@ public class DescuentoDAOImpl implements DescuentoDAO{
 		Descuento d = new Descuento();
 		int i = 1;
 		
+		Integer idDescuento = resultSet.getInt(i++);
 		Integer porcentaje = resultSet.getInt(i++);
 		String nombreOferta = resultSet.getString(i++);
 		Date fechaInicio = resultSet.getDate(i++);
@@ -141,7 +142,7 @@ public class DescuentoDAOImpl implements DescuentoDAO{
 
 		d = new Descuento();
 		
-		
+		d.setIdDescuento(idDescuento);
 		d.setPorcentaje(porcentaje);
 		d.setNombreOferta(nombreOferta);
 		d.setFechaInicio(fechaInicio);

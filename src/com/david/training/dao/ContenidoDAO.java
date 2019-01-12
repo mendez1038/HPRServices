@@ -16,7 +16,7 @@ public interface ContenidoDAO {
 	
 	public List<Contenido> findByContenidoCriteria()
 		throws Exception;
-	
+	//innecesario
 	public Contenido create (Contenido c)
 			throws Exception;
 	

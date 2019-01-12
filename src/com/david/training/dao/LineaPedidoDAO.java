@@ -1,10 +1,9 @@
 package com.david.training.dao;
 
-import java.sql.Connection;
 import java.util.List;
 
 import com.david.training.exceptions.DataException;
-import com.david.training.model.IdLineaPedido;
+
 import com.david.training.model.LineaPedido;
 
 
@@ -12,19 +11,19 @@ import com.david.training.model.LineaPedido;
 public interface LineaPedidoDAO {
 	
 	
-	public LineaPedido findById(Connection connection, IdLineaPedido id) 
+	public LineaPedido findById( LineaPedido id) 
         	throws DataException;
 	
-	public Boolean exists(Connection connection, IdLineaPedido id) 
+	public Boolean exists( LineaPedido id) 
     		throws DataException;
 	    
-    public List<LineaPedido> findByTicket(Connection connection, Long idTicket) 
+	public List<LineaPedido> findByPedido( Integer idPedido) 
         	throws DataException;
   
-    public LineaPedido create(Connection connection, LineaPedido c) 
+    public LineaPedido create(LineaPedido lp) 
     		throws DataException;
         
-    public long delete(Connection connection, IdLineaPedido id) 
+    public long delete( LineaPedido id) 
     		throws DataException;
 
 
