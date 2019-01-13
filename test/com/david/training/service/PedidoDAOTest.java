@@ -15,7 +15,7 @@ public class PedidoDAOTest {
 	
 	public void testFindById()
 		throws Exception {
-		Pedido p = dao.findById(1);
+		Pedido p = dao.findById(2);
 		System.out.println(p);
 	}
 	

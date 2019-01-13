@@ -17,7 +17,7 @@ public class ContenidoDAOTest {
 	
 	public void testFindById()
 	throws Exception {
-		Contenido c= dao.findById(5);
+		Contenido c= dao.findById(201);
 			System.out.println(c);
 		
 	}
@@ -52,9 +52,9 @@ public class ContenidoDAOTest {
 	public static void main(String args[]) {
 		try {
 			ContenidoDAOTest test = new ContenidoDAOTest();
-			//test.testFindById();
+			test.testFindById();
 			//test.testFindByTitulo();
-			test.testCreate();
+			//test.testCreate();
 		} catch (Exception c) {
 			c.printStackTrace();
 		}

@@ -9,6 +9,10 @@ public class Artista extends AbstractValueObject{
 	private Date fechaNacimiento = null;
 	
 	
+	public Artista() {
+		
+	}
+	
 	public Artista(Integer idArtista, String nombreArtista, Date fechaNacimiento) {
 		setIdArtista(idArtista);
 		setNombreArtista(nombreArtista);

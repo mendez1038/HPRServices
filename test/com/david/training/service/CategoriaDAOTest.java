@@ -14,7 +14,7 @@ public class CategoriaDAOTest {
 
 	public void testFindById()
 		throws Exception {
-		Categoria ca = dao.findById(1);
+		Categoria ca = dao.findById(12);
 		System.out.println(ca);
 		
 	}
@@ -29,14 +29,14 @@ public class CategoriaDAOTest {
 		Categoria ca = new Categoria();
 		
 		ca.setNombreCategoria("Terror");
-		dao.testCreate(ca);
+		dao.create(ca);
 	}
 	
 	public static void main(String args[]) {
 		try {
 			CategoriaDAOTest test = new CategoriaDAOTest();
 			
-			
+			//test.testCreate();
 			test.testFindById();
 		} catch (Exception e) {
 			e.printStackTrace();

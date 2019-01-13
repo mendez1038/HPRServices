@@ -18,8 +18,8 @@ public class UsuarioDAOTest {
 	
 	public void testFindByEmail() 
 		throws Exception{
-		Usuario u = dao.findByEmail("AA@A.COM");
-		Usuario u2 = dao.findByEmail("BB@B.COM");
+		Usuario u = dao.findByEmail("CC@C.COM");
+		Usuario u2 = dao.findByEmail("JJ@J.COM");
 		System.out.println(u);
 		System.out.println(u2);
 		
@@ -69,10 +69,10 @@ public class UsuarioDAOTest {
 	public static void main(String args[]) {
 		try {
 			UsuarioDAOTest test = new UsuarioDAOTest();
-			//test.testFindByEmail();
+			test.testFindByEmail();
 			//test.testDelete();
 			//test.testCreate();
-			test.testUpdate();
+			//test.testUpdate();
 		} catch (Exception u) {
 			u.printStackTrace();
 		}

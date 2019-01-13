@@ -6,6 +6,9 @@ public class Pais extends AbstractValueObject {
 	private String nombrePais = null;
 	private String capitalPais = null;
 
+	public Pais() {
+		
+	}
 	
 	public Pais(Integer idPais, String nombrePais, String capitalPais) {
 		this.idPais = idPais;

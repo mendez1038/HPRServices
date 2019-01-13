@@ -17,7 +17,7 @@ public class DescuentoDAOTest {
 	public void testFindById()
 			throws Exception {
 		
-		Descuento d2 = dao.findById(2);
+		Descuento d2 = dao.findById(3);
 		
 		
 		System.out.println(d2);

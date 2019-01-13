@@ -10,6 +10,7 @@ import java.util.List;
 
 
 import com.david.training.dao.LineaPedidoDAO;
+import com.david.training.dao.util.ConnectionManager;
 import com.david.training.dao.util.JDBCUtils;
 import com.david.training.exceptions.DataException;
 import com.david.training.model.LineaPedido;
@@ -19,12 +20,13 @@ import com.david.training.model.LineaPedido;
 public class LineaPedidoDAOImpl implements LineaPedidoDAO{
 
 	@Override
-	public LineaPedido findById(LineaPedido id) throws DataException {
+	public LineaPedido findById(Integer idp, Integer idc) throws DataException {
 		// TODO Auto-generated method stub
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		Connection connection = null;
-		try {          
+		try {  
+			connection = ConnectionManager.getConnection();
 			String queryString = 
 					"SELECT LP.ID_PEDIDO, LP.ID_CONTENIDO, LP.PRECIO_UNIDAD " + 
 							"FROM LINEAPEDIDO LP  " +
@@ -34,8 +36,8 @@ public class LineaPedidoDAOImpl implements LineaPedidoDAO{
 					ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 
 			int i = 1;                
-			preparedStatement.setLong(i++, id.getIdPedido());
-			preparedStatement.setLong(i++, id.getIdContenido());
+			preparedStatement.setInt(i++, idp);
+			preparedStatement.setInt(i++, idc);
 
 			resultSet = preparedStatement.executeQuery();
 

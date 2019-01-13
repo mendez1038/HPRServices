@@ -63,7 +63,7 @@ public CategoriaDAOImpl() {
 		}
 			
 				
-		public Categoria testCreate(Categoria ca)
+		public Categoria create(Categoria ca)
 				throws Exception {
 			Connection connection = null; 
 			PreparedStatement preparedStatement = null;
@@ -135,5 +135,7 @@ public CategoriaDAOImpl() {
 			// TODO Auto-generated method stub
 			return null;
 		}
+
+		
 
 }

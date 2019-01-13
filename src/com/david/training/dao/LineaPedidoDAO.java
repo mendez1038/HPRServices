@@ -11,7 +11,7 @@ import com.david.training.model.LineaPedido;
 public interface LineaPedidoDAO {
 	
 	
-	public LineaPedido findById( LineaPedido id) 
+	public LineaPedido findById( Integer idp, Integer idc) 
         	throws DataException;
 	
 	public Boolean exists( LineaPedido id) 
