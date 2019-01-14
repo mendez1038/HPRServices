@@ -95,9 +95,42 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 	}
 
 	@Override
-	public Usuario exists( Usuario u) throws DataException  {
-		// TODO Auto-generated method stub
-		return null;
+	public Boolean exists( String email) throws DataException  {
+		
+		boolean exist = false;
+		Connection connection = null; 
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+
+		try {
+			connection = ConnectionManager.getConnection();
+			
+
+			String queryString = "SELECT U.EMAIL, U.CONTRASENA, U.NOMBRE, U.APELLIDOS, U.GENERO, U.FECHA_NACIMIENTO, U.TELEFONO " + 
+								"FROM USUARIO U "  + 
+								"WHERE U.EMAIL = ? ";
+
+			preparedStatement = connection.prepareStatement(queryString);
+
+			int i = 1;
+			preparedStatement.setString(i++, email);
+
+			resultSet = preparedStatement.executeQuery();
+
+			if (resultSet.next()) {
+				exist = true;
+			}
+
+		} catch (SQLException e) {
+			throw new DataException(e);
+		} finally {
+			JDBCUtils.closeResultSet(resultSet);
+			JDBCUtils.closeStatement(preparedStatement);
+			JDBCUtils.closeConnection(connection);
+		}
+
+		return exist;
+
 	}
 
 	@Override
@@ -134,7 +167,8 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 			throw new DataException(e);
 		} finally {
 			JDBCUtils.closeResultSet(resultSet);
-			JDBCUtils.closeStatement(preparedStatement);}
+			JDBCUtils.closeStatement(preparedStatement);
+			JDBCUtils.closeConnection(connection);}
 		}
 	
 	@Override
@@ -171,7 +205,41 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 			throw new DataException(e);
 		} finally {
 			JDBCUtils.closeStatement(preparedStatement);
+			JDBCUtils.closeConnection(connection);
 		}
+		
+	}
+
+	@Override
+	public long countAll() 
+			throws Exception {
+		Connection connection = null; 
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		try {
+			connection = ConnectionManager.getConnection();
+			String queryString = 
+					" SELECT count(*) "
+							+ " FROM Usuario";
+
+			preparedStatement = connection.prepareStatement(queryString);
+
+			resultSet = preparedStatement.executeQuery();
+
+			int i=1;
+			if (resultSet.next()) {
+				return resultSet.getLong(i++);
+			} else {
+				throw new DataException("Unexpected condition trying to retrieve count value");
+			}
+
+		} catch (SQLException e) {
+			throw new DataException(e);
+		} finally {
+			JDBCUtils.closeResultSet(resultSet);
+			JDBCUtils.closeStatement(preparedStatement);
+			JDBCUtils.closeConnection(connection);
+		}	    	 
 		
 	}
 

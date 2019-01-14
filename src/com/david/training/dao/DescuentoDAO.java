@@ -9,8 +9,14 @@ public interface DescuentoDAO {
 	public Descuento findById(Integer id)
 		throws Exception;
 	
-	//innecesario
+	
 	public Descuento create (Descuento d)
+			throws Exception;
+	
+	public Descuento delete (Descuento d)
+			throws Exception;
+	
+	public void update(Descuento d)
 			throws Exception;
 	
 	

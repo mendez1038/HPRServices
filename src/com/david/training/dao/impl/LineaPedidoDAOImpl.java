@@ -5,7 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -69,20 +69,111 @@ public class LineaPedidoDAOImpl implements LineaPedidoDAO{
 
 	@Override
 	public List<LineaPedido> findByPedido( Integer idPedido) throws DataException {
-		// TODO Auto-generated method stub
-		return null;
+		
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		Connection connection = null;
+
+		try {
+			connection = ConnectionManager.getConnection();
+			String queryString = 
+					"SELECT LP.ID_PEDIDO, LP.ID_CONTENIDO, LP.PRECIO_UNIDAD " + 
+					"FROM LINEAPEDIDO LP " +
+						"INNER JOIN PEDIDO P "+
+						"ON LP.ID_PEDIDO = P.ID_PEDIDO AND P.ID_PEDIDO = ? ";
+
+			preparedStatement = connection.prepareStatement(queryString,
+					ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+
+			int i = 1;                
+			preparedStatement.setInt(i++, idPedido);
+
+			resultSet = preparedStatement.executeQuery();
+
+			List<LineaPedido> results = new ArrayList<LineaPedido>();  
+			
+			LineaPedido lp = null;
+			
+			while (resultSet.next()) {
+				lp = loadNext (resultSet);
+				results.add(lp);
+			}
+			return results;
+
+		} catch (SQLException e) {
+			throw new DataException(e);
+		} finally {
+			JDBCUtils.closeResultSet(resultSet);
+			JDBCUtils.closeStatement(preparedStatement);
+			JDBCUtils.closeConnection(connection);
+		}
 	}
 
 	@Override
 	public LineaPedido create( LineaPedido lp) throws DataException {
-		// TODO Auto-generated method stub
-		return null;
+		Connection connection = null; 
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		try {          
+
+			connection = ConnectionManager.getConnection();
+
+
+
+			String queryString = "INSERT INTO LINEAPEDIDO(ID_PEDIDO,ID_CONTENIDO,PRECIO_UNIDAD) "
+					+ "VALUES (?, ?, ?)";
+
+			preparedStatement = connection.prepareStatement(queryString);
+
+			int i = 1;     
+			preparedStatement.setInt(i++,lp.getIdPedido());
+			preparedStatement.setInt(i++,lp.getIdContenido());
+			preparedStatement.setDouble(i++,lp.getPrecioUnidad());
+
+			int insertedRows = preparedStatement.executeUpdate();
+
+			if (insertedRows == 0) {
+				throw new SQLException("Can not add row to table 'LINEAPEDIDO'");
+			}
+
+			return lp;
+		} catch (SQLException ex) {
+			throw new DataException(ex);
+		} finally {
+			JDBCUtils.closeResultSet(resultSet);
+			JDBCUtils.closeStatement(preparedStatement);			
+			JDBCUtils.closeConnection(connection);
+		}
 	}
 
 	@Override
-	public long delete(LineaPedido id) throws DataException {
-		// TODO Auto-generated method stub
-		return 0;
+	public long delete(Integer idPedido, Integer idContenido) throws DataException {
+		Connection connection = null; 
+		PreparedStatement preparedStatement = null;
+
+		try {
+			connection = ConnectionManager.getConnection();
+
+			String queryString =	
+					"DELETE FROM LINEAPEDIDO " 
+				+ "WHERE ID_PEDIDO = ? AND ID_CONTENIDO = ? ";
+
+
+			preparedStatement = connection.prepareStatement(queryString);
+
+			int i = 1;
+			preparedStatement.setInt(i++, idPedido);
+			preparedStatement.setInt(i++,idContenido);
+
+			int removedRows = preparedStatement.executeUpdate();
+
+			return removedRows;
+
+		} catch (SQLException e) {
+			throw new DataException(e);
+		} finally {
+			JDBCUtils.closeStatement(preparedStatement);
+		}
 	}
 
 	private LineaPedido loadNext( ResultSet resultSet) 

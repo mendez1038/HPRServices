@@ -23,7 +23,7 @@ public interface LineaPedidoDAO {
     public LineaPedido create(LineaPedido lp) 
     		throws DataException;
         
-    public long delete( LineaPedido id) 
+    public long delete( Integer idPedido, Integer idContenido) 
     		throws DataException;
 
 

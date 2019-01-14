@@ -11,13 +11,17 @@ public interface UsuarioDAO {
 	throws DataException;
 
 
-	public Usuario exists( Usuario u)
+	public Boolean exists( String email)
 	throws Exception;
 	
 
 	public Usuario create( Usuario u)
 	throws Exception;
 	
+	
+	/*
+	 * Falta solo este.
+	 */
 	public boolean update( Usuario u) 
 			throws DataException; 
 		
@@ -25,7 +29,8 @@ public interface UsuarioDAO {
 	public long delete(String email)
 			throws DataException; 
 
-
+	public long countAll() 
+		throws Exception;
 
 }
 		

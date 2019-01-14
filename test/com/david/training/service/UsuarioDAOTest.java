@@ -66,13 +66,34 @@ public class UsuarioDAOTest {
 		System.out.println(u);
 	}	
 	
+	public void testExists() 
+			throws Exception {
+		System.out.println("Testeando existencia de usuarios ...");
+		String email = "AA@A.COM";
+		try {
+			Boolean exists = dao.exists(email);
+			System.out.println("Existe "+email+"? =>"+exists);
+		} catch (Throwable t) {
+			System.out.println(t);
+		}
+		System.out.println("Test finalizado");
+		
+	}
+	
+	public void testCountAll()
+			throws Exception {
+		System.out.println("Contando usuarios ...");
+		dao.countAll();
+	}
+	
 	public static void main(String args[]) {
 		try {
 			UsuarioDAOTest test = new UsuarioDAOTest();
-			test.testFindByEmail();
+			//test.testFindByEmail();
 			//test.testDelete();
 			//test.testCreate();
 			//test.testUpdate();
+			test.testExists();
 		} catch (Exception u) {
 			u.printStackTrace();
 		}
