@@ -25,14 +25,15 @@ public class LineaPedidoDAOImpl implements LineaPedidoDAO{
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		Connection connection = null;
+		StringBuilder queryString = null;
 		try {  
 			connection = ConnectionManager.getConnection();
-			String queryString = 
+			queryString = new StringBuilder(
 					"SELECT LP.ID_PEDIDO, LP.ID_CONTENIDO, LP.PRECIO_UNIDAD " + 
 							"FROM LINEAPEDIDO LP  " +
-							"WHERE LP.ID_PEDIDO = ? AND LP.ID_CONTENIDO = ? ";
-			
-			preparedStatement = connection.prepareStatement(queryString,
+					"WHERE LP.ID_PEDIDO = ? AND LP.ID_CONTENIDO = ? ");
+
+			preparedStatement = connection.prepareStatement(queryString.toString(),
 					ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 
 			int i = 1;                
@@ -46,7 +47,7 @@ public class LineaPedidoDAOImpl implements LineaPedidoDAO{
 			if (resultSet.next()) {
 				lp = loadNext( resultSet);				
 			} else {
-				
+
 			}
 
 			return lp;
@@ -59,30 +60,24 @@ public class LineaPedidoDAOImpl implements LineaPedidoDAO{
 			JDBCUtils.closeConnection(connection);
 		}  
 
-	}
-
-	@Override
-	public Boolean exists(LineaPedido id) throws DataException {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	}	
 
 	@Override
 	public List<LineaPedido> findByPedido( Integer idPedido) throws DataException {
-		
+
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		Connection connection = null;
-
+		StringBuilder queryString = null;
 		try {
 			connection = ConnectionManager.getConnection();
-			String queryString = 
+			queryString = new StringBuilder(
 					"SELECT LP.ID_PEDIDO, LP.ID_CONTENIDO, LP.PRECIO_UNIDAD " + 
-					"FROM LINEAPEDIDO LP " +
-						"INNER JOIN PEDIDO P "+
-						"ON LP.ID_PEDIDO = P.ID_PEDIDO AND P.ID_PEDIDO = ? ";
+							"FROM LINEAPEDIDO LP " +
+							"INNER JOIN PEDIDO P "+
+					"ON LP.ID_PEDIDO = P.ID_PEDIDO AND P.ID_PEDIDO = ? ");
 
-			preparedStatement = connection.prepareStatement(queryString,
+			preparedStatement = connection.prepareStatement(queryString.toString(),
 					ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 
 			int i = 1;                
@@ -91,9 +86,9 @@ public class LineaPedidoDAOImpl implements LineaPedidoDAO{
 			resultSet = preparedStatement.executeQuery();
 
 			List<LineaPedido> results = new ArrayList<LineaPedido>();  
-			
+
 			LineaPedido lp = null;
-			
+
 			while (resultSet.next()) {
 				lp = loadNext (resultSet);
 				results.add(lp);
@@ -114,16 +109,15 @@ public class LineaPedidoDAOImpl implements LineaPedidoDAO{
 		Connection connection = null; 
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
+		StringBuilder queryString = null;
 		try {          
 
 			connection = ConnectionManager.getConnection();
+			queryString = new StringBuilder(
+					"INSERT INTO LINEAPEDIDO(ID_PEDIDO,ID_CONTENIDO,PRECIO_UNIDAD) "
+							+ "VALUES (?, ?, ?)");
 
-
-
-			String queryString = "INSERT INTO LINEAPEDIDO(ID_PEDIDO,ID_CONTENIDO,PRECIO_UNIDAD) "
-					+ "VALUES (?, ?, ?)";
-
-			preparedStatement = connection.prepareStatement(queryString);
+			preparedStatement = connection.prepareStatement(queryString.toString());
 
 			int i = 1;     
 			preparedStatement.setInt(i++,lp.getIdPedido());
@@ -150,16 +144,16 @@ public class LineaPedidoDAOImpl implements LineaPedidoDAO{
 	public long delete(Integer idPedido, Integer idContenido) throws DataException {
 		Connection connection = null; 
 		PreparedStatement preparedStatement = null;
-
+		StringBuilder queryString = null;
 		try {
 			connection = ConnectionManager.getConnection();
 
-			String queryString =	
+			queryString =	new StringBuilder(
 					"DELETE FROM LINEAPEDIDO " 
-				+ "WHERE ID_PEDIDO = ? AND ID_CONTENIDO = ? ";
+							+ "WHERE ID_PEDIDO = ? AND ID_CONTENIDO = ? ");
 
 
-			preparedStatement = connection.prepareStatement(queryString);
+			preparedStatement = connection.prepareStatement(queryString.toString());
 
 			int i = 1;
 			preparedStatement.setInt(i++, idPedido);
@@ -181,19 +175,19 @@ public class LineaPedidoDAOImpl implements LineaPedidoDAO{
 			throws DataException, SQLException {
 
 		int i = 1;
-		
-		
+
+
 		Integer idPedido = resultSet.getInt(i++);
 		Integer idContenido = resultSet.getInt(i++);
 		Double precioUnidad = resultSet.getDouble(i++);
-		
-		
+
+
 		LineaPedido lp = new LineaPedido();
-		
+
 		lp.setIdPedido(idPedido);
 		lp.setIdContenido(idContenido);
 		lp.setPrecioUnidad(precioUnidad);
-		
+
 
 		return lp;
 	}

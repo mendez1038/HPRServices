@@ -19,24 +19,24 @@ public class PedidoDAOImpl implements PedidoDAO{
 	@Override
 	public Pedido findById(Integer id) throws DataException {
 		// TODO Auto-generated method stub
-		
-	
+
+
 
 		Pedido p = null;
 		Connection connection = null; 
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
-
+		StringBuilder queryString = null;
 		try {
 			connection = ConnectionManager.getConnection();
-			String queryString = 
+			queryString = new StringBuilder(
 					"SELECT P.ID_PEDIDO, P.FECHA_PEDIDO, P.PRECIO_TOTAL, P.EMAIL " +
 							"FROM PEDIDO P " +
-							"WHERE P.ID_PEDIDO = ? ";
+					"WHERE P.ID_PEDIDO = ? ");
 
 
 			System.out.println("Creating statement...");
-			preparedStatement = connection.prepareStatement(queryString,
+			preparedStatement = connection.prepareStatement(queryString.toString(),
 					ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 
 			int i = 1;                
@@ -71,15 +71,15 @@ public class PedidoDAOImpl implements PedidoDAO{
 			throws DataException, SQLException {
 
 		int i = 1;
-		
-		
+
+
 		Integer idPedido = resultSet.getInt(i++);
 		Date fechaPedido = resultSet.getDate(i++);
 		Double precioTotal = resultSet.getDouble(i++);
 		String email = resultSet.getString(i++);
-		
+
 		Pedido p = new Pedido();
-		
+
 		p.setIdPedido(idPedido);
 		p.setFechaPedido(fechaPedido);
 		p.setPrecioTotal(precioTotal);
@@ -88,6 +88,6 @@ public class PedidoDAOImpl implements PedidoDAO{
 		return p;
 	}
 
-	
+
 
 }

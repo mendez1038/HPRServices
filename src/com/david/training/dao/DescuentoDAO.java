@@ -2,6 +2,8 @@ package com.david.training.dao;
 
 
 
+import java.util.List;
+
 import com.david.training.model.Descuento;
 
 public interface DescuentoDAO {
@@ -13,10 +15,13 @@ public interface DescuentoDAO {
 	public Descuento create (Descuento d)
 			throws Exception;
 	
-	public Descuento delete (Descuento d)
+	public long  delete (Integer id)
+			throws Exception;
+	//Falta test
+	public boolean update(Descuento d)
 			throws Exception;
 	
-	public void update(Descuento d)
+	public List<Descuento> findAll()
 			throws Exception;
 	
 	

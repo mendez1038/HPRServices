@@ -13,10 +13,7 @@ public interface LineaPedidoDAO {
 	
 	public LineaPedido findById( Integer idp, Integer idc) 
         	throws DataException;
-	
-	public Boolean exists( LineaPedido id) 
-    		throws DataException;
-	    
+		    
 	public List<LineaPedido> findByPedido( Integer idPedido) 
         	throws DataException;
   

@@ -10,27 +10,22 @@ public interface UsuarioDAO {
 	public Usuario findByEmail( String email)
 	throws DataException;
 
-
 	public Boolean exists( String email)
 	throws Exception;
 	
-
 	public Usuario create( Usuario u)
 	throws Exception;
 	
-	
-	/*
-	 * Falta solo este.
-	 */
 	public boolean update( Usuario u) 
 			throws DataException; 
-		
-		
+				
 	public long delete(String email)
 			throws DataException; 
 
 	public long countAll() 
 		throws Exception;
+	
+	//finByCriteria nombre,fecha,tel?
 
 }
 		

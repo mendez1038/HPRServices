@@ -15,10 +15,10 @@ import com.david.training.model.Usuario;
 
 
 public class UsuarioDAOImpl implements UsuarioDAO{
-	
-	
+
+
 	public UsuarioDAOImpl () {
-		
+
 	}
 
 	@Override
@@ -29,17 +29,17 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 		Connection connection = null; 
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
-		
+		StringBuilder queryString = null;
 		try {
 			connection = ConnectionManager.getConnection();
-			String queryString = 
+			queryString = new StringBuilder(
 					"SELECT U.EMAIL, U.CONTRASENA, U.NOMBRE, U.APELLIDOS, U.GENERO, U.FECHA_NACIMIENTO, U.TELEFONO " +
 							"FROM USUARIO U " +
-							"WHERE U.EMAIL = ? ";
-			
-			
+					"WHERE U.EMAIL = ? ");
+
+
 			System.out.println("Creating statement...");
-			preparedStatement = connection.prepareStatement(queryString,
+			preparedStatement = connection.prepareStatement(queryString.toString(),
 					ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 
 			int i = 1;                
@@ -47,7 +47,7 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 
 			resultSet = preparedStatement.executeQuery();
 
-			
+
 
 			if (resultSet.next()) {
 				e = loadNext(resultSet);				
@@ -66,13 +66,13 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 			JDBCUtils.closeStatement(preparedStatement);
 			JDBCUtils.closeConnection(connection);
 		}
-		
+
 	}
 
 	private Usuario loadNext( ResultSet resultSet) 
-		// TODO Auto-generated method stub
-		throws DataException, SQLException {
-			
+	// TODO Auto-generated method stub
+			throws DataException, SQLException {
+
 		int i = 1;
 		String email = resultSet.getString(i++);
 		String contrasena = resultSet.getString(i++);
@@ -81,7 +81,7 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 		String genero = resultSet.getString(i++);
 		Date fechaNacimiento = resultSet.getDate(i++);
 		String telefono = resultSet.getString(i++);
-		
+
 		Usuario u = new Usuario();
 		u.setEmail(email);
 		u.setContrasena(contrasena);
@@ -90,27 +90,26 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 		u.setGenero(genero);
 		u.setFechaNacimiento(fechaNacimiento);
 		u.setTelefono(telefono);
-		
+
 		return u;
 	}
 
 	@Override
 	public Boolean exists( String email) throws DataException  {
-		
+
 		boolean exist = false;
 		Connection connection = null; 
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
-
+		StringBuilder queryString = null;
 		try {
 			connection = ConnectionManager.getConnection();
-			
 
-			String queryString = "SELECT U.EMAIL, U.CONTRASENA, U.NOMBRE, U.APELLIDOS, U.GENERO, U.FECHA_NACIMIENTO, U.TELEFONO " + 
-								"FROM USUARIO U "  + 
-								"WHERE U.EMAIL = ? ";
+			queryString = new StringBuilder("SELECT U.EMAIL, U.CONTRASENA, U.NOMBRE, U.APELLIDOS, U.GENERO, U.FECHA_NACIMIENTO, U.TELEFONO " + 
+					"FROM USUARIO U "  + 
+					"WHERE U.EMAIL = ? ");
 
-			preparedStatement = connection.prepareStatement(queryString);
+			preparedStatement = connection.prepareStatement(queryString.toString());
 
 			int i = 1;
 			preparedStatement.setString(i++, email);
@@ -140,25 +139,26 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 		Connection connection = null; 
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
+		StringBuilder queryString = null;
 		try {
 
 			connection = ConnectionManager.getConnection();
-			String queryString = "INSERT INTO USUARIO(EMAIL, CONTRASENA) "
-					+ "VALUES (?,?)";
-			
-			preparedStatement = connection.prepareStatement(queryString, Statement.RETURN_GENERATED_KEYS);
-			
+			queryString = new StringBuilder("INSERT INTO USUARIO(EMAIL, CONTRASENA, FECHA_NACIMIENTO) "
+					+ "VALUES (?,?,?)");
+
+			preparedStatement = connection.prepareStatement(queryString.toString(), Statement.RETURN_GENERATED_KEYS);
+
 			int i = 1;
 			preparedStatement.setString(i++, u.getEmail());
 			preparedStatement.setString(i++, u.getContrasena());
-			
+			preparedStatement.setDate(i++, new java.sql.Date(u.getFechaNacimiento().getTime()));
 			// Execute query
 			int insertedRows = preparedStatement.executeUpdate();
 
 			if (insertedRows == 0) {
 				throw new SQLException("Can not add row to table 'Usuario'");
 			}
-				
+
 
 			// Return the DTO
 			return u;
@@ -169,45 +169,92 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 			JDBCUtils.closeResultSet(resultSet);
 			JDBCUtils.closeStatement(preparedStatement);
 			JDBCUtils.closeConnection(connection);}
-		}
-	
+	}
+
 	@Override
 	public boolean update( Usuario u) 
 			throws DataException {
-				return false;
-		// TODO Auto-generated method stub
-		
+
+		Connection connection = null; 
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		StringBuilder queryString = null;
+		try {          
+			connection = ConnectionManager.getConnection();
+
+			queryString = new StringBuilder("UPDATE USUARIO "
+					+ "SET CONTRASENA = ?, "
+					+ "SET NOMBRE = ?, "
+					+ "SET APELLIDOS = ?, "
+					+ "SET GENERO = ?, "
+					+ "SET FECHA_NACIMIENTO = ?,  "
+					+ "SET TELEFONO = ? "
+					+ "WHERE EMAIL= ? ");
+
+			preparedStatement = connection.prepareStatement(queryString.toString());
+
+			int i = 1;     			
+			preparedStatement.setString(i++, u.getContrasena());
+			preparedStatement.setString(i++, u.getNombre());
+			preparedStatement.setString(i++, u.getApellidos());
+			preparedStatement.setString(i++, u.getGenero());
+			preparedStatement.setDate(i++, new java.sql.Date(u.getFechaNacimiento().getTime()));
+			preparedStatement.setString(i++, u.getTelefono());
+			preparedStatement.setString(i++, u.getEmail());
+
+
+			int insertedRows = preparedStatement.executeUpdate();
+
+			if (insertedRows == 0) 
+			{
+
+				throw new SQLException("Can not uppdate row to table 'USUARIO'");
+
+			} 
+			else { return true;}
+
+			//...
+
+
+		} catch (SQLException ex) {
+			throw new DataException(ex);
+		} finally {
+			JDBCUtils.closeResultSet(resultSet);
+			JDBCUtils.closeStatement(preparedStatement);			
+			JDBCUtils.closeConnection(connection);
+		}
+
+
 	}
-	
+
 	@Override
 	public   long delete( String email) throws DataException {
 		// TODO Auto-generated method stub
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
-		
-		
+		StringBuilder queryString = null;
 		try {
 			connection = ConnectionManager.getConnection();
-			
-			String queryString = "DELETE FROM USUARIO "
-					+ "WHERE EMAIL = ? ";
-		
-			preparedStatement = connection.prepareStatement(queryString);
-			
+
+			queryString = new StringBuilder("DELETE FROM USUARIO "
+					+ "WHERE EMAIL = ? ");
+
+			preparedStatement = connection.prepareStatement(queryString.toString());
+
 			int i =1;
 			preparedStatement.setString(i++, email);
-			
+
 			long removedRows = preparedStatement.executeUpdate(); 
-			
+
 			return removedRows;
-			
+
 		} catch (SQLException e) {
 			throw new DataException(e);
 		} finally {
 			JDBCUtils.closeStatement(preparedStatement);
 			JDBCUtils.closeConnection(connection);
 		}
-		
+
 	}
 
 	@Override
@@ -216,13 +263,14 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 		Connection connection = null; 
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
+		StringBuilder queryString = null;
 		try {
 			connection = ConnectionManager.getConnection();
-			String queryString = 
+			queryString = new StringBuilder(
 					" SELECT count(*) "
-							+ " FROM Usuario";
+							+ " FROM Usuario");
 
-			preparedStatement = connection.prepareStatement(queryString);
+			preparedStatement = connection.prepareStatement(queryString.toString());
 
 			resultSet = preparedStatement.executeQuery();
 
@@ -240,7 +288,7 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 			JDBCUtils.closeStatement(preparedStatement);
 			JDBCUtils.closeConnection(connection);
 		}	    	 
-		
+
 	}
 
 }

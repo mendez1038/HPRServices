@@ -17,14 +17,14 @@ public class ContenidoDAOTest {
 	
 	public void testFindById()
 	throws Exception {
-		Contenido c= dao.findById(201);
+		Contenido c= dao.findById(101);
 			System.out.println(c);
 		
 	}
 	
 	public void testFindByTitulo()
 		throws Exception {
-	List<Contenido> contenidos = dao.findByTitulo("s");
+	List<Contenido> contenidos = dao.findByTitulo("e");
 	for(Contenido c: contenidos) {
 		System.out.println(c);
 	}
@@ -49,12 +49,22 @@ public class ContenidoDAOTest {
 		System.out.println(c);
 	}
 	
+	public void testDelete()	
+			throws Exception{
+		long x;
+		Integer id = 205;
+		x = dao.delete(id);
+		System.out.println("Contenido con id "+id+" eliminado.");
+		
+	}
+	
 	public static void main(String args[]) {
 		try {
 			ContenidoDAOTest test = new ContenidoDAOTest();
-			test.testFindById();
+			//test.testFindById();
 			//test.testFindByTitulo();
 			//test.testCreate();
+			test.testDelete();
 		} catch (Exception c) {
 			c.printStackTrace();
 		}

@@ -2,6 +2,9 @@ package com.david.training.service;
 
 
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import com.david.training.dao.UsuarioDAO;
 import com.david.training.dao.impl.UsuarioDAOImpl;
 import com.david.training.exceptions.DataException;
@@ -30,13 +33,14 @@ public class UsuarioDAOTest {
 		throws Exception{
 		
 		Usuario u = new Usuario();
-		u.setEmail("KK@K.COM");
+		u.setEmail("LL@L.COM");
 		u.setContrasena("2589");
-		u.setNombre(null);
-		u.setApellidos(null);
-		u.setGenero(null);
-		u.setFechaNacimiento(null);
-		u.setTelefono(null);
+		u.setNombre("Lucas");
+		u.setApellidos("VdG");
+		u.setGenero("M");
+		u.setFechaNacimiento(new Date());
+		//u.setFechaNacimiento(new SimpleDateFormat( "yyyyMMdd" ).parse( "20001210" ));
+		u.setTelefono("654987321");
 		
 		dao.create(u);
 		System.out.println(u);
@@ -45,7 +49,7 @@ public class UsuarioDAOTest {
 	public void testDelete()
 		throws Exception {
 		long fila;
-		String email = "KK@K.COM";
+		String email = "LL@L.COM";
 		fila = dao.delete(email);
 		System.out.println("Usuario eliminado con email "+email);
 		
@@ -55,13 +59,15 @@ public class UsuarioDAOTest {
 	
 	public void testUpdate()
 		throws DataException {
+		
 		Usuario u = new  Usuario();
 		u.setContrasena("123456");
-		u.setNombre(null);
-		u.setApellidos(null);
-		u.setGenero(null);
-		u.setFechaNacimiento(null);
-		u.setTelefono(null);
+		u.setNombre("Pedro");
+		u.setApellidos("Alvarez");
+		u.setGenero("O");
+		u.setFechaNacimiento(new Date());
+		u.setTelefono("333666999");
+		u.setEmail("AA@A.COM");
 		dao.update(u);
 		System.out.println(u);
 	}	
@@ -83,7 +89,7 @@ public class UsuarioDAOTest {
 	public void testCountAll()
 			throws Exception {
 		System.out.println("Contando usuarios ...");
-		dao.countAll();
+		System.out.println("Usuarios totales: "+dao.countAll());
 	}
 	
 	public static void main(String args[]) {
@@ -91,9 +97,10 @@ public class UsuarioDAOTest {
 			UsuarioDAOTest test = new UsuarioDAOTest();
 			//test.testFindByEmail();
 			//test.testDelete();
-			//test.testCreate();
-			//test.testUpdate();
-			test.testExists();
+			test.testCreate();
+			//stest.testUpdate();
+			//test.testExists();
+			test.testCountAll();
 		} catch (Exception u) {
 			u.printStackTrace();
 		}

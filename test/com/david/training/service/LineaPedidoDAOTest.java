@@ -16,8 +16,9 @@ public class LineaPedidoDAOTest {
 	
 	public void testFindById() 
 		throws Exception{
+		System.out.println("Buscando la linea de pedido solicitada");
 		
-		LineaPedido lp = dao.findById(1,1);
+		LineaPedido lp = dao.findById(3,101);
 		System.out.println(lp);
 			
 			
@@ -25,9 +26,9 @@ public class LineaPedidoDAOTest {
 	
 	public void testFindByPedido() 
 		throws Exception{
-		System.out.println("Buscando líneas de pedido ...");
+		System.out.println("Buscando líneas del pedido solicitado ...");
 		
-			List<LineaPedido> lineas = dao.findByPedido(1);
+			List<LineaPedido> lineas = dao.findByPedido(4);
 			
 		
 			for (LineaPedido lp:lineas) {
@@ -38,7 +39,7 @@ public class LineaPedidoDAOTest {
 	
 	public void testDelete() 
 			throws Exception{
-		long fila;
+		
 		
 		Integer idPedido = 1;
 		Integer idContenido = 1;
@@ -50,6 +51,7 @@ public class LineaPedidoDAOTest {
 	
 	public void testCreate()
 			throws Exception{
+		System.out.println("Creando pedido ...");
 		LineaPedido lp = new LineaPedido();
 		
 		lp.setIdPedido(1);
@@ -62,10 +64,10 @@ public class LineaPedidoDAOTest {
 	public static  void main(String args[]) {
 		try {
 			LineaPedidoDAOTest test = new LineaPedidoDAOTest();
-			//test.testFindById();
-			//test.testFindByPedido();
+			test.testFindById();
+			test.testFindByPedido();
 			//test.testDelete();
-			test.testCreate();
+			//test.testCreate();
 		} catch (Exception u) {
 			u.printStackTrace();
 		}

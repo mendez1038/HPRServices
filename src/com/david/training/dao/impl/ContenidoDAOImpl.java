@@ -15,40 +15,37 @@ import com.david.training.dao.util.ConnectionManager;
 import com.david.training.dao.util.JDBCUtils;
 import com.david.training.exceptions.DataException;
 import com.david.training.model.Contenido;
+import com.david.training.model.ProductoCriteria;
 
 public class ContenidoDAOImpl implements ContenidoDAO{
 
 
-	
+
 	public ContenidoDAOImpl() {
-		 
+
 	}
 
 	public Contenido findById(Integer id)
 			throws Exception {
 
 		Contenido c = null;
-		
+
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
+		StringBuilder sql = null;
 		try{
 
 			//metodo connectionmanager
 			connection = ConnectionManager.getConnection();
 
-
-
-			String sql;
-			sql ="SELECT ID_CONTENIDO, TITULO, RESTRICCION_EDAD, PORTADA, FECHA_LANZAMIENTO, DESCRIPCION_BREVE, PRECIO, DURACION, ID_DESCUENTO, ID_TIPO_CONTENIDO "
+			sql = new StringBuilder("SELECT ID_CONTENIDO, TITULO, RESTRICCION_EDAD, PORTADA, FECHA_LANZAMIENTO, DESCRIPCION_BREVE, PRECIO, DURACION, ID_DESCUENTO, ID_TIPO_CONTENIDO "
 					+"FROM CONTENIDO "
-					+"WHERE ID_CONTENIDO = ? ";
+					+"WHERE ID_CONTENIDO = ? ");
 
 			//STEP 4: Execute a query
-
 			System.out.println("Creating statement...");
-			preparedStatement = connection.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-
+			preparedStatement = connection.prepareStatement(sql.toString(), ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 
 			// Establecer parametros
 			int i = 1;
@@ -64,8 +61,7 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 			if (resultSet.next()) {
 				throw new Exception("Contenido"+id+" duplicado");
 			}
-				
-			
+
 		} catch (SQLException ex) {
 			throw new DataException(ex);
 		} finally {            
@@ -73,34 +69,30 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 			JDBCUtils.closeStatement(preparedStatement);
 			JDBCUtils.closeConnection(connection);
 		}
-		
-		return c;
-		
+		return c;		
 	}
 
 
 	public List<Contenido> findByTitulo(String title) 
 			throws Exception {
-		
-		
 
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
+		StringBuilder sql = null;
 		try {
 			connection = ConnectionManager.getConnection();
-			String sql = "SELECT ID_CONTENIDO, TITULO, RESTRICCION_EDAD, PORTADA, FECHA_LANZAMIENTO, DESCRIPCION_BREVE, PRECIO, DURACION, ID_DESCUENTO, ID_TIPO_CONTENIDO "
+			sql = new StringBuilder("SELECT ID_CONTENIDO, TITULO, RESTRICCION_EDAD, PORTADA, FECHA_LANZAMIENTO, DESCRIPCION_BREVE, PRECIO, DURACION, ID_DESCUENTO, ID_TIPO_CONTENIDO "
 					+ "FROM CONTENIDO "
 					+ "WHERE "
-					+ "TITULO LIKE ? ";
+					+ "TITULO LIKE ? ");
 			System.out.println("Creating statement...");
-			preparedStatement = connection.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			preparedStatement = connection.prepareStatement(sql.toString(), ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 
 			int i= 1;
 			preparedStatement.setString(i++, "%" +title+ "%");
-			
 			resultSet = preparedStatement.executeQuery();
-			
+
 			List<Contenido> contenidos = new ArrayList<Contenido>();
 			Contenido c = null;
 			while (resultSet.next()) {
@@ -115,25 +107,24 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 			JDBCUtils.closeConnection(connection);
 		} 
 
-
 	}
 
 	public Contenido create (Contenido c)
 			throws Exception {
-		
+
 		Connection connection = null; 
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
-		
+		StringBuilder sql = null;
 		try {          
 
 			connection = ConnectionManager.getConnection();
-			
-			String sql = "INSERT INTO CONTENIDO(ID_CONTENIDO, TITULO, RESTRICCION_EDAD, "
+
+			sql = new StringBuilder("INSERT INTO CONTENIDO(ID_CONTENIDO, TITULO, RESTRICCION_EDAD, "
 					+ "PORTADA, FECHA_LANZAMIENTO, DESCRIPCION_BREVE, PRECIO, DURACION, ID_DESCUENTO, ID_TIPO_CONTENIDO )"
-					+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-			
-			preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+					+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+
+			preparedStatement = connection.prepareStatement(sql.toString(), Statement.RETURN_GENERATED_KEYS);
 			int i = 1;
 			preparedStatement.setInt(i++, c.getIdContenido());
 			preparedStatement.setString(i++, c.getTitulo());
@@ -145,30 +136,25 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 			preparedStatement.setInt(i++, c.getDuracion());
 			preparedStatement.setInt(i++, c.getIdDescuento());
 			preparedStatement.setString(i++, c.getTipoContenido() );
-			
-			
+
 			int insertedRows = preparedStatement.executeUpdate();
-			
+
 			if (insertedRows == 0) {
-				throw new SQLException("No se puede añadir fila a 'Contenido'");
+				throw new SQLException("No se puede añadir fila a 'ARTISTA'");
 			}
-			
-			
+
 			return c;
 		} catch (SQLException ex) {
 			throw new DataException(ex);
 		} finally {
 			JDBCUtils.closeResultSet(resultSet);
 			JDBCUtils.closeStatement(preparedStatement);			
-			JDBCUtils.closeConnection(connection);
-			
-		}
-		
-		
+			JDBCUtils.closeConnection(connection);	
+		}	
 	}
 
-	
-	
+
+
 	private Contenido loadNext(ResultSet resultSet) throws Exception {
 		Contenido c = new Contenido();
 		int i = 1;
@@ -182,10 +168,10 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 		Integer duracion = resultSet.getInt(i++);
 		Integer idDescuento = resultSet.getInt(i++);
 		String tipoContenido = resultSet.getString(i++);
-		
+
 
 		c = new Contenido();
-		
+
 		c.setIdContenido(idContenido);
 		c.setTitulo(titulo);
 		c.setRestriccionEdad(restriccionEdad);
@@ -196,22 +182,113 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 		c.setDuracion(duracion);
 		c.setIdDescuento(idDescuento);
 		c.setTipoContenido(tipoContenido);
-		
-		
-		
-		
+
+
+
+
 		//Descuento d = descuentoDAO.findById(i);
 		//c.se
 		return c;
 	}
 
 	@Override
-	public List<Contenido> findByContenidoCriteria() throws Exception {
+	public List<Contenido> findByCriteria(ProductoCriteria producto) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	
+	@Override
+	public boolean update(Contenido d) throws Exception {
 
-	
+		Connection connection = null; 
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		StringBuilder queryString = null;
+		try {          
+
+			connection = ConnectionManager.getConnection();
+
+
+			queryString = new StringBuilder("UPDATE CONTENIDO "
+					+ "SET TITULO = ?, "
+					+ "SET RESTRICCION_EDAD = ?, "
+					+ "SET PORTADA = ?, "
+					+ "SET FECHA_LANZAMIENTO = ?,  "
+					+ "SET DESCRIPCION_BREVE = ?, "
+					+ "SET PRECIO = ?,  "
+					+ "SET FECHA_DURACION = ?,  "
+					+ "SET ID_DESCUENTO = ?,  "
+					+ "SET ID_TIPO_CONTENIDO = ?  "
+					+ "WHERE EMAIL= ? ");
+
+			preparedStatement = connection.prepareStatement(queryString.toString());
+
+			int i = 1;     			
+
+			preparedStatement.setString(i++, d.getTitulo());
+			preparedStatement.setString(i++, d.getRestriccionEdad());
+			preparedStatement.setString(i++, d.getPortada());
+			preparedStatement.setDate(i++, new java.sql.Date(d.getFechaLanzamiento().getTime()));
+			preparedStatement.setString(i++, d.getDescripcionBreve());
+			preparedStatement.setDouble(i++, d.getPrecio());
+			preparedStatement.setInt(i++, d.getDuracion());
+			preparedStatement.setInt(i++, d.getIdDescuento());
+			preparedStatement.setString(i++, d.getTipoContenido());
+			preparedStatement.setInt(i++, d.getIdContenido());
+
+
+			int insertedRows = preparedStatement.executeUpdate();
+
+			if (insertedRows == 0) 
+			{
+
+				throw new SQLException("No se pudo actualizar la tabla 'CONTENIDO'");
+
+			} 
+			else { return true;}
+
+			//...
+
+
+		} catch (SQLException ex) {
+			throw new DataException(ex);
+		} finally {
+			JDBCUtils.closeResultSet(resultSet);
+			JDBCUtils.closeStatement(preparedStatement);			
+			JDBCUtils.closeConnection(connection);
+		}
+
+	}
+
+	@Override
+	public long delete(Integer id) throws Exception {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		StringBuilder queryString = null;
+
+		try {
+			connection = ConnectionManager.getConnection();
+
+			queryString = new StringBuilder("DELETE FROM CONTENIDO "
+					+ "WHERE ID_CONTENIDO = ? ");
+
+			preparedStatement = connection.prepareStatement(queryString.toString());
+
+			int i =1;
+			preparedStatement.setInt(i++, id);
+
+			long removedRows = preparedStatement.executeUpdate(); 
+
+			return removedRows;
+
+		} catch (SQLException e) {
+			throw new DataException(e);
+		} finally {
+			JDBCUtils.closeStatement(preparedStatement);
+			JDBCUtils.closeConnection(connection);
+		}
+
+
+	}
+
 }

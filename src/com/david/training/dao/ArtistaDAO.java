@@ -15,5 +15,11 @@ public interface ArtistaDAO {
 	
 	public List<Artista> findByNombre(String title) 
 			throws Exception;
+	
+	public List<Artista> findAll ()
+			throws Exception;
+	
+	public Artista create (Artista a)
+			throws Exception;
 
 }
