@@ -22,16 +22,14 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 	}
 
 	@Override
-	public Usuario findByEmail( String email) 
+	public Usuario findByEmail( String email, Connection c) 
 			throws DataException {
 		// TODO Auto-generated method stub
 		Usuario e = null;
-		Connection connection = null; 
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		StringBuilder queryString = null;
 		try {
-			connection = ConnectionManager.getConnection();
 			queryString = new StringBuilder(
 					"SELECT U.EMAIL, U.CONTRASENA, U.NOMBRE, U.APELLIDOS, U.GENERO, U.FECHA_NACIMIENTO, U.TELEFONO " +
 							"FROM USUARIO U " +
@@ -39,15 +37,13 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 
 
 			System.out.println("Creating statement...");
-			preparedStatement = connection.prepareStatement(queryString.toString(),
+			preparedStatement = c.prepareStatement(queryString.toString(),
 					ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 
 			int i = 1;                
 			preparedStatement.setString(i++, email);
 
 			resultSet = preparedStatement.executeQuery();
-
-
 
 			if (resultSet.next()) {
 				e = loadNext(resultSet);				
@@ -64,7 +60,7 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 		} finally {
 			JDBCUtils.closeResultSet(resultSet);
 			JDBCUtils.closeStatement(preparedStatement);
-			JDBCUtils.closeConnection(connection);
+			
 		}
 
 	}
@@ -228,18 +224,18 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 	}
 
 	@Override
-	public   long delete( String email) throws DataException {
+	public   long delete( String email, Connection c) throws DataException {
 		// TODO Auto-generated method stub
-		Connection connection = null;
+		
 		PreparedStatement preparedStatement = null;
 		StringBuilder queryString = null;
 		try {
-			connection = ConnectionManager.getConnection();
+			
 
 			queryString = new StringBuilder("DELETE FROM USUARIO "
 					+ "WHERE EMAIL = ? ");
 
-			preparedStatement = connection.prepareStatement(queryString.toString());
+			preparedStatement = c.prepareStatement(queryString.toString());
 
 			int i =1;
 			preparedStatement.setString(i++, email);
@@ -252,7 +248,7 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 			throw new DataException(e);
 		} finally {
 			JDBCUtils.closeStatement(preparedStatement);
-			JDBCUtils.closeConnection(connection);
+			
 		}
 
 	}
