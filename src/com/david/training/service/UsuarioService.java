@@ -1,6 +1,6 @@
 package com.david.training.service;
 
-import java.util.List;
+
 
 import com.david.training.model.Usuario;
 
@@ -9,23 +9,15 @@ public interface UsuarioService {
 	public Usuario signUp(Usuario u)
 		throws Exception;
 	
-	public void editar(Usuario u)
+	public void update(Usuario u)
 			throws Exception;
 
-	public boolean eliminar(String email)
+	public boolean delete(String email)
 			throws Exception;
 	
-	public Usuario buscarPorEmail(String email)
-			throws Exception;
-	
-	public Boolean exists( String email)
-			throws Exception;
-	
-	public long countAll() 
+	public Usuario signIn(String email, String contrasena)
 			throws Exception;
 
-	public List<Usuario>  buscarPorNombre(String nombre )
+	public Usuario findByEmail(String email)
 			throws Exception;
-
-
 }

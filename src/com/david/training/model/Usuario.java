@@ -31,6 +31,8 @@ public class Usuario extends AbstractValueObject{
 		setNombre(nombre);
 	}
 	
+	
+
 	public String getEmail() {
 		return email;
 	}

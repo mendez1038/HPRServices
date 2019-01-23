@@ -9,8 +9,12 @@ public class MailServiceImpl implements MailService{
 		
 	}
 	
-	public boolean sendMail(String mensajeHTML,String asunto, String URL, String... para)
-		throws Exception{
+		
+	
+	@Override
+	public boolean sendEmail(String mensajeHTML, String asunto, String URL, String... para) throws Exception {
+
+
 		
 		try {
 			 HtmlEmail email = new HtmlEmail();
@@ -36,25 +40,30 @@ public class MailServiceImpl implements MailService{
 		}
 			
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-
-}
-	public static final String PASSWORD="ruataboadan1";
-	@Override
-	public boolean sendEmail(String mensajeHTML, String asunto, String URL, String... para) throws Exception {
-		// TODO Auto-generated method stub
-		return false;
 	}
 	
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	public static final String PASSWORD="ruataboadan1";
 	
 }

@@ -2,7 +2,7 @@ package com.david.training.service.impl;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.List;
+
 
 import com.david.training.dao.UsuarioDAO;
 import com.david.training.dao.impl.UsuarioDAOImpl;
@@ -42,13 +42,13 @@ public class UsuarioServiceImpl implements UsuarioService{
 	
 
 	@Override
-	public void editar(Usuario u) throws Exception {
+	public void update(Usuario u) throws Exception {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public boolean eliminar(String email) throws Exception {
+	public boolean delete(String email) throws Exception {
 		boolean commit = false;
 		Connection c = null;
 		try {
@@ -68,16 +68,16 @@ public class UsuarioServiceImpl implements UsuarioService{
 	}
 
 	@Override
-	public Usuario buscarPorEmail(String email) throws Exception {
+	public Usuario findByEmail(String email) throws Exception {
 		boolean commit = false;
 		Connection c = null;
 		try {
 
 		c = ConnectionManager.getConnection();
 		
-		c.setAutoCommit(true);
+		c.setAutoCommit(false);
 		Usuario u = dao.findByEmail(email,c);
-		commit = true;
+		//commit =true;
 		return u;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -87,22 +87,23 @@ public class UsuarioServiceImpl implements UsuarioService{
 			}
 	}
 
-	@Override
-	public List<Usuario> buscarPorNombre(String nombre) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
+
+	
 
 	@Override
-	public Boolean exists(String email) throws Exception {
-		// TODO Auto-generated method stub
+	public Usuario signIn(String email, String contrasena) throws Exception {
+		
+		//Validaciones
+		
+		Usuario u = findByEmail(email);
+		if (u==null) {
+			return null;
+		}
+		if (u.getContrasena().equals(contrasena)) {
+			return u;
+		}
 		return null;
-	}
-
-	@Override
-	public long countAll() throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
 	}
 
 }

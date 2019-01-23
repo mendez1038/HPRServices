@@ -31,9 +31,9 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 		StringBuilder queryString = null;
 		try {
 			queryString = new StringBuilder(
-					"SELECT U.EMAIL, U.CONTRASENA, U.NOMBRE, U.APELLIDOS, U.GENERO, U.FECHA_NACIMIENTO, U.TELEFONO " +
-							"FROM USUARIO U " +
-					"WHERE U.EMAIL = ? ");
+					"SELECT EMAIL, CONTRASENA, NOMBRE, APELLIDOS, GENERO, FECHA_NACIMIENTO, TELEFONO " +
+							"FROM USUARIO  " +
+					"WHERE EMAIL = ? ");
 
 
 			System.out.println("Creating statement...");
@@ -139,15 +139,19 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 		try {
 
 			connection = ConnectionManager.getConnection();
-			queryString = new StringBuilder("INSERT INTO USUARIO(EMAIL, CONTRASENA, FECHA_NACIMIENTO) "
-					+ "VALUES (?,?,?)");
+			queryString = new StringBuilder("INSERT INTO USUARIO(EMAIL, CONTRASENA, NOMBRE, APELLIDOS, GENERO, FECHA_NACIMIENTO, TELEFONO) "
+					+ "VALUES (?,?,?,?,?,?,?)");
 
 			preparedStatement = connection.prepareStatement(queryString.toString(), Statement.RETURN_GENERATED_KEYS);
 
 			int i = 1;
 			preparedStatement.setString(i++, u.getEmail());
 			preparedStatement.setString(i++, u.getContrasena());
+			preparedStatement.setString(i++, u.getNombre());
+			preparedStatement.setString(i++, u.getApellidos());
+			preparedStatement.setString(i++, u.getGenero());
 			preparedStatement.setDate(i++, new java.sql.Date(u.getFechaNacimiento().getTime()));
+			preparedStatement.setString(i++, u.getTelefono());
 			// Execute query
 			int insertedRows = preparedStatement.executeUpdate();
 
