@@ -1,5 +1,6 @@
 package com.david.training.service;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import com.david.training.model.Usuario;
@@ -17,13 +18,13 @@ public class UsuarioServiceTest {
 	public void testSignUp() 
 			throws Exception {
 		Usuario u = new Usuario();
-		u.setEmail("DMENDEZ@GMAIL.COM");
-		u.setContrasena("DMM");
-		u.setNombre("DAVID");
+		u.setEmail("HUGOMEMA@GMAIL.COM");
+		u.setContrasena("HMM");
+		u.setNombre("HUGO");
 		u.setApellidos("MENDEZ");
 		u.setGenero("M");
-		u.setFechaNacimiento(new Date());
-		//u.setFechaNacimiento(new SimpleDateFormat( "yyyyMMdd" ).parse( "20001210" ));
+		//u.setFechaNacimiento(new Date());
+		u.setFechaNacimiento(new SimpleDateFormat( "yyyyMMdd" ).parse( "19990423" ));
 		u.setTelefono("626408214");
 		
 		servicio.signUp(u);
@@ -34,8 +35,9 @@ public class UsuarioServiceTest {
 	
 	public void testSignIn() 
 			throws Exception {
-		String email= "DMENDEZ1038@GMAIL.COM";
-		String contrasena= "DMM";
+		String email= "HUGOMEMA@GMAIL.COM";
+		String contrasena= "H"
+				+ "MM";
 		//servicio.signIn(email,contrasena);
 		System.out.println(servicio.signIn(email,contrasena));
 		

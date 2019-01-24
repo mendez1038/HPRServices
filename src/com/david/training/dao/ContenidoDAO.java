@@ -15,7 +15,7 @@ public interface ContenidoDAO {
 	public List<Contenido> findByTitulo(String title) 
 			throws Exception;
 	
-	//innecesario
+	
 	public Contenido create (Contenido c)
 			throws Exception;
 	//Falta
