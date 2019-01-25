@@ -28,6 +28,8 @@ public interface ContenidoDAO {
 	public long delete (Integer id)
 			throws Exception;
 	
+	public List<Contenido> anadirFavoritos(Contenido c)
+			throws Exception;
 	
 }
 

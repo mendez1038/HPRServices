@@ -8,7 +8,7 @@ import java.sql.Statement;
 import java.util.Date;
 
 import com.david.training.dao.UsuarioDAO;
-import com.david.training.dao.util.ConnectionManager;
+
 import com.david.training.dao.util.JDBCUtils;
 import com.david.training.exceptions.DataException;
 import com.david.training.model.Usuario;
@@ -91,21 +91,19 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 	}
 
 	@Override
-	public Boolean exists( String email) throws DataException  {
+	public Boolean exists( String email, Connection c) throws DataException  {
 
 		boolean exist = false;
-		Connection connection = null; 
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		StringBuilder queryString = null;
 		try {
-			connection = ConnectionManager.getConnection();
 
-			queryString = new StringBuilder("SELECT U.EMAIL, U.CONTRASENA, U.NOMBRE, U.APELLIDOS, U.GENERO, U.FECHA_NACIMIENTO, U.TELEFONO " + 
-					"FROM USUARIO U "  + 
-					"WHERE U.EMAIL = ? ");
+			queryString = new StringBuilder("SELECT EMAIL, CONTRASENA, NOMBRE, APELLIDOS, GENERO, FECHA_NACIMIENTO, TELEFONO " + 
+					"FROM USUARIO  "  + 
+					"WHERE EMAIL = ? ");
 
-			preparedStatement = connection.prepareStatement(queryString.toString());
+			preparedStatement = c.prepareStatement(queryString.toString());
 
 			int i = 1;
 			preparedStatement.setString(i++, email);
@@ -121,7 +119,6 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 		} finally {
 			JDBCUtils.closeResultSet(resultSet);
 			JDBCUtils.closeStatement(preparedStatement);
-			JDBCUtils.closeConnection(connection);
 		}
 
 		return exist;
@@ -129,20 +126,17 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 	}
 
 	@Override
-	public Usuario create( Usuario u)
+	public Usuario create( Usuario u, Connection c)
 			throws DataException {
-		// TODO Auto-generated method stub
-		Connection connection = null; 
+		
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		StringBuilder queryString = null;
 		try {
-
-			connection = ConnectionManager.getConnection();
-			queryString = new StringBuilder("INSERT INTO USUARIO(EMAIL, CONTRASENA, NOMBRE, APELLIDOS, GENERO, FECHA_NACIMIENTO, TELEFONO) "
+		queryString = new StringBuilder("INSERT INTO USUARIO(EMAIL, CONTRASENA, NOMBRE, APELLIDOS, GENERO, FECHA_NACIMIENTO, TELEFONO) "
 					+ "VALUES (?,?,?,?,?,?,?)");
 
-			preparedStatement = connection.prepareStatement(queryString.toString(), Statement.RETURN_GENERATED_KEYS);
+			preparedStatement = c.prepareStatement(queryString.toString(), Statement.RETURN_GENERATED_KEYS);
 
 			int i = 1;
 			preparedStatement.setString(i++, u.getEmail());
@@ -168,20 +162,17 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 		} finally {
 			JDBCUtils.closeResultSet(resultSet);
 			JDBCUtils.closeStatement(preparedStatement);
-			JDBCUtils.closeConnection(connection);}
+			}
 	}
 
 	@Override
-	public boolean update( Usuario u) 
-			throws DataException {
+	public boolean update( Usuario u, Connection c) 
+			throws Exception {
 
-		Connection connection = null; 
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		StringBuilder queryString = null;
 		try {          
-			connection = ConnectionManager.getConnection();
-
 			queryString = new StringBuilder("UPDATE USUARIO "
 					+ "SET CONTRASENA = ?, "
 					+ "SET NOMBRE = ?, "
@@ -191,7 +182,7 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 					+ "SET TELEFONO = ? "
 					+ "WHERE EMAIL= ? ");
 
-			preparedStatement = connection.prepareStatement(queryString.toString());
+			preparedStatement = c.prepareStatement(queryString.toString());
 
 			int i = 1;     			
 			preparedStatement.setString(i++, u.getContrasena());
@@ -217,11 +208,10 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 
 
 		} catch (SQLException ex) {
-			throw new DataException(ex);
+			throw new Exception(ex);
 		} finally {
 			JDBCUtils.closeResultSet(resultSet);
 			JDBCUtils.closeStatement(preparedStatement);			
-			JDBCUtils.closeConnection(connection);
 		}
 
 
@@ -258,19 +248,18 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 	}
 
 	@Override
-	public long countAll() 
+	public long countAll(Connection c) 
 			throws Exception {
-		Connection connection = null; 
+ 
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		StringBuilder queryString = null;
 		try {
-			connection = ConnectionManager.getConnection();
 			queryString = new StringBuilder(
 					" SELECT count(*) "
 							+ " FROM Usuario");
 
-			preparedStatement = connection.prepareStatement(queryString.toString());
+			preparedStatement = c.prepareStatement(queryString.toString());
 
 			resultSet = preparedStatement.executeQuery();
 
@@ -286,7 +275,6 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 		} finally {
 			JDBCUtils.closeResultSet(resultSet);
 			JDBCUtils.closeStatement(preparedStatement);
-			JDBCUtils.closeConnection(connection);
 		}	    	 
 
 	}

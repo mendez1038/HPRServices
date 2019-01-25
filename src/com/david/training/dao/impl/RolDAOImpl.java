@@ -22,11 +22,12 @@ public class RolDAOImpl implements RolDAO{
 		ResultSet resultSet = null;
 		StringBuilder sql = null;
 		try {
-			sql =  new StringBuilder("SELECT R.ID_ROL, RI.NOMBRE_ROL "
+			sql =  new StringBuilder("SELECT R.ID_ROL, IR.NOMBRE_ROL "
 					+"FROM ROL R "
-					+"INNER JOIN ROL_IDIOMA RI ON R.ID_ROL=RI.ID_ROL "
+					+"INNER JOIN IDIOMA_ROL IR ON R.ID_ROL=IR.ID_ROL "
+					+ "INNER JOIN IDIOMA I ON I.ID_IDIOMA = IR.ID_IDIOMA "
 					+"WHERE R.ID_ROL = ? "
-					+"AND ID_IDIOMA = ? ");
+					+"AND I.ID_IDIOMA = ? ");
 
 			System.out.println("Creating statement...");
 			preparedStatement = c.prepareStatement(sql.toString(), ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
@@ -63,12 +64,13 @@ public class RolDAOImpl implements RolDAO{
 		StringBuilder sql = null;
 		try {
 
-			sql = new StringBuilder("SELECT R.ID_ROL, RI.NOMBRE_ROL "
+			sql = new StringBuilder("SELECT R.ID_ROL, IR.NOMBRE_ROL "
 					+ "FROM ROL R "
-					+ "INNER JOIN ROL_IDIOMA RI ON RI.ID_ROL = R.ID_ROL "
+					+ "INNER JOIN IDIOMA_ROL IR ON IR.ID_ROL = R.ID_ROL "
+					+ "INNER JOIN IDIOMA I ON I.ID_IDIOMA = IR.ID_IDIOMA "
 					+ "WHERE "
-					+ "RI.NOMBRE_ROL LIKE ? "
-					+ "AND ID_IDIOMA = ? ");
+					+ "IR.NOMBRE_ROL LIKE ? "
+					+ "AND I.ID_IDIOMA = ? ");
 			System.out.println("Creating statement...");
 			preparedStatement = c.prepareStatement(sql.toString(), ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 

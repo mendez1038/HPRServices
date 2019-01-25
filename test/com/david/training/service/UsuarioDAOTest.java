@@ -2,12 +2,14 @@ package com.david.training.service;
 
 
 
+import java.sql.Connection;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import com.david.training.dao.UsuarioDAO;
 import com.david.training.dao.impl.UsuarioDAOImpl;
-import com.david.training.exceptions.DataException;
+import com.david.training.dao.util.ConnectionManager;
+
 import com.david.training.model.Usuario;
 
 
@@ -21,8 +23,9 @@ public class UsuarioDAOTest {
 	
 	public void testFindByEmail() 
 		throws Exception{
-		Usuario u = dao.findByEmail("CC@C.COM");
-		Usuario u2 = dao.findByEmail("JJ@J.COM");
+		Connection c = ConnectionManager.getConnection();
+		Usuario u = dao.findByEmail("CC@C.COM", c);
+		Usuario u2 = dao.findByEmail("JJ@J.COM", c);
 		System.out.println(u);
 		System.out.println(u2);
 		
@@ -31,7 +34,7 @@ public class UsuarioDAOTest {
 	
 	public void testCreate()
 		throws Exception{
-		
+		Connection c = ConnectionManager.getConnection();
 		Usuario u = new Usuario();
 		u.setEmail("LL@L.COM");
 		u.setContrasena("2589");
@@ -42,24 +45,23 @@ public class UsuarioDAOTest {
 		//u.setFechaNacimiento(new SimpleDateFormat( "yyyyMMdd" ).parse( "20001210" ));
 		u.setTelefono("654987321");
 		
-		dao.create(u);
+		dao.create(u, c);
 		System.out.println(u);
 	}
 	
 	public void testDelete()
 		throws Exception {
+		Connection c = ConnectionManager.getConnection();
 		long fila;
 		String email = "LL@L.COM";
-		fila = dao.delete(email);
+		fila = dao.delete(email, c);
 		System.out.println("Usuario eliminado con email "+email);
-		
-		
 	}
 	
 	
 	public void testUpdate()
-		throws DataException {
-		
+		throws Exception {
+		Connection c = ConnectionManager.getConnection();
 		Usuario u = new  Usuario();
 		u.setContrasena("123456");
 		u.setNombre("Pedro");
@@ -68,16 +70,17 @@ public class UsuarioDAOTest {
 		u.setFechaNacimiento(new Date());
 		u.setTelefono("333666999");
 		u.setEmail("AA@A.COM");
-		dao.update(u);
+		dao.update(u, c);
 		System.out.println(u);
 	}	
 	
 	public void testExists() 
 			throws Exception {
+		Connection c = ConnectionManager.getConnection();
 		System.out.println("Testeando existencia de usuarios ...");
 		String email = "AA@A.COM";
 		try {
-			Boolean exists = dao.exists(email);
+			Boolean exists = dao.exists(email, c);
 			System.out.println("Existe "+email+"? =>"+exists);
 		} catch (Throwable t) {
 			System.out.println(t);
@@ -88,8 +91,9 @@ public class UsuarioDAOTest {
 	
 	public void testCountAll()
 			throws Exception {
+		Connection c = ConnectionManager.getConnection();
 		System.out.println("Contando usuarios ...");
-		System.out.println("Usuarios totales: "+dao.countAll());
+		System.out.println("Usuarios totales: "+dao.countAll(c));
 	}
 	
 	public static void main(String args[]) {

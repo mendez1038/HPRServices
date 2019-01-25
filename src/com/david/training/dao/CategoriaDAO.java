@@ -1,19 +1,23 @@
 package com.david.training.dao;
 
 
+import java.sql.Connection;
+
 import com.david.training.model.Categoria;
 
 
 public interface CategoriaDAO {
 
-	public Categoria findById(Integer id)
+	public Categoria findById(Integer id, String idIidioma, Connection c)
 		throws Exception;
-	
-	public Categoria findAll() 
+	//falta
+	public Categoria findAll(String idioma, Connection c) 
 		throws Exception;
-	
-	public Categoria create(Categoria c) 
+	/* Innecesario
+	 * 	public Categoria create(Categoria ca, String idIdioma, Connection c) 
 		throws Exception;
+
+	 */
 
 		
 		

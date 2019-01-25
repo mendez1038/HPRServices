@@ -23,34 +23,28 @@ public class DescuentoDAOImpl implements DescuentoDAO{
 
 	}
 
-	public Descuento findById(Integer id)
+	public Descuento findById(Integer id, String idioma, Connection c)
 			throws Exception {
 
 		Descuento d = null;
-
-		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		StringBuilder sql = null;
 		try{
 
-			//metodo connectionmanager
-			connection = ConnectionManager.getConnection();
-
-
-			sql = new StringBuilder("SELECT ID_DESCUENTO, PORCENTAJE, NOMBRE_OFERTA, FECHA_INICIO, FECHA_FIN "
-					+"FROM DESCUENTO "
-					+"WHERE ID_DESCUENTO = ? ");
+			sql = new StringBuilder("SELECT D.ID_DESCUENTO, D.PORCENTAJE, DI.NOMBRE_OFERTA, D.FECHA_INICIO, D.FECHA_FIN "
+					+"FROM DESCUENTO D INNER JOIN DESCUENTO_IDIOMA DI ON DI.ID_DESCUENTO=D.ID_DESCUENTO "
+					+ "INNER JOIN IDIOMA I ON DI.ID_IDIOMA = I.ID_IDIOMA "
+					+"WHERE D.ID_DESCUENTO = ? AND I.ID_IDIOMA = ? ");
 
 			//STEP 4: Execute a query
 
 			System.out.println("Creating statement...");
-			preparedStatement = connection.prepareStatement(sql.toString(), ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-
-
+			preparedStatement = c.prepareStatement(sql.toString(), ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			// Establecer parametros
 			int i = 1;
 			preparedStatement.setInt(i++, id );
+			preparedStatement.setString(i++, idioma);
 			resultSet = preparedStatement.executeQuery(); 
 
 			//STEP 5: Extract data from result set	
@@ -62,18 +56,13 @@ public class DescuentoDAOImpl implements DescuentoDAO{
 			if (resultSet.next()) {
 				throw new Exception("Descuento"+id+" duplicado");
 			}
-
-
 		} catch (SQLException ex) {
 			throw new DataException(ex);
 		} finally {            
 			JDBCUtils.closeResultSet(resultSet);
 			JDBCUtils.closeStatement(preparedStatement);
-			JDBCUtils.closeConnection(connection);
 		}
-
 		return d;
-
 	}
 
 
@@ -147,7 +136,7 @@ public class DescuentoDAOImpl implements DescuentoDAO{
 		return d;
 	}
 
-	@Override
+
 	public long delete(Integer id) throws Exception {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
@@ -176,7 +165,7 @@ public class DescuentoDAOImpl implements DescuentoDAO{
 		}
 	}
 
-	@Override
+
 	public boolean update(Descuento d) throws Exception {
 
 		Connection connection = null; 
@@ -225,7 +214,7 @@ public class DescuentoDAOImpl implements DescuentoDAO{
 		}
 	}
 
-	@Override
+
 	public List<Descuento> findAll() throws Exception {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
@@ -263,6 +252,47 @@ public class DescuentoDAOImpl implements DescuentoDAO{
 			JDBCUtils.closeStatement(preparedStatement);
 			JDBCUtils.closeConnection(connection);
 		}  	
+	}
+
+	@Override
+	public List<Descuento> findByPorcentaje(Integer porcentaje, String idioma, Connection c) 
+			throws Exception {
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		StringBuilder sql = null;
+		try {
+			sql = new StringBuilder(
+					"SELECT D.ID_DESCUENTO, D.PORCENTAJE, DI.NOMBRE_OFERTA,  D.FECHA_INICIO, D.FECHA_FIN "
+					+"FROM DESCUENTO D INNER JOIN DESCUENTO_IDIOMA DI ON D.ID_DESCUENTO = DI.ID_DESCUENTO "
+					+ "WHERE D.PORCENTAJE = ? AND DI.ID_IDIOMA = ? ");
+			System.out.println("Creating statement...");
+
+			preparedStatement = c.prepareStatement(sql.toString(), ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+
+			
+			int i = 1;
+			preparedStatement.setInt(i++, porcentaje );
+			preparedStatement.setString(i++, idioma);
+			resultSet = preparedStatement.executeQuery(); 			
+			//STEP 5: Extract data from result set			
+
+			List<Descuento> results = new ArrayList<Descuento>();                        
+			Descuento d = null;
+
+
+			while(resultSet.next()) {
+				d = loadNext(resultSet);
+				results.add(d);               	
+
+			} 
+			return results;
+		} catch (SQLException ex) {
+			throw new DataException(ex);
+		} finally {
+			JDBCUtils.closeResultSet(resultSet);
+			JDBCUtils.closeStatement(preparedStatement);
+		}
+
 	}
 
 }

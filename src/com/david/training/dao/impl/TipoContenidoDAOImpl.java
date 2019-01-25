@@ -22,11 +22,12 @@ public class TipoContenidoDAOImpl implements TipoContenidoDAO{
 		ResultSet resultSet = null;
 		StringBuilder sql = null;
 		try {
-			sql =  new StringBuilder("SELECT P.ID_PAIS, PI.NOMBRE_PAIS, P.CAPITAL "
+			sql =  new StringBuilder("SELECT TC.ID_TIPO_CONTENIDO, TCI.NOMBRE_CONTENIDO "
 					+"FROM TIPO_CONTENIDO TC "
-					+"INNER JOIN TIPO_CONTENIDO_IDIOMA TCI ON TC.ID_CONTENIDO=TCI.ID_TIPO_CONTENIDO "
+					+"INNER JOIN TIPO_CONTENIDO_IDIOMA TCI ON TC.ID_TIPO_CONTENIDO=TCI.ID_TIPO_CONTENIDO "
+					+ "INNER JOIN IDIOMA I ON I.ID_IDIOMA = TCI.ID_IDIOMA "
 					+"WHERE TC.ID_TIPO_CONTENIDO = ? "
-					+"AND ID_IDIOMA = ? ");
+					+"AND I.ID_IDIOMA = ? ");
 
 			System.out.println("Creating statement...");
 			preparedStatement = c.prepareStatement(sql.toString(), ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
@@ -62,12 +63,13 @@ public class TipoContenidoDAOImpl implements TipoContenidoDAO{
 		StringBuilder sql = null;
 		try {
 
-			sql = new StringBuilder("SELECT P.ID_PAIS, PI.NOMBRE_PAIS, P.CAPITAL "
-					+ "FROM TIPO_CONTENIDO  TP "
+			sql = new StringBuilder("SELECT TC.ID_TIPO_CONTENIDO, TCI.NOMBRE_CONTENIDO "
+					+ "FROM TIPO_CONTENIDO  TC "
 					+ "INNER JOIN TIPO_CONTENIDO_IDIOMA TCI ON TCI.ID_TIPO_CONTENIDO = TC.ID_TIPO_CONTENIDO "
+					+ "INNER JOIN IDIOMA I ON TCI.ID_IDIOMA = I.ID_IDIOMA "
 					+ "WHERE "
 					+ "TCI.NOMBRE_CONTENIDO LIKE ? "
-					+ "AND ID_IDIOMA = ? ");
+					+ "AND I.ID_IDIOMA = ? ");
 			System.out.println("Creating statement...");
 			preparedStatement = c.prepareStatement(sql.toString(), ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 
