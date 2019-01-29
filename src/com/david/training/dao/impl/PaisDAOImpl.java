@@ -71,7 +71,7 @@ public class PaisDAOImpl implements PaisDAO{
 		return pa;
 	}
 	@Override
-	public List<Pais> findByNombre(String nombre, String idioma, Connection c) throws Exception {
+	public List<Pais> findAll(String idioma, Connection c) throws Exception {
 
 
 		PreparedStatement preparedStatement = null;
@@ -82,14 +82,11 @@ public class PaisDAOImpl implements PaisDAO{
 			sql = new StringBuilder("SELECT P.ID_PAIS, PI.NOMBRE_PAIS, P.CAPITAL "
 					+ "FROM PAIS P "
 					+ "INNER JOIN PAIS_IDIOMA PI ON PI.ID_PAIS = P.ID_PAIS "
-					+ "WHERE "
-					+ "PI.NOMBRE_PAIS LIKE ? "
-					+ "AND ID_IDIOMA = ? ");
+					+ "WHERE ID_IDIOMA = ? ");
 			System.out.println("Creating statement...");
 			preparedStatement = c.prepareStatement(sql.toString(), ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 
 			int i= 1;
-			preparedStatement.setString(i++, "%" +nombre+ "%");
 			preparedStatement.setString(i++, idioma);
 
 			resultSet = preparedStatement.executeQuery();

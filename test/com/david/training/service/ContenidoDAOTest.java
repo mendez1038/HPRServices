@@ -1,10 +1,12 @@
 package com.david.training.service;
 
+import java.sql.Connection;
 import java.util.Date;
 import java.util.List;
 
 import com.david.training.dao.ContenidoDAO;
 import com.david.training.dao.impl.ContenidoDAOImpl;
+import com.david.training.dao.util.ConnectionManager;
 import com.david.training.model.Contenido;
 
 public class ContenidoDAOTest {
@@ -17,14 +19,18 @@ public class ContenidoDAOTest {
 	
 	public void testFindById()
 	throws Exception {
-		Contenido c= dao.findById(101);
+		Connection connection = ConnectionManager.getConnection();
+		String idioma = "es";
+		Contenido c= dao.findById(connection,7,idioma);
 			System.out.println(c);
 		
 	}
 	
 	public void testFindByTitulo()
 		throws Exception {
-	List<Contenido> contenidos = dao.findByTitulo("e");
+	Connection connection = ConnectionManager.getConnection();
+	String idioma = "en";
+	List<Contenido> contenidos = dao.findByTitulo(connection, "e", idioma);
 	for(Contenido c: contenidos) {
 		System.out.println(c);
 	}
@@ -32,6 +38,7 @@ public class ContenidoDAOTest {
 	
 	public void testCreate()
 			throws Exception {
+		Connection connection = ConnectionManager.getConnection();
 		
 		Contenido c = new Contenido();
 		c.setIdContenido(205);
@@ -45,15 +52,17 @@ public class ContenidoDAOTest {
 		c.setIdDescuento(1);
 		c.setTipoContenido("DOC");
 		
-		dao.create(c);
+		dao.create(connection, c);
 		System.out.println(c);
 	}
 	
 	public void testDelete()	
 			throws Exception{
 		long x;
+		Connection connection = ConnectionManager.getConnection();
+		
 		Integer id = 205;
-		x = dao.delete(id);
+		x = dao.delete(connection, id);
 		System.out.println("Contenido con id "+id+" eliminado.");
 		
 	}
@@ -62,9 +71,9 @@ public class ContenidoDAOTest {
 		try {
 			ContenidoDAOTest test = new ContenidoDAOTest();
 			//test.testFindById();
-			//test.testFindByTitulo();
+			test.testFindByTitulo();
 			//test.testCreate();
-			test.testDelete();
+			//test.testDelete();
 		} catch (Exception c) {
 			c.printStackTrace();
 		}

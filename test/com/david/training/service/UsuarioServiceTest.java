@@ -18,14 +18,14 @@ public class UsuarioServiceTest {
 	public void testSignUp() 
 			throws Exception {
 		Usuario u = new Usuario();
-		u.setEmail("HUGOMEMA@GMAIL.COM");
-		u.setContrasena("HMM");
-		u.setNombre("HUGO");
-		u.setApellidos("MENDEZ");
-		u.setGenero("M");
+		u.setEmail("KK@K.COM");
+		u.setContrasena("AB38");
+		u.setNombre("GUI");
+		u.setApellidos("FITI");
+		u.setGenero("F");
 		//u.setFechaNacimiento(new Date());
-		u.setFechaNacimiento(new SimpleDateFormat( "yyyyMMdd" ).parse( "19990423" ));
-		u.setTelefono("626408214");
+		u.setFechaNacimiento(new SimpleDateFormat( "yyyyMMdd" ).parse( "19981003" ));
+		u.setTelefono("759346638");
 		
 		servicio.signUp(u);
 		System.out.println(u);
@@ -35,19 +35,22 @@ public class UsuarioServiceTest {
 	
 	public void testSignIn() 
 			throws Exception {
-		String email= "HUGOMEMA@GMAIL.COM";
-		String contrasena= "H"
-				+ "MM";
+		String email= "";
+		String contrasena= "";
 		//servicio.signIn(email,contrasena);
 		System.out.println(servicio.signIn(email,contrasena));
 		
+	}
+	
+	public void testEditProfile() 
+			throws Exception {
 	}
 
 	public static void main(String args[]) {
 		try {
 			UsuarioServiceTest test = new UsuarioServiceTest();
-			//test.testSignUp();
-			test.testSignIn();
+			test.testSignUp();
+			//test.testSignIn();
 			
 		} catch (Exception u) {
 			u.printStackTrace();

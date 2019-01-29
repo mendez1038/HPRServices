@@ -4,12 +4,12 @@ package com.david.training.service;
 
 import java.sql.Connection;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import com.david.training.dao.UsuarioDAO;
 import com.david.training.dao.impl.UsuarioDAOImpl;
 import com.david.training.dao.util.ConnectionManager;
-
 import com.david.training.model.Usuario;
 
 
@@ -35,15 +35,16 @@ public class UsuarioDAOTest {
 	public void testCreate()
 		throws Exception{
 		Connection c = ConnectionManager.getConnection();
+		
 		Usuario u = new Usuario();
-		u.setEmail("LL@L.COM");
-		u.setContrasena("2589");
-		u.setNombre("Lucas");
-		u.setApellidos("VdG");
-		u.setGenero("M");
-		u.setFechaNacimiento(new Date());
-		//u.setFechaNacimiento(new SimpleDateFormat( "yyyyMMdd" ).parse( "20001210" ));
-		u.setTelefono("654987321");
+		u.setEmail("KK@K.COM");
+		u.setContrasena("AB89");
+		u.setNombre("GUI");
+		u.setApellidos("FITI");
+		u.setGenero("F");
+		//u.setFechaNacimiento(2000,Calendar.JANUARY,3);
+		u.setFechaNacimiento(new SimpleDateFormat( "yyyyMMdd" ).parse( "20000103" ));
+		u.setTelefono("754987321");
 		
 		dao.create(u, c);
 		System.out.println(u);
@@ -52,9 +53,8 @@ public class UsuarioDAOTest {
 	public void testDelete()
 		throws Exception {
 		Connection c = ConnectionManager.getConnection();
-		long fila;
 		String email = "LL@L.COM";
-		fila = dao.delete(email, c);
+		dao.delete(email, c);
 		System.out.println("Usuario eliminado con email "+email);
 	}
 	
@@ -64,12 +64,12 @@ public class UsuarioDAOTest {
 		Connection c = ConnectionManager.getConnection();
 		Usuario u = new  Usuario();
 		u.setContrasena("123456");
-		u.setNombre("Pedro");
-		u.setApellidos("Alvarez");
-		u.setGenero("O");
-		u.setFechaNacimiento(new Date());
+		u.setNombre("PEDRO");
+		u.setApellidos("ALVAREZ");
+		u.setGenero(null);
+		u.setFechaNacimiento(null);
 		u.setTelefono("333666999");
-		u.setEmail("AA@A.COM");
+		u.setEmail("KK@K.COM");
 		dao.update(u, c);
 		System.out.println(u);
 	}	
@@ -101,10 +101,10 @@ public class UsuarioDAOTest {
 			UsuarioDAOTest test = new UsuarioDAOTest();
 			//test.testFindByEmail();
 			//test.testDelete();
-			test.testCreate();
-			//stest.testUpdate();
+			//test.testCreate();
+			test.testUpdate();
 			//test.testExists();
-			test.testCountAll();
+			//test.testCountAll();
 		} catch (Exception u) {
 			u.printStackTrace();
 		}

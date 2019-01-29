@@ -4,39 +4,39 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import com.david.training.dao.PedidoDAO;
-import com.david.training.dao.util.ConnectionManager;
+
 import com.david.training.dao.util.JDBCUtils;
 import com.david.training.exceptions.DataException;
 import com.david.training.model.Pedido;
+import com.david.training.exceptions.InstanceNotFoundException;
+
 
 
 
 public class PedidoDAOImpl implements PedidoDAO{
 
 	@Override
-	public Pedido findById(Integer id) throws DataException {
-		// TODO Auto-generated method stub
-
-
-
+	public Pedido findById(Connection c, Integer id) throws DataException {
+		
 		Pedido p = null;
-		Connection connection = null; 
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		StringBuilder queryString = null;
 		try {
-			connection = ConnectionManager.getConnection();
+			
 			queryString = new StringBuilder(
-					"SELECT P.ID_PEDIDO, P.FECHA_PEDIDO, P.PRECIO_TOTAL, P.EMAIL " +
-							"FROM PEDIDO P " +
-					"WHERE P.ID_PEDIDO = ? ");
+					"SELECT ID_PEDIDO, FECHA_PEDIDO, PRECIO_TOTAL, EMAIL " +
+							"FROM PEDIDO  " +
+					"WHERE ID_PEDIDO = ? ");
 
 
 			System.out.println("Creating statement...");
-			preparedStatement = connection.prepareStatement(queryString.toString(),
+			preparedStatement = c.prepareStatement(queryString.toString(),
 					ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 
 			int i = 1;                
@@ -61,13 +61,12 @@ public class PedidoDAOImpl implements PedidoDAO{
 		} finally {
 			JDBCUtils.closeResultSet(resultSet);
 			JDBCUtils.closeStatement(preparedStatement);
-			JDBCUtils.closeConnection(connection);
 		}
 
 	}
 
 	private Pedido loadNext( ResultSet resultSet) 
-	// TODO Auto-generated method stub
+	
 			throws DataException, SQLException {
 
 		int i = 1;
@@ -86,6 +85,109 @@ public class PedidoDAOImpl implements PedidoDAO{
 		p.setEmail(email);
 
 		return p;
+	}
+
+	@Override
+	public List<Pedido> findByUsuario(Connection c, String email) throws Exception {
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		StringBuilder queryString = null;
+		try {
+			queryString = new StringBuilder(
+					"SELECT P.ID_PEDIDO, P.FECHA_PEDIDO, P.PRECIO_TOTAL, P.EMAIL " + 
+					"FROM PEDIDO P " +
+					"INNER JOIN USUARIO U "+
+					"ON P.EMAIL = U.EMAIL AND P.EMAIL = ? ");
+
+			preparedStatement = c.prepareStatement(queryString.toString(),
+					ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+
+			int i = 1;                
+			preparedStatement.setString(i++, email);
+
+			resultSet = preparedStatement.executeQuery();
+
+			List<Pedido> results = new ArrayList<Pedido>();  
+
+			Pedido p = null;
+
+			while (resultSet.next()) {
+				p = loadNext (resultSet);
+				results.add(p);
+			}
+			return results;
+
+		} catch (SQLException e) {
+			throw new DataException(e);
+		} finally {
+			JDBCUtils.closeResultSet(resultSet);
+			JDBCUtils.closeStatement(preparedStatement);
+		}
+
+	}
+
+	@Override
+	public Pedido create(Connection c, Pedido p) throws Exception {
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		StringBuilder queryString = null;
+		try {          
+			queryString = new StringBuilder(
+					"INSERT INTO PEDIDO(ID_PEDIDO, FECHA_PEDIDO, PRECIO_TOTAL, EMAIL) "
+					+ "VALUES (?, ?, ?)");
+
+			preparedStatement = c.prepareStatement(queryString.toString());
+
+			int i = 1;     
+			preparedStatement.setInt(i++,p.getIdPedido());
+			preparedStatement.setDate(i++, new java.sql.Date(p.getFechaPedido().getTime()));
+			preparedStatement.setDouble(i++,p.getPrecioTotal());
+			preparedStatement.setString(i++, p.getEmail());
+
+			int insertedRows = preparedStatement.executeUpdate();
+
+			if (insertedRows == 0) {
+				throw new SQLException("Can not add row to table 'PEDIDO'");
+			}
+
+			return p;
+		} catch (SQLException ex) {
+			throw new DataException(ex);
+		} finally {
+			JDBCUtils.closeResultSet(resultSet);
+			JDBCUtils.closeStatement(preparedStatement);			
+		}
+	}
+
+	
+	public void delete(Connection c, Integer idPedido) throws Exception {
+		PreparedStatement preparedStatement = null;
+		StringBuilder queryString = null;
+		try {
+			queryString = new StringBuilder(
+					  "DELETE FROM PEDIDO " 
+					+ "WHERE ID_PEDIDO = ? ");
+			
+			preparedStatement = c.prepareStatement(queryString.toString());
+
+			int i = 1;
+			preparedStatement.setLong(i++, idPedido);
+
+			int removedRows = preparedStatement.executeUpdate();
+
+			if (removedRows == 0) {
+				throw new InstanceNotFoundException(idPedido,"No se elimino el pedido correctamente");
+			} 
+			
+
+		} catch (SQLException e) {
+			throw new DataException(e);
+		} finally {
+			JDBCUtils.closeStatement(preparedStatement);
+		}
+		
+
+	
 	}
 
 

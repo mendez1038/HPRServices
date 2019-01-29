@@ -20,17 +20,17 @@ public class PaisDAOTest {
 	public void testFindById()
 			throws Exception {
 			Connection c = ConnectionManager.getConnection();
-			String idioma = "en";
+			String idioma = "es";
 			Pais p = dao.findById(1, idioma, c);
 			System.out.println(p);
 			
 		}
 	
-	public void testFindByNombre()
+	public void testFindAll()
 			throws Exception {
 		Connection c = ConnectionManager.getConnection();
-		String idioma = "es";
-		List<Pais> paises = dao.findByNombre("e", idioma, c);
+		String idioma = "en";
+		List<Pais> paises = dao.findAll(idioma, c);
 		for(Pais p: paises) {
 			System.out.println(p);
 		}
@@ -40,8 +40,8 @@ public class PaisDAOTest {
 		try {
 			PaisDAOTest test = new PaisDAOTest();
 			
-			//test.testFindByNombre();
-			test.testFindById();
+			test.testFindAll();
+			//test.testFindById();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

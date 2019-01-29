@@ -8,10 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import com.david.training.dao.ContenidoDAO;
-
-import com.david.training.dao.util.ConnectionManager;
 import com.david.training.dao.util.JDBCUtils;
 import com.david.training.exceptions.DataException;
 import com.david.training.model.Contenido;
@@ -25,23 +22,21 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 
 	}
 
-	public Contenido findById(Integer id)
+	public Contenido findById(Connection connection, Integer id, String idioma)
 			throws Exception {
 
 		Contenido c = null;
-
-		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		StringBuilder sql = null;
 		try{
 
 			//metodo connectionmanager
-			connection = ConnectionManager.getConnection();
 
-			sql = new StringBuilder("SELECT ID_CONTENIDO, TITULO, RESTRICCION_EDAD, PORTADA, FECHA_LANZAMIENTO, DESCRIPCION_BREVE, PRECIO, DURACION, ID_DESCUENTO, ID_TIPO_CONTENIDO "
-					+"FROM CONTENIDO "
-					+"WHERE ID_CONTENIDO = ? ");
+			sql = new StringBuilder("SELECT C.ID_CONTENIDO, CI.TITULO, C.RESTRICCION_EDAD, C.PORTADA, C.FECHA_LANZAMIENTO, CI.DESCRIPCION_BREVE, C.PRECIO, C.PRECIO_DESCONTADO, C.DURACION, C.ID_DESCUENTO, C.ID_TIPO_CONTENIDO "
+					+"FROM CONTENIDO C INNER JOIN CONTENIDO_IDIOMA CI ON C.ID_CONTENIDO = CI.ID_CONTENIDO "
+					+ ""
+					+"WHERE C.ID_CONTENIDO = ? AND CI.ID_IDIOMA = ? ");
 
 			//STEP 4: Execute a query
 			System.out.println("Creating statement...");
@@ -50,6 +45,7 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 			// Establecer parametros
 			int i = 1;
 			preparedStatement.setInt(i++, id );
+			preparedStatement.setString(i++, idioma);
 			resultSet = preparedStatement.executeQuery(); 
 
 			//STEP 5: Extract data from result set	
@@ -67,30 +63,30 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 		} finally {            
 			JDBCUtils.closeResultSet(resultSet);
 			JDBCUtils.closeStatement(preparedStatement);
-			JDBCUtils.closeConnection(connection);
 		}
 		return c;		
 	}
 
 
-	public List<Contenido> findByTitulo(String title) 
+	public List<Contenido> findByTitulo(Connection connection, String title, String idioma) 
 			throws Exception {
 
-		Connection connection = null;
+		
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		StringBuilder sql = null;
 		try {
-			connection = ConnectionManager.getConnection();
-			sql = new StringBuilder("SELECT ID_CONTENIDO, TITULO, RESTRICCION_EDAD, PORTADA, FECHA_LANZAMIENTO, DESCRIPCION_BREVE, PRECIO, DURACION, ID_DESCUENTO, ID_TIPO_CONTENIDO "
-					+ "FROM CONTENIDO "
+			
+			sql = new StringBuilder("SELECT C.ID_CONTENIDO, CI.TITULO, C.RESTRICCION_EDAD, C.PORTADA, C.FECHA_LANZAMIENTO, CI.DESCRIPCION_BREVE, C.PRECIO, C.PRECIO_DESCONTADO, C.DURACION, C.ID_DESCUENTO, C.ID_TIPO_CONTENIDO "  
+					+ "FROM CONTENIDO C INNER JOIN CONTENIDO_IDIOMA CI ON C.ID_CONTENIDO = CI.ID_CONTENIDO "
 					+ "WHERE "
-					+ "TITULO LIKE ? ");
+					+ "CI.TITULO LIKE ? AND CI.ID_IDIOMA = ? ");
 			System.out.println("Creating statement...");
 			preparedStatement = connection.prepareStatement(sql.toString(), ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 
 			int i= 1;
 			preparedStatement.setString(i++, "%" +title+ "%");
+			preparedStatement.setString(i++, idioma);
 			resultSet = preparedStatement.executeQuery();
 
 			List<Contenido> contenidos = new ArrayList<Contenido>();
@@ -104,21 +100,19 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 		} finally {            
 			JDBCUtils.closeResultSet(resultSet);
 			JDBCUtils.closeStatement(preparedStatement);
-			JDBCUtils.closeConnection(connection);
 		} 
 
 	}
 
-	public Contenido create (Contenido c)
+	public Contenido create (Connection connection, Contenido c)
 			throws Exception {
 
-		Connection connection = null; 
+		
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		StringBuilder sql = null;
 		try {          
 
-			connection = ConnectionManager.getConnection();
 
 			sql = new StringBuilder("INSERT INTO CONTENIDO(ID_CONTENIDO, TITULO, RESTRICCION_EDAD, "
 					+ "PORTADA, FECHA_LANZAMIENTO, DESCRIPCION_BREVE, PRECIO, DURACION, ID_DESCUENTO, ID_TIPO_CONTENIDO )"
@@ -149,7 +143,6 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 		} finally {
 			JDBCUtils.closeResultSet(resultSet);
 			JDBCUtils.closeStatement(preparedStatement);			
-			JDBCUtils.closeConnection(connection);	
 		}	
 	}
 
@@ -165,6 +158,7 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 		Date fechaLanzamiento = resultSet.getDate(i++);
 		String descripcionBreve = resultSet.getString(i++);
 		Double precio = resultSet.getDouble(i++);
+		Double precioDescontado = resultSet.getDouble(i++);
 		Integer duracion = resultSet.getInt(i++);
 		Integer idDescuento = resultSet.getInt(i++);
 		String tipoContenido = resultSet.getString(i++);
@@ -179,6 +173,7 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 		c.setFechaLanzamiento(fechaLanzamiento);
 		c.setDescripcionBreve(descripcionBreve);
 		c.setPrecio(precio);
+		c.setPrecioDescontado(precioDescontado);
 		c.setDuracion(duracion);
 		c.setIdDescuento(idDescuento);
 		c.setTipoContenido(tipoContenido);
@@ -192,21 +187,19 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 	}
 
 	@Override
-	public List<Contenido> findByCriteria(ProductoCriteria producto) throws Exception {
+	public List<Contenido> findByCriteria(Connection connection, ProductoCriteria producto, String idioma) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public boolean update(Contenido d) throws Exception {
+	public boolean update(Connection connection, Contenido d, String idioma) throws Exception {
 
-		Connection connection = null; 
+		
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		StringBuilder queryString = null;
 		try {          
-
-			connection = ConnectionManager.getConnection();
 
 
 			queryString = new StringBuilder("UPDATE CONTENIDO "
@@ -255,20 +248,19 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 		} finally {
 			JDBCUtils.closeResultSet(resultSet);
 			JDBCUtils.closeStatement(preparedStatement);			
-			JDBCUtils.closeConnection(connection);
+			
 		}
 
 	}
 
 	@Override
-	public long delete(Integer id) throws Exception {
-		Connection connection = null;
+	public long delete(Connection connection, Integer id) throws Exception {
+		
 		PreparedStatement preparedStatement = null;
 		StringBuilder queryString = null;
 
 		try {
-			connection = ConnectionManager.getConnection();
-
+	
 			queryString = new StringBuilder("DELETE FROM CONTENIDO "
 					+ "WHERE ID_CONTENIDO = ? ");
 
@@ -285,10 +277,16 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 			throw new DataException(e);
 		} finally {
 			JDBCUtils.closeStatement(preparedStatement);
-			JDBCUtils.closeConnection(connection);
+			
 		}
 
 
+	}
+
+	@Override
+	public List<Contenido> anadirFavoritos(Connection c, Contenido c2, String idioma) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

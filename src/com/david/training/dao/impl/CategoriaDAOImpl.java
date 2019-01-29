@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.david.training.dao.CategoriaDAO;
 
@@ -132,9 +134,81 @@ public class CategoriaDAOImpl implements CategoriaDAO{
 
 
 	@Override
-	public Categoria findAll(String idioma, Connection c) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Categoria> findAll(String idioma, Connection c) throws Exception {
+		
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		StringBuilder sql = null;
+		try {
+
+			sql = new StringBuilder(
+					  "SELECT ID_CATEGORIA, NOMBRE_CATEGORIA "
+					+ "FROM CATEGORIA_IDIOMA "
+					+ "WHERE ID_IDIOMA = ? ");
+
+			// Preparar a query
+			System.out.println("Creating statement...");
+			preparedStatement = c.prepareStatement(sql.toString(), ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			int i = 1;
+			preparedStatement.setString(i++, idioma);
+			resultSet = preparedStatement.executeQuery();			
+			//STEP 5: Extract data from result set			
+
+			List<Categoria> results = new ArrayList<Categoria>();                        
+			Categoria a = null;
+
+
+			while(resultSet.next()) {
+				a = loadNext(resultSet);
+				results.add(a);               	
+			}
+
+			return results;
+
+		} catch (SQLException ex) {
+			throw new DataException(ex);
+		} finally {            
+			JDBCUtils.closeResultSet(resultSet);
+			JDBCUtils.closeStatement(preparedStatement);
+		}  	
+
+	}
+
+
+
+	@Override
+	public List<Categoria> findByContenido(Integer idContenido, String idioma, Connection c) throws Exception {
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		StringBuilder sql = null;
+		try {
+
+			sql = new StringBuilder("SELECT C.ID_CATEGORIA, CI.NOMBRE_CATEGORIA "
+					+ "FROM CATEGORIA C INNER JOIN CATEGORIA_IDIOMA CI ON C.ID_CATEGORIA = CI.ID_CATEGORIA "
+					+ "INNER JOIN CONTENIDO_CATEGORIA CC ON C.ID_CATEGORIA = CC.ID_CATEGORIA "
+					+ "WHERE "
+					+ "CC.ID_CONTENIDO = ? AND CI.ID_IDIOMA = ? ");
+			System.out.println("Creating statement...");
+			preparedStatement = c.prepareStatement(sql.toString(), ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+
+			int i= 1;
+			preparedStatement.setInt(i++, idContenido);
+			preparedStatement.setString(i++,idioma);
+			resultSet = preparedStatement.executeQuery();
+
+			List<Categoria> categorias = new ArrayList<Categoria>();
+			Categoria a = null;
+			while (resultSet.next()) {
+				a = loadNext(resultSet);
+				categorias.add(a);
+			} return categorias;
+		} catch (SQLException ex) {
+			throw new DataException(ex);
+		} finally {            
+			JDBCUtils.closeResultSet(resultSet);
+			JDBCUtils.closeStatement(preparedStatement);
+		} 
+
 	}
 
 

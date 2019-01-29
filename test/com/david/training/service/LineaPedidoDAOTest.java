@@ -1,9 +1,11 @@
 package com.david.training.service;
 
+import java.sql.Connection;
 import java.util.List;
 
 import com.david.training.dao.LineaPedidoDAO;
 import com.david.training.dao.impl.LineaPedidoDAOImpl;
+import com.david.training.dao.util.ConnectionManager;
 import com.david.training.model.LineaPedido;
 
 public class LineaPedidoDAOTest {
@@ -16,9 +18,10 @@ public class LineaPedidoDAOTest {
 	
 	public void testFindById() 
 		throws Exception{
+		Connection c = ConnectionManager.getConnection();
 		System.out.println("Buscando la linea de pedido solicitada");
 		
-		LineaPedido lp = dao.findById(3,101);
+		LineaPedido lp = dao.findById(c,3,101);
 		System.out.println(lp);
 			
 			
@@ -27,8 +30,8 @@ public class LineaPedidoDAOTest {
 	public void testFindByPedido() 
 		throws Exception{
 		System.out.println("Buscando líneas del pedido solicitado ...");
-		
-			List<LineaPedido> lineas = dao.findByPedido(4);
+		Connection c = ConnectionManager.getConnection();
+			List<LineaPedido> lineas = dao.findByPedido(c,1);
 			
 		
 			for (LineaPedido lp:lineas) {
@@ -40,10 +43,10 @@ public class LineaPedidoDAOTest {
 	public void testDelete() 
 			throws Exception{
 		
-		
+		Connection c = ConnectionManager.getConnection();
 		Integer idPedido = 1;
 		Integer idContenido = 1;
-		dao.delete(idPedido, idContenido);
+		dao.delete(c,idPedido, idContenido);
 		System.out.println("Eliminada linea de pedido numero "+idContenido+" del pedido con id: "+idPedido);
 			
 		
@@ -52,22 +55,23 @@ public class LineaPedidoDAOTest {
 	public void testCreate()
 			throws Exception{
 		System.out.println("Creando pedido ...");
+		Connection c = ConnectionManager.getConnection();
 		LineaPedido lp = new LineaPedido();
 		
 		lp.setIdPedido(1);
 		lp.setIdContenido(1);
 		lp.setPrecioUnidad(2.99);
-		dao.create(lp);
+		dao.create(c,lp);
 		System.out.println(lp);
 	}
 	
 	public static  void main(String args[]) {
 		try {
 			LineaPedidoDAOTest test = new LineaPedidoDAOTest();
-			test.testFindById();
-			test.testFindByPedido();
+			//test.testFindById();
+			//test.testFindByPedido();
 			//test.testDelete();
-			//test.testCreate();
+			test.testCreate();
 		} catch (Exception u) {
 			u.printStackTrace();
 		}

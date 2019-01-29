@@ -1,6 +1,7 @@
 package com.david.training.service;
 
 import java.sql.Connection;
+import java.util.List;
 
 import com.david.training.dao.CategoriaDAO;
 import com.david.training.dao.impl.CategoriaDAOImpl;
@@ -19,35 +20,43 @@ public class CategoriaDAOTest {
 	public void testFindById()
 		throws Exception {
 		Connection c = ConnectionManager.getConnection();
-		String idioma = "en";
+		String idioma = "es";
 		Categoria ca = dao.findById(12, idioma, c);
 		System.out.println(ca);
 		
 	}
 	
-	public void testFindByNombre() 
+	public void testFindByContenido() 
 		throws Exception {
-		
+		Connection c = ConnectionManager.getConnection();
+		String idioma = "es";
+		List<Categoria> categorias = dao.findByContenido(2, idioma, c);
+		for(Categoria a: categorias) {
+			System.out.println(a);
+		}
 	}
 	
-	/*
-	 * public void testCreate()
-		throws Exception{
-		Categoria ca = new Categoria();
-		
-		ca.setNombreCategoria("Terror");
-		dao.create(ca, null, null);
+	public void testFindAll()
+			throws Exception{
+		Connection c = ConnectionManager.getConnection();
+		String idioma = "es";
+		List<Categoria> categorias = null;
+
+		categorias = dao.findAll(idioma, c);
+
+		for (Categoria a : categorias) {
+			System.out.println(a);
+		}
 	}
 	
-	  
-	 */
+
 	
 	public static void main(String args[]) {
 		try {
 			CategoriaDAOTest test = new CategoriaDAOTest();
-			
-			//test.testCreate();
-			test.testFindById();
+			//test.testFindById();
+			test.testFindByContenido();
+			//test.testFindAll();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

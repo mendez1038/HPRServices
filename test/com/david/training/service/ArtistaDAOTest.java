@@ -35,16 +35,7 @@ public class ArtistaDAOTest {
 		}
 	}
 
-	public void testCreate()
-			throws Exception{
-		Connection c = ConnectionManager.getConnection();
-		Artista a= new Artista();
-
-		a.setNombreArtista("DAVID CABALLERO");
-		a.setFechaNacimiento(new Date());
-		dao.create(a,c);
-		System.out.println(a);
-	}
+	
 
 	public void testFindAll()
 			throws Exception{
@@ -62,9 +53,8 @@ public class ArtistaDAOTest {
 		try {
 			ArtistaDAOTest test = new ArtistaDAOTest();
 			test.testFindById();
-			test.testFindByNombre();
-			test.testCreate();
-			test.testFindAll();
+			//test.testFindByNombre();
+			//test.testFindAll();
 		} catch (Exception c) {
 			c.printStackTrace();
 		}

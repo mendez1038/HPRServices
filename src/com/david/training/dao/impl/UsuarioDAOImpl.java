@@ -170,27 +170,54 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 			throws Exception {
 
 		PreparedStatement preparedStatement = null;
-		ResultSet resultSet = null;
 		StringBuilder queryString = null;
 		try {          
-			queryString = new StringBuilder("UPDATE USUARIO "
-					+ "SET CONTRASENA = ?, "
-					+ "SET NOMBRE = ?, "
-					+ "SET APELLIDOS = ?, "
-					+ "SET GENERO = ?, "
-					+ "SET FECHA_NACIMIENTO = ?,  "
-					+ "SET TELEFONO = ? "
-					+ "WHERE EMAIL= ? ");
+			queryString = new StringBuilder("UPDATE USUARIO ");
+			boolean first = true;
+			if(u.getContrasena()!=null) {
+				addUpdate(queryString,first, "CONTRASENA = ? ");
+				first=false;
+			}
+			if(u.getNombre()!=null) {
+				addUpdate(queryString,first, "NOMBRE = ? ");
+				first=false;
+			}
+			if (u.getApellidos()!=null) {
+				addUpdate(queryString,first, "APELLIDOS = ? ");
+				first=false;
+			}
+			if(u.getGenero()!=null) {
+				addUpdate(queryString,first, "GENERO = ? ");
+				first = false;
+			}
+			if(u.getFechaNacimiento()!=null) {
+				addUpdate(queryString,first, "FECHA_NACIMIENTO = ? ");
+				first=false;
+			}
+			if(u.getTelefono()!=null) {
+				addUpdate(queryString,first, "TELEFONO = ? ");
+				first=false;
+			}
+					
+			queryString.append("WHERE EMAIL= ? ");
 
 			preparedStatement = c.prepareStatement(queryString.toString());
 
-			int i = 1;     			
+			int i = 1;  
+			if (u.getContrasena()!=null)
 			preparedStatement.setString(i++, u.getContrasena());
+			if (u.getNombre()!=null)
 			preparedStatement.setString(i++, u.getNombre());
+			if (u.getApellidos()!=null)
 			preparedStatement.setString(i++, u.getApellidos());
+			if (u.getGenero()!=null)
 			preparedStatement.setString(i++, u.getGenero());
+			if (u.getFechaNacimiento()!=null)
 			preparedStatement.setDate(i++, new java.sql.Date(u.getFechaNacimiento().getTime()));
+			if (u.getTelefono()!=null)
 			preparedStatement.setString(i++, u.getTelefono());
+			
+			
 			preparedStatement.setString(i++, u.getEmail());
 
 
@@ -198,19 +225,14 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 
 			if (insertedRows == 0) 
 			{
-
 				throw new SQLException("Can not uppdate row to table 'USUARIO'");
-
 			} 
-			else { return true;}
-
-			//...
+			 return true;
 
 
 		} catch (SQLException ex) {
 			throw new Exception(ex);
 		} finally {
-			JDBCUtils.closeResultSet(resultSet);
 			JDBCUtils.closeStatement(preparedStatement);			
 		}
 
@@ -277,6 +299,10 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 			JDBCUtils.closeStatement(preparedStatement);
 		}	    	 
 
+	}
+	
+	private void addUpdate(StringBuilder queryString, boolean first, String clause) {
+		queryString.append(first? " SET ": " , ").append(clause);
 	}
 
 }

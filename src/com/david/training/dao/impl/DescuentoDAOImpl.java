@@ -215,21 +215,20 @@ public class DescuentoDAOImpl implements DescuentoDAO{
 	}
 
 
-	public List<Descuento> findAll() throws Exception {
-		Connection connection = null;
+	public List<Descuento> findAll(Connection c) throws Exception {
+		
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		StringBuilder sql = null;
 		try {
-			connection = ConnectionManager.getConnection();
 
 			sql = new StringBuilder(
-					"SELECT ID_DESCUENTO, PORCENTAJE, NOMBRE_OFERTA,  FECHA_INICIO, FECHA_FIN "
-							+"FROM DESCUENTO ");
+					"SELECT D.ID_DESCUENTO, D.PORCENTAJE, DI.NOMBRE_OFERTA,  D.FECHA_INICIO, D.FECHA_FIN "
+							+"FROM DESCUENTO D INNER JOIN DESCUENTO_IDIOMA DI ON D.ID_DESCUENTO = DI.ID_DESCUENTO");
 
 			// Preparar a query
 			System.out.println("Creating statement...");
-			preparedStatement = connection.prepareStatement(sql.toString(), ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			preparedStatement = c.prepareStatement(sql.toString(), ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 
 			resultSet = preparedStatement.executeQuery();			
 			//STEP 5: Extract data from result set			
@@ -250,7 +249,6 @@ public class DescuentoDAOImpl implements DescuentoDAO{
 		} finally {            
 			JDBCUtils.closeResultSet(resultSet);
 			JDBCUtils.closeStatement(preparedStatement);
-			JDBCUtils.closeConnection(connection);
 		}  	
 	}
 

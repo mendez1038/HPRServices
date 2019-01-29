@@ -28,7 +28,7 @@ public class RolDAOTest {
 	public void testFindByNombre()
 			throws Exception {
 		Connection c = ConnectionManager.getConnection();
-		String idioma = "es";
+		String idioma = "en";
 		List<Rol> roles = dao.findByNombre("e", idioma, c);
 		for(Rol r: roles) {
 			System.out.println(r);
@@ -39,8 +39,8 @@ public class RolDAOTest {
 		try {
 			RolDAOTest test = new RolDAOTest();
 			
-			test.testFindByNombre();
-			//test.testFindById();
+			//test.testFindByNombre();
+			test.testFindById();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

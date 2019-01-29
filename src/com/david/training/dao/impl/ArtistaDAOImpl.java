@@ -151,7 +151,7 @@ public class ArtistaDAOImpl implements ArtistaDAO {
 
 	}
 
-	@Override
+	
 	public Artista create(Artista a, Connection c) throws Exception {
 
 		PreparedStatement preparedStatement = null;

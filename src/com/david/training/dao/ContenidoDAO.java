@@ -1,6 +1,7 @@
 package com.david.training.dao;
 
 
+import java.sql.Connection;
 import java.util.List;
 
 import com.david.training.model.Contenido;
@@ -9,26 +10,26 @@ import com.david.training.model.ProductoCriteria;
 
 public interface ContenidoDAO {
 	
-	public Contenido findById(Integer id)
+	public Contenido findById(Connection c, Integer id, String idioma)
 			throws Exception;
 	
-	public List<Contenido> findByTitulo(String title) 
+	public List<Contenido> findByTitulo(Connection c, String title, String idioma) 
 			throws Exception;
 	
 	
-	public Contenido create (Contenido c)
+	public Contenido create (Connection connection, Contenido c)
 			throws Exception;
 	//Falta
-	public List<Contenido> findByCriteria(ProductoCriteria producto)
+	public List<Contenido> findByCriteria(Connection c, ProductoCriteria producto, String idioma)
 			throws Exception;
 	//Falta
-	public boolean update(Contenido d)
+	public boolean update(Connection connection, Contenido d, String idioma)
 			throws Exception;
 	//Falta
-	public long delete (Integer id)
+	public long delete (Connection c, Integer id)
 			throws Exception;
 	
-	public List<Contenido> anadirFavoritos(Contenido c)
+	public List<Contenido> anadirFavoritos(Connection connection, Contenido c, String idioma)
 			throws Exception;
 	
 }

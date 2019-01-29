@@ -19,7 +19,7 @@ public class TipoContenidoDAOTest {
 	public void testFindById()
 			throws Exception {
 			Connection c = ConnectionManager.getConnection();
-			String idioma = "en";
+			String idioma = "es";
 			TipoContenido tc = dao.findById("pel", idioma, c);
 			System.out.println(tc);
 			
@@ -28,7 +28,7 @@ public class TipoContenidoDAOTest {
 	public void testFindByNombre()
 			throws Exception {
 		Connection c = ConnectionManager.getConnection();
-		String idioma = "es";
+		String idioma = "en";
 		List<TipoContenido> tipos = dao.findByNombre("e", idioma, c);
 		for(TipoContenido tc: tipos) {
 			System.out.println(tc);

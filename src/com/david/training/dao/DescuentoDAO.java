@@ -17,17 +17,9 @@ public interface DescuentoDAO {
 	
 	public List<Descuento> findByPorcentaje (Integer porcentaje, String idioma, Connection c)
 			throws Exception;
-	//public Descuento create (Descuento d)
-		//	throws Exception;
 	
-	//public long  delete (Integer id)
-		//	throws Exception;
-	
-	//public boolean update(Descuento d)
-		//	throws Exception;
-	
-	//public List<Descuento> findAll()
-		//	throws Exception;
+	public List<Descuento> findAll(Connection c)
+			throws Exception;
 	
 	
 

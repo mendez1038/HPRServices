@@ -10,6 +10,6 @@ public interface PaisDAO {
 	public Pais findById(Integer id, String idioma, Connection c) 
 		throws Exception;
 	
-	public List<Pais> findByNombre(String nombre, String idioma, Connection c)
+	public List<Pais> findAll(String idioma, Connection c)
 			throws Exception;
 }

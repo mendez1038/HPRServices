@@ -124,4 +124,6 @@ public class Usuario extends AbstractValueObject{
 	apellidos+", Genero: "+genero+", Fecha de nacimiento: "+fechaNacimiento+" y Telefono: "+telefono;
 		
 	}
+
+	
 }

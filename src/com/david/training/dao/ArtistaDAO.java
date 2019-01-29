@@ -20,7 +20,6 @@ public interface ArtistaDAO {
 	public List<Artista> findAll (Connection c)
 			throws Exception;
 	
-	public Artista create (Artista a, Connection c)
-			throws Exception;
+	
 
 }

@@ -1,3 +1,4 @@
+
 package com.david.training.service;
 
 import java.sql.Connection;
@@ -47,23 +48,18 @@ public class DescuentoDAOTest {
 
 	}
 */
-	/*public void testUpdate()
+	public void testFindAll() 
 			throws Exception{
-
-	}
-*/
-	/*public void testFindAll() 
-			throws Exception{
-
+		Connection c = ConnectionManager.getConnection();
 		List<Descuento> results = null;
 
-		results = dao.findAll();
+		results = dao.findAll(c);
 
 		for (Descuento d: results) {
 			System.out.println(d);
 		}
 	}
-*/
+
 
 	public void testFindByPorcentaje()
 			throws Exception {
@@ -76,12 +72,11 @@ public class DescuentoDAOTest {
 	}
 	
 	public static void main(String args[]) {
+		
 		try {
 			DescuentoDAOTest test = new DescuentoDAOTest();
 			test.testFindById();
-			test.testFindByPorcentaje();
-			//test.testCreate();
-			//test.testDelete();
+			//test.testFindByPorcentaje();
 			//test.testFindAll();
 		} catch (Exception e) {
 			e.printStackTrace();

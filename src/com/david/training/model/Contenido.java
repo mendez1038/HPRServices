@@ -13,9 +13,11 @@ public class Contenido extends AbstractValueObject  implements Comparable<Conten
 	private Date fechaLanzamiento = null;
 	private String descripcionBreve = null;
 	private Double precio = null;
+	private Double precioDescontado = null;
 	private Integer duracion = null;
 	private Integer idDescuento = null;
 	private String tipoContenido = null;
+	
 	
 	
 	public Contenido() {
@@ -26,7 +28,7 @@ public class Contenido extends AbstractValueObject  implements Comparable<Conten
 	public Contenido( Integer idContenido, String titulo, 
 			String restriccionEdad, String portada, 
 			Date fechaLanzamiento, String descripcionBreve,
-			Double precio, Integer duracion, 
+			Double precio, Double precioDescontado, Integer duracion, 
 			Integer idDescuento, String tipoContenido) {
 		
 		setIdContenido(idContenido);
@@ -36,6 +38,7 @@ public class Contenido extends AbstractValueObject  implements Comparable<Conten
 		setFechaLanzamiento(fechaLanzamiento);
 		setDescripcionBreve(descripcionBreve);
 		setPrecio(precio);
+		setPrecioDescontado(precioDescontado);
 		setIdDescuento(idDescuento);
 		setTipoContenido(tipoContenido);
 		
@@ -141,9 +144,17 @@ public class Contenido extends AbstractValueObject  implements Comparable<Conten
 	public String toString() {
 		return "ID:"+idContenido+" Titulo:"+titulo+" Restriccion de edad:"+restriccionEdad+" "
 				+ "Link de la portada:"+portada+" Fecha de lanzamiento:"+fechaLanzamiento+" "
-				+ "Descripcion:"+descripcionBreve+" Precio:"+precio+", con una duracion de "+duracion+" "
+				+ "Descripcion:"+descripcionBreve+" Precio:"+precio+", Precio descontado: "+precioDescontado+", con una duracion de "+duracion+" "
 				+ "minutos, Descuento:"+idDescuento+" Tipo contenido:"+tipoContenido;
 		
+	}
+
+	public Double getPrecioDescontado() {
+		return precioDescontado;
+	}
+
+	public void setPrecioDescontado(Double precioDescontado) {
+		this.precioDescontado = precioDescontado;
 	}
 	
 
