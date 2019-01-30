@@ -3,12 +3,13 @@ package com.david.training.service.impl;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-
 import com.david.training.dao.UsuarioDAO;
 import com.david.training.dao.impl.UsuarioDAOImpl;
 import com.david.training.dao.util.ConnectionManager;
 import com.david.training.dao.util.JDBCUtils;
 import com.david.training.model.Usuario;
+import com.david.training.service.MailService;
+import com.david.training.service.MailServiceImpl;
 import com.david.training.service.UsuarioService;
 
 public class UsuarioServiceImpl implements UsuarioService{
@@ -22,14 +23,14 @@ public class UsuarioServiceImpl implements UsuarioService{
 	public Usuario signUp(Usuario u) throws Exception {
 		boolean commit = false;
 		Connection c = null;
+		MailService mailService = null;
 		try {
-
+		mailService = new MailServiceImpl();
 		c = ConnectionManager.getConnection();
-		
 		c.setAutoCommit(false);
-		
-		UsuarioDAO dao = new UsuarioDAOImpl();
 		u = dao.create(u, c);
+		
+		mailService.sendEmail("Gracias por registrarte en HPR","Bienvenida!", u.getEmail());
 		commit = true;
 		return u;
 		} catch (SQLException e) {
@@ -43,7 +44,21 @@ public class UsuarioServiceImpl implements UsuarioService{
 
 	@Override
 	public void update(Usuario u) throws Exception {
-		// TODO Auto-generated method stub
+		boolean commit = false;
+		Connection c = null;
+		try {
+
+		c = ConnectionManager.getConnection();
+		c.setAutoCommit(false);
+		dao.update(u, c);
+		commit = true;
+		
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			JDBCUtils.closeConnection(c, commit);
+			}
 		
 	}
 

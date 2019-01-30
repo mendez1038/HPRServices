@@ -3,6 +3,9 @@ package com.david.training.service;
 import org.apache.commons.mail.DefaultAuthenticator;
 import org.apache.commons.mail.HtmlEmail;
 
+
+
+
 public class MailServiceImpl implements MailService{
 	
 	public MailServiceImpl() {
@@ -12,12 +15,11 @@ public class MailServiceImpl implements MailService{
 		
 	
 	@Override
-	public boolean sendEmail(String mensajeHTML, String asunto, String URL, String... para) throws Exception {
-
+	public void sendEmail(String mensajeHTML, String asunto, String... para) throws Exception {
 
 		
 		try {
-			 HtmlEmail email = new HtmlEmail();
+			  HtmlEmail email = new HtmlEmail(); 
 			  email.setHostName("smtp.googlemail.com");
 			  email.setSmtpPort(465);
 			  email.setAuthenticator(new DefaultAuthenticator("dmendez1038@gmail.com", PASSWORD));
@@ -28,15 +30,12 @@ public class MailServiceImpl implements MailService{
 			  // set the html message
 			  email.setHtmlMsg(mensajeHTML);
 
-			  // set the alternative message
-			  email.setTextMsg("Hola");
-
 			  // send the email
 			  email.send();
-			  return true;
+			  
 		} catch (Exception e) {
 			e.printStackTrace();
-			return false;
+			
 		}
 			
 		

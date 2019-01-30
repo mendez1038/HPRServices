@@ -304,5 +304,9 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 	private void addUpdate(StringBuilder queryString, boolean first, String clause) {
 		queryString.append(first? " SET ": " , ").append(clause);
 	}
+	
+	private void addCreate(StringBuilder queryString, boolean first, String clause) {
+		queryString.append(first? "  ": " , ").append(clause);
+	}
 
 }

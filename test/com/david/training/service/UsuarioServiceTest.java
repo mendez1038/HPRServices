@@ -18,14 +18,14 @@ public class UsuarioServiceTest {
 	public void testSignUp() 
 			throws Exception {
 		Usuario u = new Usuario();
-		u.setEmail("KK@K.COM");
-		u.setContrasena("AB38");
-		u.setNombre("GUI");
-		u.setApellidos("FITI");
-		u.setGenero("F");
+		u.setEmail("DMENDEZ1038@GMAIL.COM");
+		u.setContrasena("123456");
+		u.setNombre("DAVID");
+		u.setApellidos("MENDEZ");
+		u.setGenero("M");
 		//u.setFechaNacimiento(new Date());
-		u.setFechaNacimiento(new SimpleDateFormat( "yyyyMMdd" ).parse( "19981003" ));
-		u.setTelefono("759346638");
+		u.setFechaNacimiento(new SimpleDateFormat( "yyyyMMdd" ).parse( "19970528" ));
+		u.setTelefono("");
 		
 		servicio.signUp(u);
 		System.out.println(u);
@@ -44,6 +44,35 @@ public class UsuarioServiceTest {
 	
 	public void testEditProfile() 
 			throws Exception {
+	
+		Usuario u = new Usuario();
+		u.setContrasena("AB38");
+		u.setNombre("GUI");
+		u.setApellidos("FITI");
+		u.setGenero(null);
+		u.setFechaNacimiento(null);
+		//u.setFechaNacimiento(new SimpleDateFormat( "yyyyMMdd" ).parse( "19981003" ));
+		u.setTelefono("759346638");
+		u.setEmail("KK@K.COM");
+		servicio.update(u);
+		System.out.println(u);
+		
+	
+	}
+	
+	
+	public void testRemoveAccount()
+			throws Exception {
+		String email = "";
+		servicio.delete(email);
+		System.out.println("Usuario eliminado con email "+email);
+	}
+	
+	public void testFindByEmail()
+			throws Exception {
+		String email = "KK@K.COM";
+		System.out.println(servicio.findByEmail(email));
+		
 	}
 
 	public static void main(String args[]) {
@@ -51,7 +80,9 @@ public class UsuarioServiceTest {
 			UsuarioServiceTest test = new UsuarioServiceTest();
 			test.testSignUp();
 			//test.testSignIn();
-			
+			//test.testFindByEmail();
+			//test.testEditProfile();
+			//test.testRemoveAccount();
 		} catch (Exception u) {
 			u.printStackTrace();
 		}
