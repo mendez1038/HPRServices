@@ -1,7 +1,9 @@
-package com.david.training.service;
+package com.david.training.service.impl;
 
 import org.apache.commons.mail.DefaultAuthenticator;
 import org.apache.commons.mail.HtmlEmail;
+
+import com.david.training.service.MailService;
 
 
 

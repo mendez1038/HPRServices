@@ -1,4 +1,4 @@
-package com.david.training.service;
+package com.david.training.dao;
 
 
 

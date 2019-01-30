@@ -1,5 +1,5 @@
 
-package com.david.training.service;
+package com.david.training.dao;
 
 import java.sql.Connection;
 import java.util.List;

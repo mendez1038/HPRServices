@@ -1,4 +1,4 @@
-package com.david.training.service;
+package com.david.training.util;
 
 	//STEP 1. Import required packages
 	import java.sql.*;
