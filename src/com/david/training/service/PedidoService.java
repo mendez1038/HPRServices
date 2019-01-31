@@ -1,5 +1,5 @@
 package com.david.training.service;
 
-public interface ContenidoService {
+public interface PedidoService {
 
 }

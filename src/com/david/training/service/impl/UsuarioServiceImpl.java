@@ -9,7 +9,6 @@ import com.david.training.dao.util.ConnectionManager;
 import com.david.training.dao.util.JDBCUtils;
 import com.david.training.model.Usuario;
 import com.david.training.service.MailService;
-import com.david.training.service.MailServiceImpl;
 import com.david.training.service.UsuarioService;
 
 public class UsuarioServiceImpl implements UsuarioService{
@@ -30,7 +29,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 		c.setAutoCommit(false);
 		u = dao.create(u, c);
 		
-		mailService.sendEmail("Gracias por registrarte en HPR","Bienvenida!", u.getEmail());
+		mailService.sendEmail("Gracias por registrarte en HPR, para iniciar sesion utilice este correo y esta contraseña: "+u.getContrasena(),"Bienvenida!", u.getEmail());
 		commit = true;
 		return u;
 		} catch (SQLException e) {
@@ -70,7 +69,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 
 		c = ConnectionManager.getConnection();
 		
-		c.setAutoCommit(true);
+		c.setAutoCommit(false);
 		dao.delete(email,c);
 		commit = true;
 		return commit;

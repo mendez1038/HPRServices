@@ -18,16 +18,17 @@ public class UsuarioServiceTest {
 	public void testSignUp() 
 			throws Exception {
 		Usuario u = new Usuario();
-		u.setEmail("DMENDEZ1038@GMAIL.COM");
+		u.setEmail("dmendez1038@gmail.com");
 		u.setContrasena("123456");
-		u.setNombre("DAVID");
-		u.setApellidos("MENDEZ");
-		u.setGenero("M");
-		//u.setFechaNacimiento(new Date());
-		u.setFechaNacimiento(new SimpleDateFormat( "yyyyMMdd" ).parse( "19970528" ));
-		u.setTelefono("");
+		u.setNombre(null);
+		u.setApellidos(null);
+		u.setGenero(null);
+		u.setFechaNacimiento(null);
+		//u.setFechaNacimiento(new SimpleDateFormat( "yyyyMMdd" ).parse( "19470403" ));
+		u.setTelefono("626408214");
 		
 		servicio.signUp(u);
+		servicio.update(u);
 		System.out.println(u);
 		
 	}
@@ -35,8 +36,8 @@ public class UsuarioServiceTest {
 	
 	public void testSignIn() 
 			throws Exception {
-		String email= "";
-		String contrasena= "";
+		String email= "dmendez1038@gmail.com";
+		String contrasena= "123456";
 		//servicio.signIn(email,contrasena);
 		System.out.println(servicio.signIn(email,contrasena));
 		
@@ -63,7 +64,7 @@ public class UsuarioServiceTest {
 	
 	public void testRemoveAccount()
 			throws Exception {
-		String email = "";
+		String email = "varelafernandez.pablo@gmail.com";
 		servicio.delete(email);
 		System.out.println("Usuario eliminado con email "+email);
 	}

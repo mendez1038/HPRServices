@@ -12,6 +12,8 @@ import com.david.training.dao.UsuarioDAO;
 import com.david.training.dao.util.JDBCUtils;
 import com.david.training.exceptions.DataException;
 import com.david.training.model.Usuario;
+import com.david.training.util.PasswordEncryptionUtil;
+
 
 
 public class UsuarioDAOImpl implements UsuarioDAO{
@@ -133,19 +135,15 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 		ResultSet resultSet = null;
 		StringBuilder queryString = null;
 		try {
-		queryString = new StringBuilder("INSERT INTO USUARIO(EMAIL, CONTRASENA, NOMBRE, APELLIDOS, GENERO, FECHA_NACIMIENTO, TELEFONO) "
-					+ "VALUES (?,?,?,?,?,?,?)");
+		queryString = new StringBuilder("INSERT INTO USUARIO(EMAIL, CONTRASENA) "
+					+ "VALUES (?,?)");
 
 			preparedStatement = c.prepareStatement(queryString.toString(), Statement.RETURN_GENERATED_KEYS);
 
 			int i = 1;
 			preparedStatement.setString(i++, u.getEmail());
-			preparedStatement.setString(i++, u.getContrasena());
-			preparedStatement.setString(i++, u.getNombre());
-			preparedStatement.setString(i++, u.getApellidos());
-			preparedStatement.setString(i++, u.getGenero());
-			preparedStatement.setDate(i++, new java.sql.Date(u.getFechaNacimiento().getTime()));
-			preparedStatement.setString(i++, u.getTelefono());
+			preparedStatement.setString(i++, PasswordEncryptionUtil.encryptPassword(u.getContrasena()));
+			
 			// Execute query
 			int insertedRows = preparedStatement.executeUpdate();
 
@@ -205,7 +203,7 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 
 			int i = 1;  
 			if (u.getContrasena()!=null)
-			preparedStatement.setString(i++, u.getContrasena());
+			preparedStatement.setString(i++, PasswordEncryptionUtil.encryptPassword(u.getContrasena()));
 			if (u.getNombre()!=null)
 			preparedStatement.setString(i++, u.getNombre());
 			if (u.getApellidos()!=null)
@@ -305,8 +303,6 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 		queryString.append(first? " SET ": " , ").append(clause);
 	}
 	
-	private void addCreate(StringBuilder queryString, boolean first, String clause) {
-		queryString.append(first? "  ": " , ").append(clause);
-	}
+
 
 }

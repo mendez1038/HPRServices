@@ -22,15 +22,21 @@ public interface ContenidoDAO {
 	//Falta
 	public List<Contenido> findByCriteria(Connection c, ProductoCriteria producto, String idioma)
 			throws Exception;
-	//Falta
+	
 	public boolean update(Connection connection, Contenido d, String idioma)
 			throws Exception;
-	//Falta
+	
 	public long delete (Connection c, Integer id)
 			throws Exception;
 	
-	public List<Contenido> anadirFavoritos(Connection connection, Contenido c, String idioma)
+	public List<Contenido> anadirFavoritos(Connection connection, Integer idContenido)
 			throws Exception;
+	
+	public List<Contenido> findLista(Connection connection, String email, String idioma) 
+			throws Exception;
+	
+	public List<Contenido> findFavoritos(Connection connection, String email, String idioma)
+		throws Exception;
 	
 }
 

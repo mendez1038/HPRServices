@@ -1,13 +1,15 @@
 package com.david.training.dao;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import com.david.training.dao.ContenidoDAO;
 import com.david.training.dao.impl.ContenidoDAOImpl;
 import com.david.training.dao.util.ConnectionManager;
+import com.david.training.model.Categoria;
 import com.david.training.model.Contenido;
+import com.david.training.model.ProductoCriteria;
 
 public class ContenidoDAOTest {
 	
@@ -26,6 +28,25 @@ public class ContenidoDAOTest {
 		
 	}
 	
+	public void testFindLista()
+			throws Exception {
+			Connection connection = ConnectionManager.getConnection();
+			String idioma = "en";
+			List<Contenido> contenidos = dao.findLista(connection, "AA@A.COM", idioma);
+			for(Contenido c: contenidos) {
+				System.out.println(c);
+			}
+	}
+	
+	public void testFindFavoritos()
+		throws Exception {
+		Connection connection = ConnectionManager.getConnection();
+		String idioma = "en";
+		List<Contenido> contenidos = dao.findFavoritos(connection, "AA@A.COM", idioma);
+		for(Contenido c: contenidos) {
+			System.out.println(c);
+		}
+	}
 	public void testFindByTitulo()
 		throws Exception {
 	Connection connection = ConnectionManager.getConnection();
@@ -67,13 +88,27 @@ public class ContenidoDAOTest {
 		
 	}
 	
+	public void testFindByCriteria()
+			throws Exception{
+		Connection connection = ConnectionManager.getConnection();
+		ProductoCriteria pc = new ProductoCriteria();
+		Categoria ca = new Categoria();
+		List<Categoria> categorias = new ArrayList();
+		ca.setCategoria(1);
+		categorias.add(ca);
+		pc.setCategoria(categorias);
+		
+	}
+	
 	public static void main(String args[]) {
 		try {
 			ContenidoDAOTest test = new ContenidoDAOTest();
 			//test.testFindById();
-			test.testFindByTitulo();
+			//test.testFindByTitulo();
 			//test.testCreate();
 			//test.testDelete();
+			//test.testFindFavoritos();
+			test.testFindLista();
 		} catch (Exception c) {
 			c.printStackTrace();
 		}
