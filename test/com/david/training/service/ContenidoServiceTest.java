@@ -1,9 +1,57 @@
 package com.david.training.service;
 
-public class ContenidoServiceTest {
+import java.util.ArrayList;
+import java.util.List;
 
+import com.david.training.model.Contenido;
+import com.david.training.service.impl.ContenidoServiceImpl;
+
+public class ContenidoServiceTest {
+	
+	private ContenidoService servicio = null;
+	
+	public ContenidoServiceTest() {
+		servicio = new ContenidoServiceImpl();
+	}
+
+	
+	public void testMiLista() {
+		
+	try {
+			
+			List<Contenido> lista = new ArrayList<Contenido>(); 
+			String email = "aa@a.com";
+			String idioma = "en";
+			lista = servicio.miLista(email, idioma);
+			for(Contenido c : lista) {
+				System.out.println(c);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void testFavoritos() {
+		
+		try {
+			
+			List<Contenido> favoritos = new ArrayList<Contenido>(); 
+			String email = "aa@a.com";
+			String idioma = "en";
+			favoritos = servicio.favoritos(email, idioma);
+			for(Contenido c : favoritos) {
+				System.out.println(c);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	
+		
+	}
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		ContenidoServiceTest test = new ContenidoServiceTest();
+		test.testMiLista();
+		test.testFavoritos();
 
 	}
 

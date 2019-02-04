@@ -274,7 +274,7 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 			preparedStatement.setDate(i++, new java.sql.Date(pc.getFechaLanzamiento().getTime()));
 			preparedStatement.setDouble(i++, pc.getPrecio());
 			preparedStatement.setInt(i++, pc.getDuracion());
-			preparedStatement.setInt(i++, pc.getCategoria());
+			
 
 			resultSet = preparedStatement.executeQuery();
 			

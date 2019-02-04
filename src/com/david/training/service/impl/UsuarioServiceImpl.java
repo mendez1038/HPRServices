@@ -10,6 +10,7 @@ import com.david.training.dao.util.JDBCUtils;
 import com.david.training.model.Usuario;
 import com.david.training.service.MailService;
 import com.david.training.service.UsuarioService;
+import com.david.training.util.PasswordEncryptionUtil;
 
 public class UsuarioServiceImpl implements UsuarioService{
 
@@ -114,7 +115,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 		if (u==null) {
 			return null;
 		}
-		if (u.getContrasena().equals(contrasena)) {
+		if (PasswordEncryptionUtil.checkPassword(contrasena, u.getContrasena())) {
 			return u;
 		}
 		return null;
