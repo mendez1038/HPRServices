@@ -26,10 +26,10 @@ public class Categoria extends AbstractValueObject{
 	public void setIdCategoria(Integer idCategoria) {
 		this.idCategoria = idCategoria;
 	}
-	
-	@Override
-	public String toString() {
-		return "ID:"+idCategoria+", Nombre:"+nombreCategoria;
-		
-	}
+//	
+//	@Override
+//	public String toString() {
+//		return "ID:"+idCategoria+", Nombre:"+nombreCategoria;
+//		
+//	}
 }

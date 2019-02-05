@@ -47,11 +47,11 @@ public  class Pedido extends AbstractValueObject{
 		this.email = email;
 	}
 	
-	@Override
-	public String toString() {
-		return "ID:"+idPedido+", Fecha:"+fechaPedido+", Precio:"+precioTotal+" realizado por:"+email;
-		
-	}
+//	@Override
+//	public String toString() {
+//		return "ID:"+idPedido+", Fecha:"+fechaPedido+", Precio:"+precioTotal+" realizado por:"+email;
+//		
+//	}
 
 
 

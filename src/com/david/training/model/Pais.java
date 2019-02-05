@@ -45,12 +45,12 @@ public class Pais extends AbstractValueObject {
 	public void setCapitalPais(String capitalPais) {
 		this.capitalPais = capitalPais;
 	}
-	
-	@Override
-	public String toString() {
-		return "ID:"+idPais+", Nombre:"+nombrePais+" y capital "+capitalPais;
-		
-	}
+//	
+//	@Override
+//	public String toString() {
+//		return "ID:"+idPais+", Nombre:"+nombrePais+" y capital "+capitalPais;
+//		
+//	}
 
 }
 	

@@ -43,10 +43,10 @@ public class LineaPedido extends AbstractValueObject{
 
 
 	
-	@Override
-	public String toString() {
-		return "Pedido "+idPedido+", contenido "+idContenido+", precio:"+precioUnidad+"€";
-		
-	}
+//	@Override
+//	public String toString() {
+//		return "Pedido "+idPedido+", contenido "+idContenido+", precio:"+precioUnidad+"€";
+//		
+//	}
 
 }

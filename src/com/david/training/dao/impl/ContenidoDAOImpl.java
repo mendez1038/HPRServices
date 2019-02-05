@@ -25,50 +25,97 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 	public ContenidoDAOImpl() {
 
 	}
+	
+	public Contenido findPorId(Connection connection, Integer id)
+	throws Exception {
 
-	public Contenido findById(Connection connection, Integer id, String idioma)
+Contenido c = null;
+PreparedStatement preparedStatement = null;
+ResultSet resultSet = null;
+StringBuilder sql = null;
+try{
+
+	//metodo connectionmanager
+
+	sql = new StringBuilder("SELECT C.ID_CONTENIDO, CI.TITULO, "
+			+ "C.RESTRICCION_EDAD, C.PORTADA, C.FECHA_LANZAMIENTO, "
+			+ "CI.DESCRIPCION_BREVE, C.PRECIO, C.PRECIO_DESCONTADO, "
+			+ "C.DURACION, C.ID_DESCUENTO, C.ID_TIPO_CONTENIDO, "
+			+ "D.PORCENTAJE "
+			+"FROM CONTENIDO C INNER JOIN DESCUENTO D ON C.ID_DESCUENTO = D.ID_DESCUENTO "
+			+ "INNER JOIN CONTENIDO_IDIOMA CI ON C.ID_CONTENIDO = CI.ID_CONTENIDO "
+			+"WHERE C.ID_CONTENIDO = ? ");
+
+	//STEP 4: Execute a query
+	System.out.println("Creating statement...");
+	preparedStatement = connection.prepareStatement(sql.toString(), ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+
+	// Establecer parametros
+	int i = 1;
+	preparedStatement.setInt(i++, id );
+////	preparedStatement.setString(i++, idioma);
+	resultSet = preparedStatement.executeQuery(); 
+
+	//STEP 5: Extract data from result set	
+	if (resultSet.next()) {
+		c = loadNext(resultSet);
+	} else {
+		throw new Exception("Non se encontrou o contenido "+id);
+	}
+
+} catch (SQLException ex) {
+	throw new DataException(ex);
+} finally {            
+	JDBCUtils.closeResultSet(resultSet);
+	JDBCUtils.closeStatement(preparedStatement);
+}
+return c;		
+}
+
+public Contenido findById(Connection connection, Integer id, String idioma)
 			throws Exception {
-
-		Contenido c = null;
-		PreparedStatement preparedStatement = null;
-		ResultSet resultSet = null;
-		StringBuilder sql = null;
-		try{
-
-			//metodo connectionmanager
-
-			sql = new StringBuilder("SELECT C.ID_CONTENIDO, CI.TITULO, C.RESTRICCION_EDAD, C.PORTADA, C.FECHA_LANZAMIENTO, CI.DESCRIPCION_BREVE, C.PRECIO, C.PRECIO_DESCONTADO, C.DURACION, C.ID_DESCUENTO, C.ID_TIPO_CONTENIDO "
-					+"FROM CONTENIDO C INNER JOIN CONTENIDO_IDIOMA CI ON C.ID_CONTENIDO = CI.ID_CONTENIDO "
-					+ ""
-					+"WHERE C.ID_CONTENIDO = ? AND CI.ID_IDIOMA = ? ");
-
-			//STEP 4: Execute a query
-			System.out.println("Creating statement...");
-			preparedStatement = connection.prepareStatement(sql.toString(), ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-
-			// Establecer parametros
-			int i = 1;
-			preparedStatement.setInt(i++, id );
-			preparedStatement.setString(i++, idioma);
-			resultSet = preparedStatement.executeQuery(); 
-
-			//STEP 5: Extract data from result set	
-			if (resultSet.next()) {
-				c = loadNext(resultSet);
-			} else {
-				throw new Exception("Non se encontrou o contenido "+id);
-			}
-			if (resultSet.next()) {
-				throw new Exception("Contenido"+id+" duplicado");
-			}
-
-		} catch (SQLException ex) {
-			throw new DataException(ex);
-		} finally {            
-			JDBCUtils.closeResultSet(resultSet);
-			JDBCUtils.closeStatement(preparedStatement);
-		}
-		return c;		
+				return null;
+//
+//		Contenido c = null;
+//		PreparedStatement preparedStatement = null;
+//		ResultSet resultSet = null;
+//		StringBuilder sql = null;
+//		try{
+//
+//			//metodo connectionmanager
+//
+//			sql = new StringBuilder("SELECT C.ID_CONTENIDO, CI.TITULO, C.RESTRICCION_EDAD, C.PORTADA, C.FECHA_LANZAMIENTO, CI.DESCRIPCION_BREVE, C.PRECIO, C.PRECIO_DESCONTADO, C.DURACION, C.ID_DESCUENTO, C.ID_TIPO_CONTENIDO "
+//					+"FROM CONTENIDO C INNER JOIN CONTENIDO_IDIOMA CI ON C.ID_CONTENIDO = CI.ID_CONTENIDO "
+//					+ ""
+//					+"WHERE C.ID_CONTENIDO = ? AND CI.ID_IDIOMA = ? ");
+//
+//			//STEP 4: Execute a query
+//			System.out.println("Creating statement...");
+//			preparedStatement = connection.prepareStatement(sql.toString(), ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+//
+//			// Establecer parametros
+//			int i = 1;
+//			preparedStatement.setInt(i++, id );
+//			preparedStatement.setString(i++, idioma);
+//			resultSet = preparedStatement.executeQuery(); 
+//
+//			//STEP 5: Extract data from result set	
+//			if (resultSet.next()) {
+//				c = loadNext(resultSet);
+//			} else {
+//				throw new Exception("Non se encontrou o contenido "+id);
+//			}
+//			if (resultSet.next()) {
+//				throw new Exception("Contenido"+id+" duplicado");
+//			}
+//
+//		} catch (SQLException ex) {
+//			throw new DataException(ex);
+//		} finally {            
+//			JDBCUtils.closeResultSet(resultSet);
+//			JDBCUtils.closeStatement(preparedStatement);
+//		}
+//		return c;		
 	}
 
 
@@ -166,7 +213,7 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 		Integer duracion = resultSet.getInt(i++);
 		Integer idDescuento = resultSet.getInt(i++);
 		String tipoContenido = resultSet.getString(i++);
-
+		Integer porcentaje = resultSet.getInt(i++);
 
 		c = new Contenido();
 
@@ -181,7 +228,7 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 		c.setDuracion(duracion);
 		c.setIdDescuento(idDescuento);
 		c.setTipoContenido(tipoContenido);
-
+		c.setPorcentaje(porcentaje);
 
 
 
@@ -296,43 +343,27 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 	}
 
 	@Override
-	public boolean update(Connection connection, Contenido d, String idioma) throws Exception {
+	public boolean update(Connection connection, Contenido d) throws Exception {
 
 		
 		PreparedStatement preparedStatement = null;
-		ResultSet resultSet = null;
 		StringBuilder queryString = null;
 		try {          
-
-
-			queryString = new StringBuilder("UPDATE CONTENIDO "
-					+ "SET TITULO = ?, "
-					+ "SET RESTRICCION_EDAD = ?, "
-					+ "SET PORTADA = ?, "
-					+ "SET FECHA_LANZAMIENTO = ?,  "
-					+ "SET DESCRIPCION_BREVE = ?, "
-					+ "SET PRECIO = ?,  "
-					+ "SET FECHA_DURACION = ?,  "
-					+ "SET ID_DESCUENTO = ?,  "
-					+ "SET ID_TIPO_CONTENIDO = ?  "
-					+ "WHERE EMAIL= ? ");
+			queryString = new StringBuilder("UPDATE CONTENIDO ");
+			boolean first = true;
+			if(d.getPrecioDescontado()!=null) {
+					addUpdate(queryString,first,"PRECIO_DESCONTADO = ? ");
+					first = false;
+			}
+					queryString.append("WHERE ID_CONTENIDO = ? ");
 
 			preparedStatement = connection.prepareStatement(queryString.toString());
 
 			int i = 1;     			
-
-			preparedStatement.setString(i++, d.getTitulo());
-			preparedStatement.setString(i++, d.getRestriccionEdad());
-			preparedStatement.setString(i++, d.getPortada());
-			preparedStatement.setDate(i++, new java.sql.Date(d.getFechaLanzamiento().getTime()));
-			preparedStatement.setString(i++, d.getDescripcionBreve());
-			preparedStatement.setDouble(i++, d.getPrecio());
-			preparedStatement.setInt(i++, d.getDuracion());
-			preparedStatement.setInt(i++, d.getIdDescuento());
-			preparedStatement.setString(i++, d.getTipoContenido());
+			if(d.getPrecioDescontado()!=null)
+			preparedStatement.setDouble(i++, d.getPrecioDescontado());
 			preparedStatement.setInt(i++, d.getIdContenido());
-
-
+			
 			int insertedRows = preparedStatement.executeUpdate();
 
 			if (insertedRows == 0) 
@@ -349,12 +380,15 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 		} catch (SQLException ex) {
 			throw new DataException(ex);
 		} finally {
-			JDBCUtils.closeResultSet(resultSet);
+			
 			JDBCUtils.closeStatement(preparedStatement);			
 			
 		}
 
 	}
+	
+	
+	
 
 	@Override
 	public long delete(Connection connection, Integer id) throws Exception {
@@ -402,10 +436,13 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 
 			//metodo connectionmanager
 
-			sql = new StringBuilder("SELECT C.ID_CONTENIDO, CI.TITULO, C.RESTRICCION_EDAD, C.PORTADA, C.FECHA_LANZAMIENTO, CI.DESCRIPCION_BREVE, C.PRECIO, C.PRECIO_DESCONTADO, C.DURACION, C.ID_DESCUENTO, C.ID_TIPO_CONTENIDO "
+			sql = new StringBuilder("SELECT C.ID_CONTENIDO, CI.TITULO, C.RESTRICCION_EDAD, C.PORTADA, C.FECHA_LANZAMIENTO, "
+					+ "CI.DESCRIPCION_BREVE, C.PRECIO, C.PRECIO_DESCONTADO, C.DURACION, C.ID_DESCUENTO, C.ID_TIPO_CONTENIDO, "
+					+ "D.PORCENTAJE "
 					+"FROM CONTENIDO C INNER JOIN CONTENIDO_IDIOMA CI ON C.ID_CONTENIDO = CI.ID_CONTENIDO "
 					+ "INNER JOIN LINEAPEDIDO LP ON LP.ID_CONTENIDO = C.ID_CONTENIDO "
 					+ "INNER JOIN PEDIDO P ON P.ID_PEDIDO = LP.ID_PEDIDO "
+					+ "INNER JOIN DESCUENTO D ON D.ID_DESCUENTO = C.ID_DESCUENTO "
 					+"WHERE P.EMAIL = ? AND CI.ID_IDIOMA = ?"
 					+ "ORDER BY P.FECHA_PEDIDO DESC ");
 
@@ -444,9 +481,12 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 
 			//metodo connectionmanager
 
-			sql = new StringBuilder("SELECT C.ID_CONTENIDO, CI.TITULO, C.RESTRICCION_EDAD, C.PORTADA, C.FECHA_LANZAMIENTO, CI.DESCRIPCION_BREVE, C.PRECIO, C.PRECIO_DESCONTADO, C.DURACION, C.ID_DESCUENTO, C.ID_TIPO_CONTENIDO "
+			sql = new StringBuilder("SELECT C.ID_CONTENIDO, CI.TITULO, C.RESTRICCION_EDAD, C.PORTADA, C.FECHA_LANZAMIENTO, "
+					+ "CI.DESCRIPCION_BREVE, C.PRECIO, C.PRECIO_DESCONTADO, C.DURACION, C.ID_DESCUENTO, C.ID_TIPO_CONTENIDO, "
+					+ "D.PORCENTAJE "
 					+"FROM CONTENIDO C INNER JOIN CONTENIDO_IDIOMA CI ON C.ID_CONTENIDO = CI.ID_CONTENIDO "
 					+ "INNER JOIN USUARIO_CONTENIDO UC ON UC.ID_CONTENIDO = C.ID_CONTENIDO "
+					+ "INNER JOIN DESCUENTO D ON D.ID_DESCUENTO = C.ID_DESCUENTO "
 					+"WHERE UC.EMAIL = ? AND CI.ID_IDIOMA = ? AND FAVORITO = 1 ");
 
 			//STEP 4: Execute a query
@@ -500,6 +540,10 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 		}
 		lista.append(" ) ");
 		return lista;
+	}
+	
+	private void addUpdate(StringBuilder queryString, boolean first, String clause) {
+		queryString.append(first? " SET ": " , ").append(clause);
 	}
 
 }

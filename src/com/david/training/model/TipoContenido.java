@@ -23,8 +23,8 @@ public class TipoContenido extends AbstractValueObject{
 		this.nombreContenido = nombreContenido;
 	}
 	
-	public String toString() {
-		return "ID:"+idTipoContenido+" y nombre "+nombreContenido;
-	}
+//	public String toString() {
+//		return "ID:"+idTipoContenido+" y nombre "+nombreContenido;
+//	}
 
 }

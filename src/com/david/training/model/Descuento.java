@@ -76,11 +76,11 @@ public class Descuento extends AbstractValueObject {
 		this.fechaFin = fechaFin;
 	}
 	
-	@Override
-	public String toString() {
-		return "ID:"+idDescuento+", Porcentaje:"+porcentaje+"% , Nombre:"+nombreOferta+", de "+
-	fechaInicio+" a "+fechaFin;
-		
-	}
+//	@Override
+//	public String toString() {
+//		return "ID:"+idDescuento+", Porcentaje:"+porcentaje+"% , Nombre:"+nombreOferta+", de "+
+//	fechaInicio+" a "+fechaFin;
+//		
+//	}
 
 }

@@ -58,11 +58,45 @@ public class ContenidoServiceImpl implements ContenidoService{
 		} finally {
 			JDBCUtils.closeConnection(c, commit);
 			}}
+	
+	
+	
+	public Double sacarPrecioDescontado(Integer id) throws Exception {
+		boolean commit = false;
+		Connection connection = null;
+		try {
+			Contenido c = new Contenido();
+			connection = ConnectionManager.getConnection();
+			connection.setAutoCommit(false);
+			c = dao.findPorId(connection, id);
+			Double precioDescontado = c.getPorcentaje()*c.getPrecio()/100;
+			
+			return precioDescontado;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			JDBCUtils.closeConnection(connection, commit);
+			}
+	}
 
 	@Override
-	public boolean precioDescontado(Contenido c, String idioma) throws Exception {
-		// TODO Auto-generated method stub
-		return false;
+	public void precioDescontado(Contenido c) throws Exception {
+		boolean commit = false;
+		Connection connection = null;
+		try {
+			connection = ConnectionManager.getConnection();
+			connection.setAutoCommit(false);
+			dao.update(connection, c);
+			commit = true;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			JDBCUtils.closeConnection(connection, commit);
+			}
+		
 	}
 
 	@Override

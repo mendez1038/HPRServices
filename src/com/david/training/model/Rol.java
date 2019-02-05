@@ -25,7 +25,7 @@ public class Rol extends AbstractValueObject{
 		this.nombreRol = nombreRol;
 	}
 
-	public String toString() {
-		return "ID:"+idRol+" con nombre "+nombreRol;
-	}
+//	public String toString() {
+//		return "ID:"+idRol+" con nombre "+nombreRol;
+//	}
 }

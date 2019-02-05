@@ -119,11 +119,11 @@ public class Usuario extends AbstractValueObject{
 
 	
 	
-	public String toString() {
-		return "Email: "+email+", Contraseña: "+contrasena+", Nombre: "+nombre+", Apellidos: "+
-	apellidos+", Genero: "+genero+", Fecha de nacimiento: "+fechaNacimiento+" y Telefono: "+telefono;
-		
-	}
+//	public String toString() {
+//		return "Email: "+email+", Contraseña: "+contrasena+", Nombre: "+nombre+", Apellidos: "+
+//	apellidos+", Genero: "+genero+", Fecha de nacimiento: "+fechaNacimiento+" y Telefono: "+telefono;
+//		
+//	}
 
 	
 }

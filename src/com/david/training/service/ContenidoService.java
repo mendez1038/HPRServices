@@ -13,12 +13,13 @@ public interface ContenidoService {
 	public List<Contenido> favoritos (String email, String idioma)
 			throws Exception;
 	
-	public boolean precioDescontado (Contenido c, String idioma)
+	public void precioDescontado (Contenido c)
 			throws Exception;
 	
 	public List<Contenido> busquedaEstructurada (ProductoCriteria producto, String idioma)
 			throws Exception;
-	
+	public Double sacarPrecioDescontado (Integer id)
+			throws Exception;
 	//añadir eliminar favoritos
 
 }

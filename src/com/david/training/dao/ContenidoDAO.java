@@ -23,7 +23,7 @@ public interface ContenidoDAO {
 	public List<Contenido> findByCriteria(Connection c, ProductoCriteria producto, String idioma)
 			throws Exception;
 	
-	public boolean update(Connection connection, Contenido d, String idioma)
+	public boolean update(Connection connection, Contenido d)
 			throws Exception;
 	
 	public long delete (Connection c, Integer id)
@@ -37,6 +37,9 @@ public interface ContenidoDAO {
 	
 	public List<Contenido> findFavoritos(Connection connection, String email, String idioma)
 		throws Exception;
+	
+	public Contenido findPorId(Connection c, Integer id) 
+			throws Exception;
 	
 }
 

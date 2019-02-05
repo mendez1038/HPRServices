@@ -1,6 +1,6 @@
 package com.david.training.model;
 
-public class Idioma {
+public class Idioma extends AbstractValueObject{
 
 	private String idIdioma = null;
 	private String nombreIdioma = null;

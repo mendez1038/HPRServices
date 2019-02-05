@@ -58,12 +58,12 @@ public class Artista extends AbstractValueObject{
 	}
 
 
-
-	@Override
-	public String toString() {
-		return "ID:"+idArtista+" con nombre "+nombreArtista+" y nacido el "+fechaNacimiento;
-		
-	}
+//
+//	@Override
+//	public String toString() {
+//		return "ID:"+idArtista+" con nombre "+nombreArtista+" y nacido el "+fechaNacimiento;
+//		
+//	}
 
 
 }

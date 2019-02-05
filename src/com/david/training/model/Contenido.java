@@ -17,7 +17,7 @@ public class Contenido extends AbstractValueObject  implements Comparable<Conten
 	private Integer duracion = null;
 	private Integer idDescuento = null;
 	private String tipoContenido = null;
-	
+	private Integer porcentaje = null;
 	
 	
 	public Contenido() {
@@ -29,7 +29,7 @@ public class Contenido extends AbstractValueObject  implements Comparable<Conten
 			String restriccionEdad, String portada, 
 			Date fechaLanzamiento, String descripcionBreve,
 			Double precio, Double precioDescontado, Integer duracion, 
-			Integer idDescuento, String tipoContenido) {
+			Integer idDescuento, String tipoContenido, Integer porcentaje) {
 		
 		setIdContenido(idContenido);
 		setTitulo(titulo);
@@ -41,7 +41,7 @@ public class Contenido extends AbstractValueObject  implements Comparable<Conten
 		setPrecioDescontado(precioDescontado);
 		setIdDescuento(idDescuento);
 		setTipoContenido(tipoContenido);
-		
+		setPorcentaje(porcentaje);
 	}
 
 	public Integer getIdContenido() {
@@ -140,14 +140,14 @@ public class Contenido extends AbstractValueObject  implements Comparable<Conten
 	
 	
 	
-	//@Override
-	public String toString() {
-		return "ID:"+idContenido+" Titulo:"+titulo+" Restriccion de edad:"+restriccionEdad+" "
-				+ "Link de la portada:"+portada+" Fecha de lanzamiento:"+fechaLanzamiento+" "
-				+ "Descripcion:"+descripcionBreve+" Precio:"+precio+", Precio descontado: "+precioDescontado+", con una duracion de "+duracion+" "
-				+ "minutos, Descuento:"+idDescuento+" Tipo contenido:"+tipoContenido;
-		
-	}
+//	//@Override
+//	public String toString() {
+//		return "ID:"+idContenido+" Titulo:"+titulo+" Restriccion de edad:"+restriccionEdad+" "
+//				+ "Link de la portada:"+portada+" Fecha de lanzamiento:"+fechaLanzamiento+" "
+//				+ "Descripcion:"+descripcionBreve+" Precio:"+precio+", Precio descontado: "+precioDescontado+", con una duracion de "+duracion+" "
+//				+ "minutos, Descuento:"+idDescuento+" Tipo contenido:"+tipoContenido;
+//		
+//	}
 
 	public Double getPrecioDescontado() {
 		return precioDescontado;
@@ -155,6 +155,14 @@ public class Contenido extends AbstractValueObject  implements Comparable<Conten
 
 	public void setPrecioDescontado(Double precioDescontado) {
 		this.precioDescontado = precioDescontado;
+	}
+
+	public Integer getPorcentaje() {
+		return porcentaje;
+	}
+
+	public void setPorcentaje(Integer porcentaje) {
+		this.porcentaje = porcentaje;
 	}
 	
 
