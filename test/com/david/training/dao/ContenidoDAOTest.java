@@ -47,16 +47,7 @@ public class ContenidoDAOTest {
 			System.out.println(c);
 		}
 	}
-	public void testFindByTitulo()
-		throws Exception {
-	Connection connection = ConnectionManager.getConnection();
-	String idioma = "en";
-	List<Contenido> contenidos = dao.findByTitulo(connection, "e", idioma);
-	for(Contenido c: contenidos) {
-		System.out.println(c);
-	}
-	}
-	
+
 	public void testCreate()
 			throws Exception {
 		Connection connection = ConnectionManager.getConnection();
@@ -94,7 +85,7 @@ public class ContenidoDAOTest {
 		ProductoCriteria pc = new ProductoCriteria();
 		Categoria ca = new Categoria();
 		List<Categoria> categorias = new ArrayList();
-		ca.setCategoria(1);
+		ca.setIdCategoria(1);
 		categorias.add(ca);
 		pc.setCategoria(categorias);
 		

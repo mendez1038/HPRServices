@@ -90,8 +90,8 @@ public class UsuarioServiceTest {
 		
 			UsuarioServiceTest test = new UsuarioServiceTest();
 			//test.testSignUp();
-			test.testSignIn();
-			//test.testFindByEmail();
+			//test.testSignIn();
+			test.testFindByEmail();
 			//test.testEditProfile();
 			//test.testRemoveAccount();
 		

@@ -14,7 +14,7 @@ public class TestException {
 		
 	}
 	
-	public void miMetodo() 
+	public void miMetodo() throws DataException 
 			{
 		dao.findByEmail("", null);
 	}

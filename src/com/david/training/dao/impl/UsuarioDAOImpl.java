@@ -7,6 +7,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Date;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.david.training.dao.UsuarioDAO;
 
 import com.david.training.dao.util.JDBCUtils;
@@ -18,7 +21,7 @@ import com.david.training.util.PasswordEncryptionUtil;
 
 public class UsuarioDAOImpl implements UsuarioDAO{
 
-
+	public static Logger logger = LogManager.getLogger(UsuarioDAOImpl.class);
 	public UsuarioDAOImpl () {
 
 	}
@@ -26,7 +29,7 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 	@Override
 	public Usuario findByEmail( String email, Connection c) 
 			throws DataException {
-		// TODO Auto-generated method stub
+		logger.debug("email = "+email);
 		Usuario e = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -38,7 +41,7 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 					"WHERE EMAIL = ? ");
 
 
-			System.out.println("Creating statement...");
+			logger.debug(queryString);;
 			preparedStatement = c.prepareStatement(queryString.toString(),
 					ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 
@@ -58,6 +61,7 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 			return e;
 
 		} catch (SQLException e1) {
+			logger.warn(e1.getMessage(), e1);
 			throw new DataException(e1);
 		} finally {
 			JDBCUtils.closeResultSet(resultSet);
@@ -68,7 +72,6 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 	}
 
 	private Usuario loadNext( ResultSet resultSet) 
-	// TODO Auto-generated method stub
 			throws DataException, SQLException {
 
 		int i = 1;
@@ -94,7 +97,7 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 
 	@Override
 	public Boolean exists( String email, Connection c) throws DataException  {
-
+		logger.debug("Email = "+email);
 		boolean exist = false;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -117,6 +120,7 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 			}
 
 		} catch (SQLException e) {
+			logger.warn(e.getMessage(), e);
 			throw new DataException(e);
 		} finally {
 			JDBCUtils.closeResultSet(resultSet);
@@ -130,7 +134,7 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 	@Override
 	public Usuario create( Usuario u, Connection c)
 			throws DataException {
-		
+		logger.debug("Usuario = "+u);
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		StringBuilder queryString = null;
@@ -156,6 +160,7 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 			return u;
 
 		} catch (SQLException e) {
+			logger.warn(e.getMessage(), e);
 			throw new DataException(e);
 		} finally {
 			JDBCUtils.closeResultSet(resultSet);
@@ -166,7 +171,7 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 	@Override
 	public boolean update( Usuario u, Connection c) 
 			throws Exception {
-
+		logger.debug("Usuario = "+u);
 		PreparedStatement preparedStatement = null;
 		StringBuilder queryString = null;
 		try {          
@@ -229,6 +234,7 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 
 
 		} catch (SQLException ex) {
+			logger.warn(ex.getMessage(), ex);
 			throw new Exception(ex);
 		} finally {
 			JDBCUtils.closeStatement(preparedStatement);			
@@ -239,13 +245,10 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 
 	@Override
 	public   long delete( String email, Connection c) throws DataException {
-		// TODO Auto-generated method stub
-		
+		logger.debug("Email = "+email);
 		PreparedStatement preparedStatement = null;
 		StringBuilder queryString = null;
 		try {
-			
-
 			queryString = new StringBuilder("DELETE FROM USUARIO "
 					+ "WHERE EMAIL = ? ");
 
@@ -259,6 +262,7 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 			return removedRows;
 
 		} catch (SQLException e) {
+			logger.warn(e.getMessage(), e);
 			throw new DataException(e);
 		} finally {
 			JDBCUtils.closeStatement(preparedStatement);
@@ -291,6 +295,7 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 			}
 
 		} catch (SQLException e) {
+			logger.warn(e.getMessage(), e);
 			throw new DataException(e);
 		} finally {
 			JDBCUtils.closeResultSet(resultSet);
