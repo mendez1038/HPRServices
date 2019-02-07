@@ -8,126 +8,105 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import com.david.training.dao.ContenidoDAO;
 import com.david.training.dao.util.JDBCUtils;
 import com.david.training.exceptions.DataException;
+import com.david.training.model.Artista;
 import com.david.training.model.Categoria;
 import com.david.training.model.Contenido;
 import com.david.training.model.Pais;
 import com.david.training.model.ProductoCriteria;
 
 
-
 public class ContenidoDAOImpl implements ContenidoDAO{
-
-
 
 	public ContenidoDAOImpl() {
 
 	}
-	
+
 	public Contenido findPorId(Connection connection, Integer id)
-	throws Exception {
-
-Contenido c = null;
-PreparedStatement preparedStatement = null;
-ResultSet resultSet = null;
-StringBuilder sql = null;
-try{
-
-	//metodo connectionmanager
-
-	sql = new StringBuilder("SELECT C.ID_CONTENIDO, CI.TITULO, "
-			+ "C.RESTRICCION_EDAD, C.PORTADA, C.FECHA_LANZAMIENTO, "
-			+ "CI.DESCRIPCION_BREVE, C.PRECIO, C.PRECIO_DESCONTADO, "
-			+ "C.DURACION, C.ID_DESCUENTO, C.ID_TIPO_CONTENIDO, "
-			+ "D.PORCENTAJE "
-			+"FROM CONTENIDO C INNER JOIN DESCUENTO D ON C.ID_DESCUENTO = D.ID_DESCUENTO "
-			+ "INNER JOIN CONTENIDO_IDIOMA CI ON C.ID_CONTENIDO = CI.ID_CONTENIDO "
-			+"WHERE C.ID_CONTENIDO = ? ");
-
-	//STEP 4: Execute a query
-	System.out.println("Creating statement...");
-	preparedStatement = connection.prepareStatement(sql.toString(), ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-
-	// Establecer parametros
-	int i = 1;
-	preparedStatement.setInt(i++, id );
-////	preparedStatement.setString(i++, idioma);
-	resultSet = preparedStatement.executeQuery(); 
-
-	//STEP 5: Extract data from result set	
-	if (resultSet.next()) {
-		c = loadNext(resultSet);
-	} else {
-		throw new Exception("Non se encontrou o contenido "+id);
-	}
-
-} catch (SQLException ex) {
-	throw new DataException(ex);
-} finally {            
-	JDBCUtils.closeResultSet(resultSet);
-	JDBCUtils.closeStatement(preparedStatement);
-}
-return c;		
-}
-
-public Contenido findById(Connection connection, Integer id, String idioma)
 			throws Exception {
-				return null;
-//
-//		Contenido c = null;
-//		PreparedStatement preparedStatement = null;
-//		ResultSet resultSet = null;
-//		StringBuilder sql = null;
-//		try{
-//
-//			//metodo connectionmanager
-//
-//			sql = new StringBuilder("SELECT C.ID_CONTENIDO, CI.TITULO, C.RESTRICCION_EDAD, C.PORTADA, C.FECHA_LANZAMIENTO, CI.DESCRIPCION_BREVE, C.PRECIO, C.PRECIO_DESCONTADO, C.DURACION, C.ID_DESCUENTO, C.ID_TIPO_CONTENIDO "
-//					+"FROM CONTENIDO C INNER JOIN CONTENIDO_IDIOMA CI ON C.ID_CONTENIDO = CI.ID_CONTENIDO "
-//					+ ""
-//					+"WHERE C.ID_CONTENIDO = ? AND CI.ID_IDIOMA = ? ");
-//
-//			//STEP 4: Execute a query
-//			System.out.println("Creating statement...");
-//			preparedStatement = connection.prepareStatement(sql.toString(), ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-//
-//			// Establecer parametros
-//			int i = 1;
-//			preparedStatement.setInt(i++, id );
-//			preparedStatement.setString(i++, idioma);
-//			resultSet = preparedStatement.executeQuery(); 
-//
-//			//STEP 5: Extract data from result set	
-//			if (resultSet.next()) {
-//				c = loadNext(resultSet);
-//			} else {
-//				throw new Exception("Non se encontrou o contenido "+id);
-//			}
-//			if (resultSet.next()) {
-//				throw new Exception("Contenido"+id+" duplicado");
-//			}
-//
-//		} catch (SQLException ex) {
-//			throw new DataException(ex);
-//		} finally {            
-//			JDBCUtils.closeResultSet(resultSet);
-//			JDBCUtils.closeStatement(preparedStatement);
-//		}
-//		return c;		
+
+		Contenido c = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		StringBuilder sql = null;
+		try{
+			sql = new StringBuilder("SELECT C.ID_CONTENIDO, CI.TITULO, "
+					+ "C.RESTRICCION_EDAD, C.PORTADA, C.FECHA_LANZAMIENTO, "
+					+ "CI.DESCRIPCION_BREVE, C.PRECIO, C.PRECIO_DESCONTADO, "
+					+ "C.DURACION, C.ID_DESCUENTO, C.ID_TIPO_CONTENIDO, "
+					+ "D.PORCENTAJE "
+					+"FROM CONTENIDO C INNER JOIN DESCUENTO D ON C.ID_DESCUENTO = D.ID_DESCUENTO "
+					+ "INNER JOIN CONTENIDO_IDIOMA CI ON C.ID_CONTENIDO = CI.ID_CONTENIDO "
+					+"WHERE C.ID_CONTENIDO = ? ");
+
+			System.out.println("Creating statement...");
+			preparedStatement = connection.prepareStatement(sql.toString(), ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+
+			int i = 1;
+			preparedStatement.setInt(i++, id );
+			resultSet = preparedStatement.executeQuery(); 
+
+			if (resultSet.next()) {
+				c = loadNext(resultSet);
+			} else {
+				throw new Exception("Non se encontrou o contenido "+id);
+			}
+		} catch (SQLException ex) {
+			throw new DataException(ex);
+		} finally {            
+			JDBCUtils.closeResultSet(resultSet);
+			JDBCUtils.closeStatement(preparedStatement);
+		}
+		return c;		
 	}
 
+	public Contenido findById(Connection connection, Integer id, String idioma)
+			throws Exception {
+				
+				PreparedStatement preparedStatement = null;
+				ResultSet resultSet = null;
+				StringBuilder sql = null;
+				Contenido c = null;
+				try{
+					sql = new StringBuilder("SELECT C.ID_CONTENIDO, CI.TITULO, C.RESTRICCION_EDAD, C.PORTADA, C.FECHA_LANZAMIENTO, CI.DESCRIPCION_BREVE, C.PRECIO, C.PRECIO_DESCONTADO, C.DURACION, C.ID_DESCUENTO, C.ID_TIPO_CONTENIDO "
+							+"FROM CONTENIDO C INNER JOIN CONTENIDO_IDIOMA CI ON C.ID_CONTENIDO = CI.ID_CONTENIDO "
+							+ ""
+							+"WHERE C.ID_CONTENIDO = ? AND CI.ID_IDIOMA = ? ");
+					System.out.println("Creating statement...");
+					preparedStatement = connection.prepareStatement(sql.toString(), ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+		
+					int i = 1;
+					preparedStatement.setInt(i++, id );
+					preparedStatement.setString(i++, idioma);
+					resultSet = preparedStatement.executeQuery(); 
+					if (resultSet.next()) {
+						c = loadNext(resultSet);
+					} else {
+						throw new Exception("Non se encontrou o contenido "+id);
+					}
+					if (resultSet.next()) {
+						throw new Exception("Contenido"+id+" duplicado");
+					}
+		
+				} catch (SQLException ex) {
+					throw new DataException(ex);
+				} finally {            
+					JDBCUtils.closeResultSet(resultSet);
+					JDBCUtils.closeStatement(preparedStatement);
+				}
+				return c;		
+	}
 
 	public List<Contenido> findByTitulo(Connection connection, String title, String idioma) 
 			throws Exception {
 
-		
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		StringBuilder sql = null;
 		try {
-			
 			sql = new StringBuilder("SELECT C.ID_CONTENIDO, CI.TITULO, C.RESTRICCION_EDAD, C.PORTADA, C.FECHA_LANZAMIENTO, CI.DESCRIPCION_BREVE, C.PRECIO, C.PRECIO_DESCONTADO, C.DURACION, C.ID_DESCUENTO, C.ID_TIPO_CONTENIDO "  
 					+ "FROM CONTENIDO C INNER JOIN CONTENIDO_IDIOMA CI ON C.ID_CONTENIDO = CI.ID_CONTENIDO "
 					+ "WHERE "
@@ -152,19 +131,15 @@ public Contenido findById(Connection connection, Integer id, String idioma)
 			JDBCUtils.closeResultSet(resultSet);
 			JDBCUtils.closeStatement(preparedStatement);
 		} 
-
 	}
 
 	public Contenido create (Connection connection, Contenido c)
 			throws Exception {
 
-		
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		StringBuilder sql = null;
 		try {          
-
-
 			sql = new StringBuilder("INSERT INTO CONTENIDO(ID_CONTENIDO, TITULO, RESTRICCION_EDAD, "
 					+ "PORTADA, FECHA_LANZAMIENTO, DESCRIPCION_BREVE, PRECIO, DURACION, ID_DESCUENTO, ID_TIPO_CONTENIDO )"
 					+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
@@ -185,7 +160,7 @@ public Contenido findById(Connection connection, Integer id, String idioma)
 			int insertedRows = preparedStatement.executeUpdate();
 
 			if (insertedRows == 0) {
-				throw new SQLException("No se puede añadir fila a 'ARTISTA'");
+				throw new SQLException("No se puede añadir fila a 'CONTENIDO'");
 			}
 
 			return c;
@@ -196,8 +171,6 @@ public Contenido findById(Connection connection, Integer id, String idioma)
 			JDBCUtils.closeStatement(preparedStatement);			
 		}	
 	}
-
-
 
 	private Contenido loadNext(ResultSet resultSet) throws Exception {
 		Contenido c = new Contenido();
@@ -229,11 +202,30 @@ public Contenido findById(Connection connection, Integer id, String idioma)
 		c.setIdDescuento(idDescuento);
 		c.setTipoContenido(tipoContenido);
 		c.setPorcentaje(porcentaje);
+		return c;
+	}
+	private Contenido loadNext2(ResultSet resultSet) throws Exception {
+		Contenido c = new Contenido();
+		int i = 1;
+		
+		String titulo = resultSet.getString(i++);
+		String restriccionEdad = resultSet.getString(i++);
+		Date fechaLanzamiento = resultSet.getDate(i++);
+		Double precio = resultSet.getDouble(i++);
+		Integer duracion = resultSet.getInt(i++);
+		Integer idDescuento = resultSet.getInt(i++);
+		String tipoContenido = resultSet.getString(i++);
 
+		c = new Contenido();
 
-
-		//Descuento d = descuentoDAO.findById(i);
-		//c.se
+		c.setTitulo(titulo);
+		c.setRestriccionEdad(restriccionEdad);
+		c.setFechaLanzamiento(fechaLanzamiento);
+		c.setPrecio(precio);
+		c.setDuracion(duracion);
+		c.setIdDescuento(idDescuento);
+		c.setTipoContenido(tipoContenido);
+		
 		return c;
 	}
 
@@ -245,106 +237,119 @@ public Contenido findById(Connection connection, Integer id, String idioma)
 		StringBuilder queryString = null;
 
 		try {
-    
 			queryString = new StringBuilder(
-					"SELECT C.ID_CONTENIDO, C.RESTRICCION_EDAD, C.PORTADA, C.FECHA_LANZAMIENTO, , C.PRECIO, C.PRECIO_DECIMAL, C.PRECIO_DESCONTADO, C.DURACION, C.ID_DESCUENTO, C.ID_TIPO_CONTENIDO "
-					+ "CI.TITULO, CI.DESCRIPCION_BREVE " + 
-					" FROM CONTENIDO C INNER JOIN CONTENIDO_IDIOMA CI ON C.ID_CONTENIDO = CI.ID_CONTENIDO "
-					+ "WHERE I.ID_IDIOMA = ? ");
-			
+					"SELECT C.ID_CONTENIDO, C.RESTRICCION_EDAD, C.PORTADA, C.FECHA_LANZAMIENTO, C.PRECIO, C.PRECIO_DESCONTADO, C.DURACION, C.ID_DESCUENTO, C.ID_TIPO_CONTENIDO, "
+							+ "CI.TITULO, CI.DESCRIPCION_BREVE " + 
+							" FROM CONTENIDO C INNER JOIN CONTENIDO_IDIOMA CI ON C.ID_CONTENIDO = CI.ID_CONTENIDO ");
+
 			boolean first = true;
-			
+
 			if(!pc.getCategoria().isEmpty()) {
 				queryString.append(" INNER JOIN CONTENIDO_CATEGORIA CC on C.ID_CONTENIDO=CC.ID_CONTENIDO INNER JOIN CATEGORIA CA on CC.ID_CATEGORIA=CA.ID_CATEGORIA ");
 			}
-			
+
 			if(!pc.getPais().isEmpty()) {
 				queryString.append(" inner join pais_contenido pc on c.id_contenido=pc.id_contenido inner join pais p on pc.id_pais=c.id_pais ");
 			}
 			
-			if(pc.getIdDescuento()!=null) {
-				addClause(queryString, first, " C.ID_DESCUENTO = ? ");
-				first = false;}
-			
-			if(pc.getTipoContenido()!=null) {
-				addClause(queryString, first, " C.TIPO_CONTENIDO = ? ");
-				first = false;}
-			
-			
-			
+			if(pc.getA()!=null) {
+				queryString.append(" inner join contenido_rol_artista cra on c.id_contenido=cra.id_contenido inner join artista a on cra.id_artista=p.id_artista ");
+			}
 			if (pc.getTitulo()!=null) {
 				addClause(queryString, first, " UPPER(CI.TITULO) LIKE ? ");
 				first = false;
 			}
-			
+
 			if (pc.getRestriccionEdad()!=null) {
 				addClause(queryString, first, " C.RESTRICCION_EDAD = ? ");
 				first = false;
 			}
-			
-			
+
 			if (pc.getFechaLanzamiento()!=null) {
 				addClause(queryString, first, " C.FECHA_LANZAMIENTO = ? ");
 				first = false;
 			}
-			 
 			
 			if (pc.getPrecio()!=null) {
 				addClause(queryString, first, " C.PRECIO = ? ");
 				first = false;
 			}
-			
+
 			if (pc.getDuracion()!=null) {
 				addClause(queryString, first, " C.DURACION = ? ");
 				first = false;
 			}
 			
+			if(pc.getIdDescuento()!=null) {
+				addClause(queryString, first, " C.ID_DESCUENTO = ? ");
+				first = false;}
+
+			if(pc.getTipoContenido()!=null) {
+				addClause(queryString, first, " C.TIPO_CONTENIDO = ? ");
+				first = false;}
+
+			if(idioma!=null) {
+				addClause(queryString, first, "CI.ID_IDIOMA = ? ");
+				first = false;}
+
 			if (!pc.getCategoria().isEmpty()) {
 				addClause(queryString, first,addCategoria(pc.getCategoria()).toString());	
 				first = false;
 			}
-			
+
 			if (!pc.getPais().isEmpty()) {
 				addClause(queryString, first,addPais(pc.getPais()).toString());	
 				first = false;
 			}
 			
+			if (pc.getA()!=null) {
+				addClause(queryString, first,addArtista(pc.getA()).toString());	
+				first = false;
+			}
+
+
 			preparedStatement = connection.prepareStatement(queryString.toString(),
 					ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 
-			int i = 1;       
-			
-			preparedStatement.setInt(i++, pc.getIdDescuento());
-			preparedStatement.setString(i++, pc.getTipoContenido());
-			preparedStatement.setString(i++, "%" +  pc.getTitulo() + "%");
-			preparedStatement.setString(i++, pc.getRestriccionEdad());
-			preparedStatement.setDate(i++, new java.sql.Date(pc.getFechaLanzamiento().getTime()));
-			preparedStatement.setDouble(i++, pc.getPrecio());
-			preparedStatement.setInt(i++, pc.getDuracion());
-			
+			int i = 1;
+			if(pc.getTitulo()!=null) {
+				preparedStatement.setString(i++, "%" +  pc.getTitulo() + "%");}
+			if(pc.getRestriccionEdad()!=null) {
+				preparedStatement.setString(i++, pc.getRestriccionEdad());}
+			if(pc.getFechaLanzamiento()!=null) {
+				preparedStatement.setDate(i++, new java.sql.Date(pc.getFechaLanzamiento().getTime()));}
+			if(pc.getPrecio()!=null) {
+				preparedStatement.setDouble(i++, pc.getPrecio());}
+			if(pc.getDuracion()!=null) {
+			preparedStatement.setInt(i++, pc.getDuracion());}
+			if(pc.getIdDescuento()!=null) {
+				preparedStatement.setInt(i++, pc.getIdDescuento());}
+			if(pc.getTipoContenido()!=null) {
+			preparedStatement.setString(i++, pc.getTipoContenido());}								
+			preparedStatement.setString(i++, idioma);
+
 
 			resultSet = preparedStatement.executeQuery();
-			
+
 			List<Contenido> results = new ArrayList<Contenido>();                        
 			Contenido e = null;
-			
+
 			while (resultSet.next()) {
-				e=loadNext(resultSet);
+				e=loadNext2(resultSet);
 				results.add(e);	
 			}
 			return results;
-			} catch (SQLException e) {
-				throw new DataException(e);
-			} finally {
-				JDBCUtils.closeResultSet(resultSet);
-				JDBCUtils.closeStatement(preparedStatement);
+		} catch (SQLException e) {
+			throw new DataException(e);
+		} finally {
+			JDBCUtils.closeResultSet(resultSet);
+			JDBCUtils.closeStatement(preparedStatement);
 		}
 
 	}
 
 	@Override
 	public boolean update(Connection connection, Contenido d) throws Exception {
-
 		
 		PreparedStatement preparedStatement = null;
 		StringBuilder queryString = null;
@@ -352,18 +357,18 @@ public Contenido findById(Connection connection, Integer id, String idioma)
 			queryString = new StringBuilder("UPDATE CONTENIDO ");
 			boolean first = true;
 			if(d.getPrecioDescontado()!=null) {
-					addUpdate(queryString,first,"PRECIO_DESCONTADO = ? ");
-					first = false;
+				addUpdate(queryString,first,"PRECIO_DESCONTADO = ? ");
+				first = false;
 			}
-					queryString.append("WHERE ID_CONTENIDO = ? ");
+			queryString.append("WHERE ID_CONTENIDO = ? ");
 
 			preparedStatement = connection.prepareStatement(queryString.toString());
 
 			int i = 1;     			
 			if(d.getPrecioDescontado()!=null)
-			preparedStatement.setDouble(i++, d.getPrecioDescontado());
+				preparedStatement.setDouble(i++, d.getPrecioDescontado());
 			preparedStatement.setInt(i++, d.getIdContenido());
-			
+
 			int insertedRows = preparedStatement.executeUpdate();
 
 			if (insertedRows == 0) 
@@ -380,29 +385,25 @@ public Contenido findById(Connection connection, Integer id, String idioma)
 		} catch (SQLException ex) {
 			throw new DataException(ex);
 		} finally {
-			
+
 			JDBCUtils.closeStatement(preparedStatement);			
-			
+
 		}
 
 	}
-	
-	
-	
 
 	@Override
 	public long delete(Connection connection, Integer id) throws Exception {
-		
+
 		PreparedStatement preparedStatement = null;
 		StringBuilder queryString = null;
 
 		try {
-	
 			queryString = new StringBuilder("DELETE FROM CONTENIDO "
 					+ "WHERE ID_CONTENIDO = ? ");
 
 			preparedStatement = connection.prepareStatement(queryString.toString());
-
+			
 			int i =1;
 			preparedStatement.setInt(i++, id);
 
@@ -414,15 +415,13 @@ public Contenido findById(Connection connection, Integer id, String idioma)
 			throw new DataException(e);
 		} finally {
 			JDBCUtils.closeStatement(preparedStatement);
-			
+
 		}
-
-
 	}
 
 	@Override
 	public List<Contenido> anadirFavoritos(Connection connection, Integer idContenido) throws Exception {
-		
+
 		return null;
 	}
 
@@ -433,9 +432,6 @@ public Contenido findById(Connection connection, Integer id, String idioma)
 		ResultSet resultSet = null;
 		StringBuilder sql = null;
 		try{
-
-			//metodo connectionmanager
-
 			sql = new StringBuilder("SELECT C.ID_CONTENIDO, CI.TITULO, C.RESTRICCION_EDAD, C.PORTADA, C.FECHA_LANZAMIENTO, "
 					+ "CI.DESCRIPCION_BREVE, C.PRECIO, C.PRECIO_DESCONTADO, C.DURACION, C.ID_DESCUENTO, C.ID_TIPO_CONTENIDO, "
 					+ "D.PORCENTAJE "
@@ -446,11 +442,9 @@ public Contenido findById(Connection connection, Integer id, String idioma)
 					+"WHERE P.EMAIL = ? AND CI.ID_IDIOMA = ?"
 					+ "ORDER BY P.FECHA_PEDIDO DESC ");
 
-			//STEP 4: Execute a query
 			System.out.println("Creating statement...");
 			preparedStatement = connection.prepareStatement(sql.toString(), ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 
-			// Establecer parametros
 			int i = 1;
 			preparedStatement.setString(i++, email);
 			preparedStatement.setString(i++, idioma);
@@ -473,14 +467,11 @@ public Contenido findById(Connection connection, Integer id, String idioma)
 
 	@Override
 	public List<Contenido> findFavoritos(Connection connection, String email, String idioma) throws Exception {
-	
+
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		StringBuilder sql = null;
 		try{
-
-			//metodo connectionmanager
-
 			sql = new StringBuilder("SELECT C.ID_CONTENIDO, CI.TITULO, C.RESTRICCION_EDAD, C.PORTADA, C.FECHA_LANZAMIENTO, "
 					+ "CI.DESCRIPCION_BREVE, C.PRECIO, C.PRECIO_DESCONTADO, C.DURACION, C.ID_DESCUENTO, C.ID_TIPO_CONTENIDO, "
 					+ "D.PORCENTAJE "
@@ -516,7 +507,7 @@ public Contenido findById(Connection connection, Integer id, String idioma)
 	private void addClause(StringBuilder queryString, boolean first, String clause) {
 		queryString.append(first? "WHERE ": " AND ").append(clause);
 	}
-	
+
 	private StringBuilder addCategoria(List<Categoria> categorias) {
 		//Creamos la query en base al número de categorias que haya marcado el usuario
 		boolean inner = true;
@@ -527,9 +518,9 @@ public Contenido findById(Connection connection, Integer id, String idioma)
 		}
 		lista.append(" ) ");
 		return lista;
-		
+
 	}
-	
+
 	private StringBuilder addPais(List<Pais> paises) {
 		//Creamos la query en base al número de idioma que haya marcado el usuario
 		boolean inner = true;
@@ -541,9 +532,21 @@ public Contenido findById(Connection connection, Integer id, String idioma)
 		lista.append(" ) ");
 		return lista;
 	}
-	
+	private StringBuilder addArtista(Artista a) {
+		//Creamos la query en base al número de idioma que haya marcado el usuario
+		boolean inner = true;
+		StringBuilder lista = new StringBuilder();
+		 if(a != null) {
+			lista.append(inner ? " (P.NOMBRE_ARTISTA LIKE "+ a.getNombreArtista() : " OR " + a.getNombreArtista());
+			inner=false;	
+		}
+		lista.append(" ) ");
+		return lista;
+	}
+
 	private void addUpdate(StringBuilder queryString, boolean first, String clause) {
 		queryString.append(first? " SET ": " , ").append(clause);
 	}
 
+	
 }

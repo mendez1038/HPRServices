@@ -1,8 +1,5 @@
 package com.david.training.service;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import com.david.training.model.Usuario;
 import com.david.training.service.impl.UsuarioServiceImpl;
 

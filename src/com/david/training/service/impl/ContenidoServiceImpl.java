@@ -108,7 +108,6 @@ public class ContenidoServiceImpl implements ContenidoService{
 		c.setAutoCommit(false);
 		
 		List<Contenido> productos = dao.findByCriteria(c, producto, idioma);
-		
 		return productos;
 		
 		}catch(SQLException e) {

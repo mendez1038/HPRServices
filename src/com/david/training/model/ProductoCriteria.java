@@ -6,6 +6,7 @@ public class ProductoCriteria extends Contenido implements ValueObject{
 	
 	private List<Categoria> categoria=null;
 	private List<Pais> pais=null;
+	private Artista a = null;
 
 	public List<Categoria> getCategoria() {
 		return categoria;
@@ -26,5 +27,13 @@ public class ProductoCriteria extends Contenido implements ValueObject{
 
 	public ProductoCriteria () {
 		
+	}
+
+	public Artista getA() {
+		return a;
+	}
+
+	public void setA(Artista a) {
+		this.a = a;
 	}
 }

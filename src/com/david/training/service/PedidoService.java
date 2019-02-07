@@ -7,10 +7,10 @@ import com.david.training.model.Pedido;
 
 public interface PedidoService {
 	
-	
+	// Amosa os pedidos realizados polo usuario
 	public List<Pedido> historial(String email)
 			throws Exception;
-	
+	// Detalla o historial cos productos comprados en cada pedido
 	public List<LineaPedido> historialAmpliado(Integer id)
 			throws Exception;
 	
