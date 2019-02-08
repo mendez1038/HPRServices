@@ -7,6 +7,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.david.training.dao.PaisDAO;
 
 import com.david.training.dao.util.JDBCUtils;
@@ -17,9 +20,11 @@ import com.david.training.model.Pais;
 
 public class PaisDAOImpl implements PaisDAO{
 
+	public static Logger logger = LogManager.getLogger(PaisDAOImpl.class);
 	@Override
 	public Pais findById(Integer id, String idioma, Connection c) 
 			throws Exception {
+		logger.debug("Id = {} Idioma ={}", id, idioma);
 		Pais pa = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -31,9 +36,7 @@ public class PaisDAOImpl implements PaisDAO{
 					+"WHERE P.ID_PAIS = ? "
 					+"AND ID_IDIOMA = ? ");
 
-			System.out.println("Creating statement...");
 			preparedStatement = c.prepareStatement(sql.toString(), ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-
 
 			int i = 1;
 			preparedStatement.setInt(i++, id);
@@ -49,6 +52,7 @@ public class PaisDAOImpl implements PaisDAO{
 				throw new Exception("Pais "+id+" duplicado");
 			}
 		} catch (SQLException ex) {
+			logger.warn(ex.getMessage(),ex);
 			throw new DataException(ex);
 		} finally { 
 			JDBCUtils.closeResultSet(resultSet);
@@ -83,12 +87,10 @@ public class PaisDAOImpl implements PaisDAO{
 					+ "FROM PAIS P "
 					+ "INNER JOIN PAIS_IDIOMA PI ON PI.ID_PAIS = P.ID_PAIS "
 					+ "WHERE ID_IDIOMA = ? ");
-			System.out.println("Creating statement...");
 			preparedStatement = c.prepareStatement(sql.toString(), ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 
 			int i= 1;
 			preparedStatement.setString(i++, idioma);
-
 			resultSet = preparedStatement.executeQuery();
 
 			List<Pais> paises = new ArrayList<Pais>();
@@ -98,6 +100,7 @@ public class PaisDAOImpl implements PaisDAO{
 				paises.add(p);
 			} return paises;
 		} catch (SQLException ex) {
+			logger.warn(ex.getMessage(),ex);
 			throw new DataException(ex);
 		} finally {            
 			JDBCUtils.closeResultSet(resultSet);
@@ -106,9 +109,5 @@ public class PaisDAOImpl implements PaisDAO{
 		} 
 
 	}
-
-
-
-
 
 }

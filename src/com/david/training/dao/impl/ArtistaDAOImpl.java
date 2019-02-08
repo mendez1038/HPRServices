@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.david.training.dao.ArtistaDAO;
 
 import com.david.training.dao.util.JDBCUtils;
@@ -19,29 +22,28 @@ import com.david.training.model.Artista;
 
 public class ArtistaDAOImpl implements ArtistaDAO {
 
-	@Override
+	public static Logger logger = LogManager.getLogger(ArtistaDAOImpl.class);
+	
+	public ArtistaDAOImpl() {
+		
+	}
 	public Artista findById(Integer id, Connection c) throws Exception {
-		// TODO Auto-generated method stub
+		logger.debug("Id = {}",id);
 		Artista  a = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		StringBuilder sql = null;
 		try{
-
 			sql = new StringBuilder("SELECT ID_ARTISTA, NOMBRE_ARTISTA, FECHA_NACIMIENTO "
 					+"FROM ARTISTA "
 					+"WHERE ID_ARTISTA = ? ");
 
-			//STEP 4: Execute a query
-			System.out.println("Creating statement...");
 			preparedStatement = c.prepareStatement(sql.toString(), ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 
-			// Establecer parametros
 			int i = 1;
 			preparedStatement.setInt(i++, id );
 			resultSet = preparedStatement.executeQuery(); 
 
-			//STEP 5: Extract data from result set	
 			if (resultSet.next()) {
 				a = loadNext(resultSet);
 			} else {
@@ -53,6 +55,7 @@ public class ArtistaDAOImpl implements ArtistaDAO {
 
 
 		} catch (SQLException ex) {
+			logger.warn(ex.getMessage(), ex);
 			throw new DataException(ex);
 		} finally {            
 			JDBCUtils.closeResultSet(resultSet);
@@ -65,7 +68,7 @@ public class ArtistaDAOImpl implements ArtistaDAO {
 
 	@Override
 	public List<Artista> findByNombre(String title, Connection c) throws Exception {
-
+		logger.debug("Nombre = {}", title);
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		StringBuilder sql = null;
@@ -75,7 +78,6 @@ public class ArtistaDAOImpl implements ArtistaDAO {
 					+ "FROM ARTISTA "
 					+ "WHERE "
 					+ "NOMBRE_ARTISTA LIKE ? ");
-			System.out.println("Creating statement...");
 			preparedStatement = c.prepareStatement(sql.toString(), ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 
 			int i= 1;
@@ -89,6 +91,7 @@ public class ArtistaDAOImpl implements ArtistaDAO {
 				artistas.add(a);
 			} return artistas;
 		} catch (SQLException ex) {
+			logger.warn(ex.getMessage(),ex);
 			throw new DataException(ex);
 		} finally {            
 			JDBCUtils.closeResultSet(resultSet);
@@ -125,7 +128,6 @@ public class ArtistaDAOImpl implements ArtistaDAO {
 							+"FROM ARTISTA ");
 
 			// Preparar a query
-			System.out.println("Creating statement...");
 			preparedStatement = c.prepareStatement(sql.toString(), ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 
 			resultSet = preparedStatement.executeQuery();			
@@ -143,6 +145,7 @@ public class ArtistaDAOImpl implements ArtistaDAO {
 			return results;
 
 		} catch (SQLException ex) {
+			logger.warn(ex.getMessage(), ex);
 			throw new DataException(ex);
 		} finally {            
 			JDBCUtils.closeResultSet(resultSet);
@@ -153,7 +156,7 @@ public class ArtistaDAOImpl implements ArtistaDAO {
 
 	
 	public Artista create(Artista a, Connection c) throws Exception {
-
+		logger.debug("Artista = {}", a);
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		StringBuilder sql = null;
@@ -161,7 +164,6 @@ public class ArtistaDAOImpl implements ArtistaDAO {
 
 			sql = new StringBuilder("INSERT INTO ARTISTA(NOMBRE_ARTISTA, FECHA_NACIMIENTO) "
 					+ "VALUES (?, ?)");
-			System.out.println("Creating statement...");
 			preparedStatement = c.prepareStatement(sql.toString(), Statement.RETURN_GENERATED_KEYS);
 			int i = 1;
 
@@ -176,6 +178,7 @@ public class ArtistaDAOImpl implements ArtistaDAO {
 
 			return a;
 		} catch (SQLException ex) {
+			logger.warn(ex.getMessage(),ex);
 			throw new DataException(ex);
 		} finally {
 			JDBCUtils.closeResultSet(resultSet);

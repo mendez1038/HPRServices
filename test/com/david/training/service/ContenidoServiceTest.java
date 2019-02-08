@@ -97,10 +97,10 @@ public class ContenidoServiceTest {
 
 	public static void main(String[] args) {
 		ContenidoServiceTest test = new ContenidoServiceTest();
-		//test.testMiLista();
+		test.testMiLista();
 		//test.testFavoritos();
 		//test.testPrecioDescontado();
-		test.testBusquedaEstructurada();
+		//test.testBusquedaEstructurada();
 	}
 
 }

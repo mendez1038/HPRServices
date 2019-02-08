@@ -29,7 +29,7 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 	@Override
 	public Usuario findByEmail( String email, Connection c) 
 			throws DataException {
-		logger.debug("email = "+email);
+		logger.debug("email = {}", email);
 		Usuario e = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -97,7 +97,7 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 
 	@Override
 	public Boolean exists( String email, Connection c) throws DataException  {
-		logger.debug("Email = "+email);
+		logger.debug("Email = {}", email);
 		boolean exist = false;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -134,7 +134,7 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 	@Override
 	public Usuario create( Usuario u, Connection c)
 			throws DataException {
-		logger.debug("Usuario = "+u);
+		logger.debug("Usuario = {}",u);
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		StringBuilder queryString = null;
@@ -171,7 +171,7 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 	@Override
 	public boolean update( Usuario u, Connection c) 
 			throws Exception {
-		logger.debug("Usuario = "+u);
+		logger.debug("Usuario = {}",u);
 		PreparedStatement preparedStatement = null;
 		StringBuilder queryString = null;
 		try {          
@@ -245,7 +245,7 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 
 	@Override
 	public   long delete( String email, Connection c) throws DataException {
-		logger.debug("Email = "+email);
+		logger.debug("Email = {}",email);
 		PreparedStatement preparedStatement = null;
 		StringBuilder queryString = null;
 		try {

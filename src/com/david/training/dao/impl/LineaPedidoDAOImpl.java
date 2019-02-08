@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.david.training.dao.LineaPedidoDAO;
 
@@ -19,9 +21,13 @@ import com.david.training.model.LineaPedido;
 
 public class LineaPedidoDAOImpl implements LineaPedidoDAO{
 
+	public static Logger logger = LogManager.getLogger(LineaPedidoDAOImpl.class);
+	public LineaPedidoDAOImpl() {
+		
+	}
 	@Override
 	public LineaPedido findById(Connection c, Integer idp, Integer idc) throws DataException {
-		
+		logger.debug("Id Pedido = {} Id Contenido = {}", idp, idc);
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		StringBuilder queryString = null;
@@ -51,6 +57,7 @@ public class LineaPedidoDAOImpl implements LineaPedidoDAO{
 			return lp;
 
 		} catch (SQLException e) {
+			logger.warn(e.getMessage(),e);
 			throw new DataException(e);
 		} finally {            
 			JDBCUtils.closeResultSet(resultSet);
@@ -61,7 +68,7 @@ public class LineaPedidoDAOImpl implements LineaPedidoDAO{
 
 	@Override
 	public List<LineaPedido> findByPedido(Connection c,  Integer idPedido) throws DataException {
-
+		logger.debug("Id = {}", idPedido);
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		StringBuilder queryString = null;
@@ -91,6 +98,7 @@ public class LineaPedidoDAOImpl implements LineaPedidoDAO{
 			return results;
 
 		} catch (SQLException e) {
+			logger.warn(e.getMessage(),e);
 			throw new DataException(e);
 		} finally {
 			JDBCUtils.closeResultSet(resultSet);
@@ -100,7 +108,7 @@ public class LineaPedidoDAOImpl implements LineaPedidoDAO{
 
 	@Override
 	public LineaPedido create(Connection c,  LineaPedido lp) throws DataException {
-		
+		logger.debug("Linea Pedido = {}", lp);
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		StringBuilder queryString = null;
@@ -124,6 +132,7 @@ public class LineaPedidoDAOImpl implements LineaPedidoDAO{
 
 			return lp;
 		} catch (SQLException ex) {
+			logger.warn(ex.getMessage(),ex);
 			throw new DataException(ex);
 		} finally {
 			JDBCUtils.closeResultSet(resultSet);
@@ -133,7 +142,7 @@ public class LineaPedidoDAOImpl implements LineaPedidoDAO{
 
 	@Override
 	public long delete(Connection c, Integer idPedido, Integer idContenido) throws DataException {
-		 
+		 logger.debug("Id pedido = {} Id contenido = {}", idPedido, idContenido);
 		PreparedStatement preparedStatement = null;
 		StringBuilder queryString = null;
 		try {
@@ -154,6 +163,7 @@ public class LineaPedidoDAOImpl implements LineaPedidoDAO{
 			return removedRows;
 
 		} catch (SQLException e) {
+			logger.warn(e.getMessage(),e);
 			throw new DataException(e);
 		} finally {
 			JDBCUtils.closeStatement(preparedStatement);

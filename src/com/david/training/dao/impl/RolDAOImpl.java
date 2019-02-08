@@ -7,6 +7,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.david.training.dao.RolDAO;
 import com.david.training.dao.util.JDBCUtils;
 import com.david.training.exceptions.DataException;
@@ -15,8 +18,11 @@ import com.david.training.model.Rol;
 
 public class RolDAOImpl implements RolDAO{
 
+	public static Logger logger = LogManager.getLogger(RolDAOImpl.class);
+
 	@Override
 	public Rol findById(String id, String idioma, Connection c) throws Exception {
+		logger.debug("Id = {} Idioma = {}", id, idioma);
 		Rol r = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -29,9 +35,7 @@ public class RolDAOImpl implements RolDAO{
 					+"WHERE R.ID_ROL = ? "
 					+"AND I.ID_IDIOMA = ? ");
 
-			System.out.println("Creating statement...");
 			preparedStatement = c.prepareStatement(sql.toString(), ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-
 
 			int i = 1;
 			preparedStatement.setString(i++, id);
@@ -47,6 +51,7 @@ public class RolDAOImpl implements RolDAO{
 				throw new Exception("Pais "+id+" duplicado");
 			}
 		} catch (SQLException ex) {
+			logger.warn(ex.getMessage(), ex);
 			throw new DataException(ex);
 		} finally { 
 			JDBCUtils.closeResultSet(resultSet);
@@ -59,6 +64,7 @@ public class RolDAOImpl implements RolDAO{
 
 	@Override
 	public List<Rol> findByNombre(String nombre, String idioma, Connection c) throws Exception {
+		logger.debug("Nombre = {} Idioma = {}", nombre, idioma);
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		StringBuilder sql = null;
@@ -71,7 +77,7 @@ public class RolDAOImpl implements RolDAO{
 					+ "WHERE "
 					+ "IR.NOMBRE_ROL LIKE ? "
 					+ "AND I.ID_IDIOMA = ? ");
-			System.out.println("Creating statement...");
+			
 			preparedStatement = c.prepareStatement(sql.toString(), ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 
 			int i= 1;
@@ -87,6 +93,7 @@ public class RolDAOImpl implements RolDAO{
 				roles.add(r);
 			} return roles;
 		} catch (SQLException ex) {
+			logger.warn(ex.getMessage(), ex);
 			throw new DataException(ex);
 		} finally {            
 			JDBCUtils.closeResultSet(resultSet);

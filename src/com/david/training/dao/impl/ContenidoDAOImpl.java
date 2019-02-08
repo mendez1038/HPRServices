@@ -31,7 +31,7 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 
 	public Contenido findPorId(Connection connection, Integer id)
 			throws Exception {
-		logger.debug("Id: "+id);
+		logger.debug("Id = {} ",id);
 		Contenido c = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -69,7 +69,7 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 
 	public Contenido findById(Connection connection, Integer id, String idioma)
 			throws Exception {
-				logger.debug("Id = {0} idioma = {1)", id, idioma);
+				logger.debug("Id = {} idioma = {)", id, idioma);
 				PreparedStatement preparedStatement = null;
 				ResultSet resultSet = null;
 				StringBuilder sql = null;
@@ -77,7 +77,6 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 				try{
 					sql = new StringBuilder("SELECT C.ID_CONTENIDO, CI.TITULO, C.RESTRICCION_EDAD, C.PORTADA, C.FECHA_LANZAMIENTO, CI.DESCRIPCION_BREVE, C.PRECIO, C.PRECIO_DESCONTADO, C.DURACION, C.ID_DESCUENTO, C.ID_TIPO_CONTENIDO "
 							+"FROM CONTENIDO C INNER JOIN CONTENIDO_IDIOMA CI ON C.ID_CONTENIDO = CI.ID_CONTENIDO "
-							+ ""
 							+"WHERE C.ID_CONTENIDO = ? AND CI.ID_IDIOMA = ? ");
 					System.out.println("Creating statement...");
 					preparedStatement = connection.prepareStatement(sql.toString(), ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
@@ -108,7 +107,7 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 
 	public Contenido create (Connection connection, Contenido c)
 			throws Exception {
-		logger.debug("Contenido = {0}", c);
+		logger.debug("Contenido = {}", c);
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		StringBuilder sql = null;
@@ -338,7 +337,7 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 
 	@Override
 	public boolean update(Connection connection, Contenido d) throws Exception {
-		logger.debug("Contenido = {0}", d);
+		logger.debug("Contenido = {}", d);
 		PreparedStatement preparedStatement = null;
 		StringBuilder queryString = null;
 		try {          
@@ -383,7 +382,7 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 
 	@Override
 	public long delete(Connection connection, Integer id) throws Exception {
-		logger.debug("Id = {0}", id);
+		logger.debug("Id = {}", id);
 		PreparedStatement preparedStatement = null;
 		StringBuilder queryString = null;
 
@@ -417,7 +416,7 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 
 	@Override
 	public List<Contenido> findLista(Connection connection, String email, String idioma) throws Exception {
-		logger.debug("Email = {0} Idioma = {1}", email, idioma);
+		logger.debug("Email = {} Idioma = {}", email, idioma);
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		StringBuilder sql = null;
@@ -457,7 +456,7 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 
 	@Override
 	public List<Contenido> findFavoritos(Connection connection, String email, String idioma) throws Exception {
-		logger.debug("Email = {0} Idioma = {1}", email, idioma);
+		logger.debug("Email = {} Idioma = {}", email, idioma);
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		StringBuilder sql = null;

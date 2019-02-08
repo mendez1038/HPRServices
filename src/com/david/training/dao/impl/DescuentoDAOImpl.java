@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.david.training.dao.DescuentoDAO;
 import com.david.training.dao.util.ConnectionManager;
 import com.david.training.dao.util.JDBCUtils;
@@ -18,14 +21,14 @@ import com.david.training.model.Descuento;
 
 public class DescuentoDAOImpl implements DescuentoDAO{
 
-
+	public static Logger logger = LogManager.getLogger(DescuentoDAOImpl.class);
 	public DescuentoDAOImpl() {
 
 	}
 
 	public Descuento findById(Integer id, String idioma, Connection c)
 			throws Exception {
-
+		logger.debug("Id = {} Idioma = {}", id, idioma);
 		Descuento d = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -37,16 +40,12 @@ public class DescuentoDAOImpl implements DescuentoDAO{
 					+ "INNER JOIN IDIOMA I ON DI.ID_IDIOMA = I.ID_IDIOMA "
 					+"WHERE D.ID_DESCUENTO = ? AND I.ID_IDIOMA = ? ");
 
-			//STEP 4: Execute a query
-
-			System.out.println("Creating statement...");
 			preparedStatement = c.prepareStatement(sql.toString(), ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			// Establecer parametros
 			int i = 1;
 			preparedStatement.setInt(i++, id );
 			preparedStatement.setString(i++, idioma);
 			resultSet = preparedStatement.executeQuery(); 
-
 			//STEP 5: Extract data from result set	
 			if (resultSet.next()) {
 				d = loadNext(resultSet);
@@ -57,6 +56,7 @@ public class DescuentoDAOImpl implements DescuentoDAO{
 				throw new Exception("Descuento"+id+" duplicado");
 			}
 		} catch (SQLException ex) {
+			logger.warn(ex.getMessage(),ex);
 			throw new DataException(ex);
 		} finally {            
 			JDBCUtils.closeResultSet(resultSet);
@@ -70,7 +70,7 @@ public class DescuentoDAOImpl implements DescuentoDAO{
 
 	public Descuento create (Descuento d)
 			throws Exception {
-
+		logger.debug("Descuento = {}", d);
 		Connection connection = null; 
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -105,6 +105,7 @@ public class DescuentoDAOImpl implements DescuentoDAO{
 			}
 			return d;
 		} catch (SQLException ex) {
+			logger.warn(ex.getMessage(),ex);
 			throw new DataException(ex);
 		} finally {
 			JDBCUtils.closeResultSet(resultSet);
@@ -138,6 +139,7 @@ public class DescuentoDAOImpl implements DescuentoDAO{
 
 
 	public long delete(Integer id) throws Exception {
+		logger.debug("Id = {}", id);
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		StringBuilder queryString = null;
@@ -158,6 +160,7 @@ public class DescuentoDAOImpl implements DescuentoDAO{
 			return removedRows;
 
 		} catch (SQLException e) {
+			logger.warn(e.getMessage(),e);
 			throw new DataException(e);
 		} finally {
 			JDBCUtils.closeStatement(preparedStatement);
@@ -167,7 +170,7 @@ public class DescuentoDAOImpl implements DescuentoDAO{
 
 
 	public boolean update(Descuento d) throws Exception {
-
+		logger.debug("Descuento = {}", d);
 		Connection connection = null; 
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -202,10 +205,9 @@ public class DescuentoDAOImpl implements DescuentoDAO{
 			} 
 			else { return true;}
 
-			//...
-
-
+		
 		} catch (SQLException ex) {
+			logger.warn(ex.getMessage(),ex);
 			throw new DataException(ex);
 		} finally {
 			JDBCUtils.closeResultSet(resultSet);
@@ -226,8 +228,6 @@ public class DescuentoDAOImpl implements DescuentoDAO{
 					"SELECT D.ID_DESCUENTO, D.PORCENTAJE, DI.NOMBRE_OFERTA,  D.FECHA_INICIO, D.FECHA_FIN "
 							+"FROM DESCUENTO D INNER JOIN DESCUENTO_IDIOMA DI ON D.ID_DESCUENTO = DI.ID_DESCUENTO");
 
-			// Preparar a query
-			System.out.println("Creating statement...");
 			preparedStatement = c.prepareStatement(sql.toString(), ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 
 			resultSet = preparedStatement.executeQuery();			
@@ -245,6 +245,7 @@ public class DescuentoDAOImpl implements DescuentoDAO{
 			return results;
 
 		} catch (SQLException ex) {
+			logger.warn(ex.getMessage(),ex);
 			throw new DataException(ex);
 		} finally {            
 			JDBCUtils.closeResultSet(resultSet);
@@ -255,6 +256,7 @@ public class DescuentoDAOImpl implements DescuentoDAO{
 	@Override
 	public List<Descuento> findByPorcentaje(Integer porcentaje, String idioma, Connection c) 
 			throws Exception {
+		logger.debug("Porcentaje = {} Idioma = {}", porcentaje, idioma);
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		StringBuilder sql = null;
@@ -263,11 +265,8 @@ public class DescuentoDAOImpl implements DescuentoDAO{
 					"SELECT D.ID_DESCUENTO, D.PORCENTAJE, DI.NOMBRE_OFERTA,  D.FECHA_INICIO, D.FECHA_FIN "
 					+"FROM DESCUENTO D INNER JOIN DESCUENTO_IDIOMA DI ON D.ID_DESCUENTO = DI.ID_DESCUENTO "
 					+ "WHERE D.PORCENTAJE = ? AND DI.ID_IDIOMA = ? ");
-			System.out.println("Creating statement...");
-
 			preparedStatement = c.prepareStatement(sql.toString(), ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 
-			
 			int i = 1;
 			preparedStatement.setInt(i++, porcentaje );
 			preparedStatement.setString(i++, idioma);
@@ -285,6 +284,7 @@ public class DescuentoDAOImpl implements DescuentoDAO{
 			} 
 			return results;
 		} catch (SQLException ex) {
+			logger.warn(ex.getMessage(),ex);
 			throw new DataException(ex);
 		} finally {
 			JDBCUtils.closeResultSet(resultSet);

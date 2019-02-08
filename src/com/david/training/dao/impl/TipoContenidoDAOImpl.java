@@ -7,6 +7,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.david.training.dao.TipoContenidoDAO;
 import com.david.training.dao.util.JDBCUtils;
 import com.david.training.exceptions.DataException;
@@ -15,8 +18,11 @@ import com.david.training.model.TipoContenido;
 
 public class TipoContenidoDAOImpl implements TipoContenidoDAO{
 
+	public static Logger logger = LogManager.getLogger(ContenidoDAOImpl.class);
+
 	@Override
 	public TipoContenido findById(String id, String idioma, Connection c) throws Exception {
+		logger.debug("Id = {} Idioma = {}", id, idioma);
 		TipoContenido tc = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -29,7 +35,6 @@ public class TipoContenidoDAOImpl implements TipoContenidoDAO{
 					+"WHERE TC.ID_TIPO_CONTENIDO = ? "
 					+"AND I.ID_IDIOMA = ? ");
 
-			System.out.println("Creating statement...");
 			preparedStatement = c.prepareStatement(sql.toString(), ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 
 
@@ -47,6 +52,7 @@ public class TipoContenidoDAOImpl implements TipoContenidoDAO{
 				throw new Exception("Pais "+id+" duplicado");
 			}
 		} catch (SQLException ex) {
+			logger.warn(ex.getMessage(),ex);
 			throw new DataException(ex);
 		} finally { 
 			JDBCUtils.closeResultSet(resultSet);
@@ -58,11 +64,11 @@ public class TipoContenidoDAOImpl implements TipoContenidoDAO{
 
 	@Override
 	public List<TipoContenido> findByNombre(String nombre, String idioma, Connection c) throws Exception {
+		logger.debug("Nombre = {} Idioma = {}", nombre, idioma);
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		StringBuilder sql = null;
 		try {
-
 			sql = new StringBuilder("SELECT TC.ID_TIPO_CONTENIDO, TCI.NOMBRE_CONTENIDO "
 					+ "FROM TIPO_CONTENIDO  TC "
 					+ "INNER JOIN TIPO_CONTENIDO_IDIOMA TCI ON TCI.ID_TIPO_CONTENIDO = TC.ID_TIPO_CONTENIDO "
@@ -70,7 +76,7 @@ public class TipoContenidoDAOImpl implements TipoContenidoDAO{
 					+ "WHERE "
 					+ "TCI.NOMBRE_CONTENIDO LIKE ? "
 					+ "AND I.ID_IDIOMA = ? ");
-			System.out.println("Creating statement...");
+
 			preparedStatement = c.prepareStatement(sql.toString(), ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 
 			int i= 1;
@@ -86,6 +92,7 @@ public class TipoContenidoDAOImpl implements TipoContenidoDAO{
 				tipos.add(tc);
 			} return tipos;
 		} catch (SQLException ex) {
+			logger.warn(ex.getMessage(),ex);
 			throw new DataException(ex);
 		} finally {            
 			JDBCUtils.closeResultSet(resultSet);
