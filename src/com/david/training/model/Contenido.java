@@ -133,7 +133,7 @@ public class Contenido extends AbstractValueObject  implements Comparable<Conten
 	@Override
 	public int compareTo(Contenido c) {
 		
-		System.out.println("Comparando " +this.titulo+ " con" + c.getTitulo());
+		
 		return this.getFechaLanzamiento().compareTo(c.getFechaLanzamiento());
 	}
 
@@ -167,10 +167,8 @@ public class Contenido extends AbstractValueObject  implements Comparable<Conten
 	
 
 	/*	for (Usuario: usuarios) {
-	*		System.out.println(u.getNombre());
 	*	}
 	*	for (int i =0; i<usuarios.size(); i++) {
-	*		System.out.println(usuarios.get(i).getNombre());
 	*	}
 	*/	
 

@@ -3,7 +3,11 @@ package com.david.training.service.impl;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.david.training.dao.UsuarioDAO;
+import com.david.training.dao.impl.ContenidoDAOImpl;
 import com.david.training.dao.impl.UsuarioDAOImpl;
 import com.david.training.dao.util.ConnectionManager;
 import com.david.training.dao.util.JDBCUtils;
@@ -15,6 +19,7 @@ import com.david.training.util.PasswordEncryptionUtil;
 public class UsuarioServiceImpl implements UsuarioService{
 
 	private UsuarioDAO dao = null;
+	public static Logger logger = LogManager.getLogger(ContenidoDAOImpl.class);
 	public UsuarioServiceImpl() {
 		dao = new UsuarioDAOImpl();
 	}
@@ -34,7 +39,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 		commit = true;
 		return u;
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.warn(e.getMessage(),e);
 			throw e;
 		} finally {
 			JDBCUtils.closeConnection(c, commit);
@@ -54,7 +59,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 		commit = true;
 		
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.warn(e.getMessage(),e);
 			throw e;
 		} finally {
 			JDBCUtils.closeConnection(c, commit);
@@ -75,7 +80,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 		commit = true;
 		return commit;
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.warn(e.getMessage(),e);
 			throw e;
 		} finally {
 			JDBCUtils.closeConnection(c, commit);
@@ -95,7 +100,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 		//commit =true;
 		return u;
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.warn(e.getMessage(),e);
 			throw e;
 		} finally {
 			JDBCUtils.closeConnection(c, commit);

@@ -5,6 +5,7 @@ import java.util.List;
 import com.david.training.model.LineaPedido;
 import com.david.training.model.Pedido;
 
+
 public interface PedidoService {
 	
 	// Amosa os pedidos realizados polo usuario
@@ -14,7 +15,12 @@ public interface PedidoService {
 	public List<LineaPedido> historialAmpliado(Integer id)
 			throws Exception;
 	
-	public List<LineaPedido> carrito (LineaPedido lp)
+	public Pedido carrito (Pedido p)
 			throws Exception;
+	public LineaPedido carritoAmplidado(LineaPedido lp)
+			throws Exception;
+	void eliminarLineaPedido(Integer idPedido, Integer idContenido) 
+			throws Exception;
+	
 
 }

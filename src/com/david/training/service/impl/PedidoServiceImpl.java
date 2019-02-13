@@ -4,8 +4,12 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.david.training.dao.LineaPedidoDAO;
 import com.david.training.dao.PedidoDAO;
+import com.david.training.dao.impl.ContenidoDAOImpl;
 import com.david.training.dao.impl.LineaPedidoDAOImpl;
 import com.david.training.dao.impl.PedidoDAOImpl;
 import com.david.training.dao.util.ConnectionManager;
@@ -14,10 +18,13 @@ import com.david.training.model.LineaPedido;
 import com.david.training.model.Pedido;
 import com.david.training.service.PedidoService;
 
+
+
 public class PedidoServiceImpl implements PedidoService{
 	
 	private PedidoDAO dao = null;
 	private LineaPedidoDAO daoLp = null;
+	public static Logger logger = LogManager.getLogger(ContenidoDAOImpl.class);
 	
 	public PedidoServiceImpl() {
 		dao = new PedidoDAOImpl();
@@ -36,19 +43,83 @@ public class PedidoServiceImpl implements PedidoService{
 			commit = true; 
 			return historial;
 		}  catch (SQLException e) {
-			e.printStackTrace();
+			logger.warn(e.getMessage(),e);
 			throw e;
 		} finally {
 			JDBCUtils.closeConnection(c, commit);
 			}
 		
 	}
+	
+	@Override
+	public Pedido carrito(Pedido p) throws Exception {
+		boolean commit=false;
+		Connection c=null;
+		try {
+		c=ConnectionManager.getConnection();
+		c.setAutoCommit(false);
+		
+		p = dao.create(c,p);
+
+		commit=true;
+		
+		return p;
+		
+		}catch(SQLException ed) {
+			ed.printStackTrace();
+			throw ed;
+		}finally {
+			JDBCUtils.closeConnection(c, commit);
+		}
+	}
 
 	@Override
-	public List<LineaPedido> carrito(LineaPedido lp) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+	public LineaPedido carritoAmplidado(LineaPedido lp) throws Exception {
+		boolean commit=false;
+		Connection c=null;
+		try {
+		c=ConnectionManager.getConnection();
+		c.setAutoCommit(false);
+		
+		lp = daoLp.create(c,lp);
+
+		commit=true;
+		
+		return lp;
+		
+		}catch(SQLException ed) {
+			ed.printStackTrace();
+			throw ed;
+		}finally {
+			JDBCUtils.closeConnection(c, commit);
+		}
 	}
+	
+	@Override
+	public void eliminarLineaPedido(Integer idPedido, Integer idContenido) throws Exception {
+		boolean commit=false;
+		Connection c=null;
+		try {
+	          
+            c = ConnectionManager.getConnection();
+
+            c.setAutoCommit(false);
+
+            daoLp.delete(c,idPedido, idContenido);
+            commit = true;
+            
+        } catch (SQLException ed) {
+            throw new Exception(ed);
+
+        } finally {
+        	JDBCUtils.closeConnection(c, commit);
+        }
+		
+	}
+
+
+	
+	
 
 	@Override
 	public List<LineaPedido> historialAmpliado(Integer id) throws Exception {
@@ -62,7 +133,7 @@ public class PedidoServiceImpl implements PedidoService{
 			commit = true; 
 			return ampliacion;
 		}  catch (SQLException e) {
-			e.printStackTrace();
+			logger.warn(e.getMessage(),e);
 			throw e;
 		} finally {
 			JDBCUtils.closeConnection(c, commit);

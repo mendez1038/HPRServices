@@ -2,14 +2,17 @@ package com.david.training.service.impl;
 
 import org.apache.commons.mail.DefaultAuthenticator;
 import org.apache.commons.mail.HtmlEmail;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
+import com.david.training.dao.impl.ContenidoDAOImpl;
 import com.david.training.service.MailService;
 
 
 
 
 public class MailServiceImpl implements MailService{
-	
+	public static Logger logger = LogManager.getLogger(ContenidoDAOImpl.class);
 	public MailServiceImpl() {
 		
 	}
@@ -36,7 +39,7 @@ public class MailServiceImpl implements MailService{
 			  email.send();
 			  
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(),e);
 			
 		}
 			

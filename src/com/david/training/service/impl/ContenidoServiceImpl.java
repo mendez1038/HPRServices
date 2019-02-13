@@ -4,6 +4,9 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.david.training.dao.ContenidoDAO;
 import com.david.training.dao.impl.ContenidoDAOImpl;
 import com.david.training.dao.util.ConnectionManager;
@@ -16,7 +19,7 @@ import com.david.training.service.ContenidoService;
 public class ContenidoServiceImpl implements ContenidoService{
 	
 	private ContenidoDAO dao = null;
-	
+	public static Logger logger = LogManager.getLogger(ContenidoDAOImpl.class);
 	public ContenidoServiceImpl()  {
 		dao = new ContenidoDAOImpl();
 	}
@@ -33,7 +36,8 @@ public class ContenidoServiceImpl implements ContenidoService{
 			commit = true; 
 			return lista;
 		}  catch (SQLException e) {
-			e.printStackTrace();
+			logger.warn(e.getMessage(),e);
+			
 			throw e;
 		} finally {
 			JDBCUtils.closeConnection(c, commit);
@@ -53,7 +57,7 @@ public class ContenidoServiceImpl implements ContenidoService{
 			commit = true; 
 			return favoritos;
 		}  catch (SQLException e) {
-			e.printStackTrace();
+			logger.warn(e.getMessage(),e);
 			throw e;
 		} finally {
 			JDBCUtils.closeConnection(c, commit);
@@ -73,7 +77,7 @@ public class ContenidoServiceImpl implements ContenidoService{
 			
 			return precioDescontado;
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.warn(e.getMessage(),e);
 			throw e;
 		} finally {
 			JDBCUtils.closeConnection(connection, commit);
@@ -91,7 +95,7 @@ public class ContenidoServiceImpl implements ContenidoService{
 			commit = true;
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.warn(e.getMessage(),e);
 			throw e;
 		} finally {
 			JDBCUtils.closeConnection(connection, commit);
@@ -111,7 +115,7 @@ public class ContenidoServiceImpl implements ContenidoService{
 		return productos;
 		
 		}catch(SQLException e) {
-			e.printStackTrace();
+			logger.warn(e.getMessage(),e);
 			throw e;
 		}finally {
 			JDBCUtils.closeConnection(c, commit);
