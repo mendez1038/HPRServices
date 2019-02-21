@@ -25,9 +25,6 @@ public interface ContenidoDAO {
 	public long delete (Connection c, Integer id)
 			throws Exception;
 	
-	public List<Contenido> anadirFavoritos(Connection connection, Integer idContenido)
-			throws Exception;
-	
 	public List<Contenido> findLista(Connection connection, String email, String idioma) 
 			throws Exception;
 	

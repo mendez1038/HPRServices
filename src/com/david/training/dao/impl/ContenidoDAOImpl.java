@@ -409,12 +409,6 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 	}
 
 	@Override
-	public List<Contenido> anadirFavoritos(Connection connection, Integer idContenido) throws Exception {
-
-		return null;
-	}
-
-	@Override
 	public List<Contenido> findLista(Connection connection, String email, String idioma) throws Exception {
 		logger.debug("Email = {} Idioma = {}", email, idioma);
 		PreparedStatement preparedStatement = null;

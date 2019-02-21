@@ -11,6 +11,7 @@ import com.david.training.dao.impl.ContenidoDAOImpl;
 import com.david.training.dao.impl.UsuarioDAOImpl;
 import com.david.training.dao.util.ConnectionManager;
 import com.david.training.dao.util.JDBCUtils;
+import com.david.training.model.Favorito;
 import com.david.training.model.Usuario;
 import com.david.training.service.MailService;
 import com.david.training.service.UsuarioService;
@@ -107,10 +108,6 @@ public class UsuarioServiceImpl implements UsuarioService{
 			}
 	}
 
-	
-
-	
-
 	@Override
 	public Usuario signIn(String email, String contrasena) throws Exception {
 		
@@ -124,6 +121,49 @@ public class UsuarioServiceImpl implements UsuarioService{
 			return u;
 		}
 		return null;
+	}
+
+	@Override
+	public Favorito añadirFavorito(Favorito f) throws Exception {
+		boolean commit = false;
+		Connection c = null;
+		try {
+		c = ConnectionManager.getConnection();
+		c.setAutoCommit(false);
+		if (dao.existsFavorito(f.getEmail(), f.getIdContenido(), c)) {
+			f = dao.updateFavoritos(f, c);
+		} else {
+		f = dao.createFavoritos(c, f);
+		}
+		commit = true;
+		return f;
+		} catch (SQLException e) {
+			logger.warn(e.getMessage(),e);
+			throw e;
+		} finally {
+			JDBCUtils.closeConnection(c, commit);
+			}
+	}
+
+	@Override
+	public void eliminarFavorito(Favorito f) throws Exception {
+		boolean commit = false;
+		Connection c = null;
+		try {
+
+		c = ConnectionManager.getConnection();
+		c.setAutoCommit(false);
+		dao.updateFavoritos(f, c);
+		commit = true;
+		
+		} catch (SQLException e) {
+			logger.warn(e.getMessage(),e);
+			throw e;
+		} finally {
+			JDBCUtils.closeConnection(c, commit);
+			}
+		
+		
 	}
 
 }

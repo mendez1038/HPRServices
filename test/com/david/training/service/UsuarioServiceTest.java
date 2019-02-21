@@ -1,5 +1,6 @@
 package com.david.training.service;
 
+import com.david.training.model.Favorito;
 import com.david.training.model.Usuario;
 import com.david.training.service.impl.UsuarioServiceImpl;
 
@@ -85,6 +86,36 @@ public class UsuarioServiceTest {
 			e.printStackTrace();
 		}
 	}
+	
+	public void testEliminarFavoritos() {
+		try {
+			Favorito f = new Favorito();
+			f.setFavorito(false);
+			f.setEmail("aa@a.com");
+			f.setIdContenido(4);;
+			servicio.eliminarFavorito(f);
+			System.out.println(f);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	
+	public void testAñadirFavoritos()   {
+		try {
+			Favorito f = new Favorito();
+			
+			f.setEmail("aa@a.com");
+			f.setIdContenido(5);
+			f.setFavorito(true);
+			
+			servicio.añadirFavorito(f);
+			System.out.println(f);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	
+	
 
 	public static void main(String args[]) {
 		
@@ -93,8 +124,9 @@ public class UsuarioServiceTest {
 			//test.testSignIn();
 			//test.testFindByEmail();
 			//test.testEditProfile();
-			test.testRemoveAccount();
-		
+			//test.testRemoveAccount();
+			//test.testEliminarFavoritos();
+			test.testAñadirFavoritos();
 	}
 	
 }

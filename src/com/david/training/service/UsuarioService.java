@@ -2,6 +2,7 @@ package com.david.training.service;
 
 
 
+import com.david.training.model.Favorito;
 import com.david.training.model.Usuario;
 
 public interface UsuarioService {
@@ -19,5 +20,11 @@ public interface UsuarioService {
 			throws Exception;
 
 	public Usuario findByEmail(String email)
+			throws Exception;
+	
+	public Favorito añadirFavorito(Favorito f)
+			throws Exception;
+	
+	public void eliminarFavorito(Favorito f)
 			throws Exception;
 }

@@ -6,14 +6,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Date;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import com.david.training.dao.UsuarioDAO;
-
 import com.david.training.dao.util.JDBCUtils;
 import com.david.training.exceptions.DataException;
+import com.david.training.model.Favorito;
 import com.david.training.model.Usuario;
 import com.david.training.util.PasswordEncryptionUtil;
 
@@ -23,7 +21,6 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 
 	public static Logger logger = LogManager.getLogger(UsuarioDAOImpl.class);
 	public UsuarioDAOImpl () {
-
 	}
 
 	@Override
@@ -39,7 +36,6 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 					"SELECT EMAIL, CONTRASENA, NOMBRE, APELLIDOS, GENERO, FECHA_NACIMIENTO, TELEFONO " +
 							"FROM USUARIO  " +
 					"WHERE EMAIL = ? ");
-
 
 			logger.debug(queryString);;
 			preparedStatement = c.prepareStatement(queryString.toString(),
@@ -57,7 +53,6 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 			} if (resultSet.next()) {
 				throw new DataException("Usuario con email  "+email+" duplicado");
 			}
-
 			return e;
 
 		} catch (SQLException e1) {
@@ -65,10 +60,8 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 			throw new DataException(e1);
 		} finally {
 			JDBCUtils.closeResultSet(resultSet);
-			JDBCUtils.closeStatement(preparedStatement);
-			
+			JDBCUtils.closeStatement(preparedStatement);			
 		}
-
 	}
 
 	private Usuario loadNext( ResultSet resultSet) 
@@ -103,7 +96,6 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 		ResultSet resultSet = null;
 		StringBuilder queryString = null;
 		try {
-
 			queryString = new StringBuilder("SELECT EMAIL, CONTRASENA, NOMBRE, APELLIDOS, GENERO, FECHA_NACIMIENTO, TELEFONO " + 
 					"FROM USUARIO  "  + 
 					"WHERE EMAIL = ? ");
@@ -126,9 +118,7 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 			JDBCUtils.closeResultSet(resultSet);
 			JDBCUtils.closeStatement(preparedStatement);
 		}
-
 		return exist;
-
 	}
 
 	@Override
@@ -154,7 +144,6 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 			if (insertedRows == 0) {
 				throw new SQLException("Can not add row to table 'Usuario'");
 			}
-
 
 			// Return the DTO
 			return u;
@@ -306,6 +295,113 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 	
 	private void addUpdate(StringBuilder queryString, boolean first, String clause) {
 		queryString.append(first? " SET ": " , ").append(clause);
+	}
+	
+
+	@Override
+	public Favorito createFavoritos(Connection connection, Favorito f) throws Exception {
+		
+		logger.debug("Favorito = {}",f);
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		StringBuilder queryString = null;
+		try {
+		queryString = new StringBuilder("INSERT INTO USUARIO_CONTENIDO(EMAIL, ID_CONTENIDO, FAVORITO) "
+					+ "VALUES (?,?,1)");
+
+			preparedStatement = connection.prepareStatement(queryString.toString(), Statement.RETURN_GENERATED_KEYS);
+
+			int i = 1;
+			preparedStatement.setString(i++, f.getEmail());
+			preparedStatement.setInt(i++, f.getIdContenido());
+			
+			// Execute query
+			int insertedRows = preparedStatement.executeUpdate();
+
+			if (insertedRows == 0) {
+				throw new SQLException("Can not add row to table 'Usuario_Contenido'");
+			}
+
+
+			// Return the DTO
+			return f;
+
+		} catch (SQLException e) {
+			logger.warn(e.getMessage(), e);
+			throw new DataException(e);
+		} finally {
+			JDBCUtils.closeResultSet(resultSet);
+			JDBCUtils.closeStatement(preparedStatement);
+			}
+	}
+
+	@Override
+	public Favorito updateFavoritos(Favorito f, Connection c) throws DataException {
+		logger.debug("Favorito = {} ", f);
+		PreparedStatement preparedStatement = null;
+		StringBuilder queryString = null;
+		try {          
+			queryString = new StringBuilder("UPDATE USUARIO_CONTENIDO "
+					+ "SET FAVORITO = ? "
+					+ "WHERE EMAIL= ? AND ID_CONTENIDO = ? ");
+
+			preparedStatement = c.prepareStatement(queryString.toString());
+
+			int i = 1;  
+			preparedStatement.setBoolean(i++, f.getFavorito());
+			preparedStatement.setString(i++, f.getEmail());
+			preparedStatement.setInt(i++, f.getIdContenido());
+			
+			@SuppressWarnings("unused")
+			int insertedRows = preparedStatement.executeUpdate();
+			 return f;
+
+
+		} catch (SQLException ex) {
+			logger.warn(ex.getMessage(), ex);
+			try {
+				throw new DataException(ex);
+		} finally {
+			JDBCUtils.closeStatement(preparedStatement);			
+		}
+		}
+	}
+
+	@Override
+	public Boolean existsFavorito(String email, Integer idContenido, Connection c) throws Exception {
+		logger.debug("Email = {} IdContenido = {}", email, idContenido);
+		boolean exist = false;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		StringBuilder queryString = null;
+		try {
+
+			queryString = new StringBuilder("SELECT EMAIL, ID_CONTENIDO, FAVORITO " + 
+					"FROM USUARIO_CONTENIDO "
+					+ "WHERE EMAIL = ? AND ID_CONTENIDO = ?");
+
+			preparedStatement = c.prepareStatement(queryString.toString());
+
+			int i = 1;
+			preparedStatement.setString(i++, email);
+			preparedStatement.setInt(i++, idContenido);
+
+			
+			resultSet = preparedStatement.executeQuery();
+
+			if (resultSet.next()) {
+				exist = true;
+			}
+
+		} catch (SQLException e) {
+			logger.warn(e.getMessage(), e);
+			throw new DataException(e);
+		} finally {
+			JDBCUtils.closeResultSet(resultSet);
+			JDBCUtils.closeStatement(preparedStatement);
+		}
+
+		return exist;
 	}
 	
 

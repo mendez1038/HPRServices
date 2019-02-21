@@ -70,6 +70,7 @@ public class ContenidoDAOTest {
 	
 	public void testDelete()	
 			throws Exception{
+		@SuppressWarnings("unused")
 		long x;
 		Connection connection = ConnectionManager.getConnection();
 		
@@ -81,10 +82,10 @@ public class ContenidoDAOTest {
 	
 	public void testFindByCriteria()
 			throws Exception{
-		Connection connection = ConnectionManager.getConnection();
+		
 		ProductoCriteria pc = new ProductoCriteria();
 		Categoria ca = new Categoria();
-		List<Categoria> categorias = new ArrayList();
+		List<Categoria> categorias = new ArrayList<Categoria>();
 		ca.setIdCategoria(1);
 		categorias.add(ca);
 		pc.setCategoria(categorias);

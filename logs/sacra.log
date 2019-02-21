@@ -1,12 +1,16 @@
-2019-02-08 00:19:11.057 DEBUG UsuarioDAOImpl.update:174 - Usuario = Email: d.mendez_97@hotmail.com, Contraseña: hidden , Nombre: null, Apellidos: null, Genero: F, Fecha de nacimiento: null y Telefono: null
-2019-02-08 00:20:38.649 DEBUG UsuarioDAOImpl.delete:248 - Email = zz@z.com
-2019-02-08 00:20:54.335 DEBUG UsuarioDAOImpl.delete:248 - Email = tt@t.com
-2019-02-08 00:21:16.978 DEBUG UsuarioDAOImpl.delete:248 - Email = ss@s.com
-2019-02-08 00:21:24.665 DEBUG UsuarioDAOImpl.delete:248 - Email = ss@s.com
-2019-02-08 00:21:35.843 DEBUG UsuarioDAOImpl.delete:248 - Email = ss@s.com
-2019-02-08 00:25:36.218 DEBUG UsuarioDAOImpl.delete:248 - Email = rr@r.com
-2019-02-08 00:38:57.874 DEBUG ContenidoDAOImpl.findByCriteria:184 - Producto = com.david.training.model.ProductoCriteria@165b2f7f[categoria=[com.david.training.model.Categoria@470a696f[idCategoria=13,nombreCategoria=<null>]],pais=[],a=<null>,idContenido=<null>,titulo=<null>,restriccionEdad=<null>,portada=<null>,fechaLanzamiento=<null>,descripcionBreve=<null>,precio=<null>,precioDescontado=<null>,duracion=<null>,idDescuento=<null>,tipoContenido=<null>,porcentaje=<null>] Idioma = en
-2019-02-08 00:39:12.567 DEBUG ContenidoDAOImpl.findPorId:34 - Id = 102 
-2019-02-08 00:39:12.700 DEBUG ContenidoDAOImpl.update:340 - Contenido = com.david.training.model.Contenido@21005f6c[idContenido=102,titulo=<null>,restriccionEdad=<null>,portada=<null>,fechaLanzamiento=<null>,descripcionBreve=<null>,precio=<null>,precioDescontado=0.75,duracion=<null>,idDescuento=<null>,tipoContenido=<null>,porcentaje=<null>]
-2019-02-08 00:39:31.608 DEBUG ContenidoDAOImpl.findFavoritos:459 - Email = EE@E.com Idioma = en
-2019-02-08 00:39:47.662 DEBUG ContenidoDAOImpl.findLista:419 - Email = aa@a.com Idioma = en
+2019-02-21 00:13:22.078 DEBUG UsuarioDAOImpl.updateFavoritos:340 - Favorito = com.david.training.model.Favorito@1252b961 
+2019-02-21 00:13:22.115 WARN  UsuarioDAOImpl.updateFavoritos:365 - Can not uppdate row to table 'USUARIO_CONTENIDO'
+java.sql.SQLException: Can not uppdate row to table 'USUARIO_CONTENIDO'
+	at com.david.training.dao.impl.UsuarioDAOImpl.updateFavoritos(UsuarioDAOImpl.java:359) [bin/:?]
+	at com.david.training.service.impl.UsuarioServiceImpl.eliminarFavorito(UsuarioServiceImpl.java:156) [bin/:?]
+	at com.david.training.service.UsuarioServiceTest.testEliminarFavoritos(UsuarioServiceTest.java:96) [bin/:?]
+	at com.david.training.service.UsuarioServiceTest.main(UsuarioServiceTest.java:112) [bin/:?]
+2019-02-21 00:14:44.803 DEBUG UsuarioDAOImpl.updateFavoritos:340 - Favorito = com.david.training.model.Favorito@1252b961 
+2019-02-21 00:20:51.455 DEBUG UsuarioDAOImpl.updateFavoritos:340 - Favorito = com.david.training.model.Favorito@277f7dd3[email=aa@a.com,idContenido=4,favorito=false] 
+2019-02-21 00:23:25.168 DEBUG UsuarioDAOImpl.existsFavorito:373 - Email = aa@a.com IdContenido = 4
+2019-02-21 00:23:25.275 DEBUG UsuarioDAOImpl.updateFavoritos:340 - Favorito = com.david.training.model.Favorito@6d366c9b[email=aa@a.com,idContenido=4,favorito=true] 
+2019-02-21 00:23:53.271 DEBUG UsuarioDAOImpl.updateFavoritos:340 - Favorito = com.david.training.model.Favorito@7d3430a7[email=aa@a.com,idContenido=4,favorito=false] 
+2019-02-21 00:24:35.065 DEBUG UsuarioDAOImpl.existsFavorito:373 - Email = aa@a.com IdContenido = 4
+2019-02-21 00:24:35.127 DEBUG UsuarioDAOImpl.updateFavoritos:340 - Favorito = com.david.training.model.Favorito@6d366c9b[email=aa@a.com,idContenido=4,favorito=true] 
+2019-02-21 00:25:06.586 DEBUG UsuarioDAOImpl.existsFavorito:373 - Email = aa@a.com IdContenido = 5
+2019-02-21 00:25:06.653 DEBUG UsuarioDAOImpl.createFavoritos:304 - Favorito = com.david.training.model.Favorito@6d366c9b[email=aa@a.com,idContenido=5,favorito=true]

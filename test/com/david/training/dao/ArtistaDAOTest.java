@@ -1,12 +1,9 @@
 package com.david.training.dao;
 
 import java.sql.Connection;
-import java.util.Date;
 import java.util.List;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import com.david.training.dao.ArtistaDAO;
 import com.david.training.dao.impl.ArtistaDAOImpl;
 import com.david.training.dao.impl.ContenidoDAOImpl;

@@ -1,38 +1,47 @@
 package com.david.training.service;
 
-import java.util.Date;
+import com.david.training.model.Usuario;
+import com.david.training.service.impl.MailServiceImpl;
 
-import com.david.training.model.Contenido;
 
 
 public class MailServiceTest {
 	
-	public static void main(String args[]) {
+	public static void main(String args[]) throws Exception {
 		
-		Contenido u1 = new Contenido();
-		u1.setIdContenido(1);
-		u1.setFechaLanzamiento(new Date());
-		
-		Contenido u2 = new Contenido();
-		u2.setIdContenido(1);
-		u2.setFechaLanzamiento(new Date());
+		Usuario u1 = new Usuario();
+		u1.setEmail("varelavazquez.pablo@gmail.com");
+		u1.setNombre("Pepe");
+		u1.setApellidos("Perez");
 		
 		
 		
+		Usuario u2 = new Usuario();
+		u2.setEmail("joseantoniolp.teacher@gmail.com");
+		u2.setNombre("Jose Antonio");
+		u2.setApellidos("Lopez");
+
+		Usuario[] usuarios = new Usuario[2];
+		usuarios[0] = u1;
+		usuarios[1] = u2;
 		
-		String mensaje=
-				
-				
-				"<html>"
-				+ "<body>"
-				+ "<p> Hola estas invitado para unirte a Fantsy Basketball Game, empezara con el partido "
-				+ u1.getIdContenido()+ " con equipos "+u1.getIdContenido()+" y "+u2.getIdContenido()
-				+ "<br> a las "+u1.getFechaLanzamiento()+" ¡Bienvenido!"
-				+ "</body"
-				+ "</html>";
-		String asunto ="Invitación";
-		String url="";
-		String para[]= new String[] {""};
+		MailService mailService = new MailServiceImpl();
+		
+		for (@SuppressWarnings("unused") Usuario u :usuarios) {
+			String mensaje=			
+					"<html>"
+					+ "<body>"
+					+ "<p> Hola estas invitado para unirte a Fantsy Basketball Game, empezara con el partido "
+					+ u1.getEmail()+ " con equipos "+u1.getApellidos()+" y "+u2.getEmail()
+					+ "<br> a las "+u1.getApellidos()+" ¡Bienvenido!"
+					+ "</body"
+					+ "</html>";
+			String asunto ="Invitación";
+			String para[]= new String[] {""};
+			
+			mailService.sendEmail(mensaje, asunto, para);
+		}
+		
 		
 	}
 

@@ -23,6 +23,7 @@ public class MyCompanyException extends Exception {
 		super(message,cause);		
 	}			
 	
+	
 	public void printStackTrace() {
 		if (getCause()!=null) {
 			getCause().printStackTrace();
