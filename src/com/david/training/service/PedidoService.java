@@ -3,6 +3,7 @@ package com.david.training.service;
 import java.util.List;
 
 import com.david.training.model.LineaPedido;
+import com.david.training.model.LineaPedidoId;
 import com.david.training.model.Pedido;
 
 
@@ -19,7 +20,7 @@ public interface PedidoService {
 			throws Exception;
 	public LineaPedido carritoAmplidado(LineaPedido lp)
 			throws Exception;
-	void eliminarLineaPedido(Integer idPedido, Integer idContenido) 
+	void eliminarLineaPedido(LineaPedidoId id) 
 			throws Exception;
 	
 

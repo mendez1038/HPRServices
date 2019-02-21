@@ -13,9 +13,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.david.training.dao.ArtistaDAO;
-
 import com.david.training.dao.util.JDBCUtils;
 import com.david.training.exceptions.DataException;
+import com.david.training.exceptions.InstanceNotFoundException;
 import com.david.training.model.Artista;
 
 
@@ -27,7 +27,8 @@ public class ArtistaDAOImpl implements ArtistaDAO {
 	public ArtistaDAOImpl() {
 		
 	}
-	public Artista findById(Integer id, Connection c) throws Exception {
+	public Artista findById(Integer id, Connection c) 
+			throws InstanceNotFoundException, DataException {
 		logger.debug("Id = {}",id);
 		Artista  a = null;
 		PreparedStatement preparedStatement = null;
@@ -47,10 +48,8 @@ public class ArtistaDAOImpl implements ArtistaDAO {
 			if (resultSet.next()) {
 				a = loadNext(resultSet);
 			} else {
-				throw new Exception("Non se encontrou o artista "+id);
-			}
-			if (resultSet.next()) {
-				throw new Exception("Artista "+id+" duplicado");
+				throw new InstanceNotFoundException("Artista with id " + id + 
+						"not found", Artista.class.getName());
 			}
 
 
@@ -67,7 +66,8 @@ public class ArtistaDAOImpl implements ArtistaDAO {
 	}
 
 	@Override
-	public List<Artista> findByNombre(String title, Connection c) throws Exception {
+	public List<Artista> findByNombre(String title, Connection c) 
+			throws DataException {
 		logger.debug("Nombre = {}", title);
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -99,7 +99,8 @@ public class ArtistaDAOImpl implements ArtistaDAO {
 		} 
 	}
 
-	private Artista loadNext(ResultSet resultSet) throws Exception {
+	private Artista loadNext(ResultSet resultSet) 
+			throws SQLException, DataException  {
 		Artista a = new Artista();
 		int i = 1;
 		Integer idArtista = resultSet.getInt(i++);
@@ -116,7 +117,8 @@ public class ArtistaDAOImpl implements ArtistaDAO {
 	}
 
 	@Override
-	public List<Artista> findAll(Connection c) throws Exception {
+	public List<Artista> findAll(Connection c) 
+			throws DataException {
 
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;

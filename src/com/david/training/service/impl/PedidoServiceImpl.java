@@ -15,6 +15,7 @@ import com.david.training.dao.impl.PedidoDAOImpl;
 import com.david.training.dao.util.ConnectionManager;
 import com.david.training.dao.util.JDBCUtils;
 import com.david.training.model.LineaPedido;
+import com.david.training.model.LineaPedidoId;
 import com.david.training.model.Pedido;
 import com.david.training.service.PedidoService;
 
@@ -96,7 +97,7 @@ public class PedidoServiceImpl implements PedidoService{
 	}
 	
 	@Override
-	public void eliminarLineaPedido(Integer idPedido, Integer idContenido) throws Exception {
+	public void eliminarLineaPedido(LineaPedidoId id) throws Exception {
 		boolean commit=false;
 		Connection c=null;
 		try {
@@ -105,7 +106,7 @@ public class PedidoServiceImpl implements PedidoService{
 
             c.setAutoCommit(false);
 
-            daoLp.delete(c,idPedido, idContenido);
+            daoLp.delete(c, id);
             commit = true;
             
         } catch (SQLException ed) {

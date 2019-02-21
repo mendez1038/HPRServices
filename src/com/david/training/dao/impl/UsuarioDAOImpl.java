@@ -11,9 +11,13 @@ import org.apache.logging.log4j.Logger;
 import com.david.training.dao.UsuarioDAO;
 import com.david.training.dao.util.JDBCUtils;
 import com.david.training.exceptions.DataException;
+import com.david.training.exceptions.DuplicateInstanceException;
+import com.david.training.exceptions.InstanceNotFoundException;
 import com.david.training.model.Favorito;
 import com.david.training.model.Usuario;
 import com.david.training.util.PasswordEncryptionUtil;
+
+
 
 
 
@@ -123,7 +127,7 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 
 	@Override
 	public Usuario create( Usuario u, Connection c)
-			throws DataException {
+			throws DuplicateInstanceException, DataException {
 		logger.debug("Usuario = {}",u);
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -159,7 +163,7 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 
 	@Override
 	public boolean update( Usuario u, Connection c) 
-			throws Exception {
+			throws InstanceNotFoundException, DataException {
 		logger.debug("Usuario = {}",u);
 		PreparedStatement preparedStatement = null;
 		StringBuilder queryString = null;
@@ -213,18 +217,22 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 			preparedStatement.setString(i++, u.getEmail());
 
 
-			int insertedRows = preparedStatement.executeUpdate();
+			int updatedRows = preparedStatement.executeUpdate();
 
-			if (insertedRows == 0) 
-			{
-				throw new SQLException("Can not uppdate row to table 'USUARIO'");
-			} 
+			if (updatedRows == 0) {
+				throw new InstanceNotFoundException(u.getEmail(), Usuario.class.getName());
+			}
+
+			if (updatedRows > 1) {
+				throw new SQLException("Duplicate row for id = '" + 
+						u.getEmail() + "' in table 'Usuario'");
+			}  
 			 return true;
 
 
 		} catch (SQLException ex) {
 			logger.warn(ex.getMessage(), ex);
-			throw new Exception(ex);
+			throw new DataException(ex);
 		} finally {
 			JDBCUtils.closeStatement(preparedStatement);			
 		}
@@ -233,7 +241,7 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 	}
 
 	@Override
-	public   long delete( String email, Connection c) throws DataException {
+	public   long delete( String email, Connection c) throws InstanceNotFoundException, DataException {
 		logger.debug("Email = {}",email);
 		PreparedStatement preparedStatement = null;
 		StringBuilder queryString = null;
@@ -246,8 +254,11 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 			int i =1;
 			preparedStatement.setString(i++, email);
 
-			long removedRows = preparedStatement.executeUpdate(); 
+			int removedRows = preparedStatement.executeUpdate();
 
+			if (removedRows == 0) {
+				throw new InstanceNotFoundException(email, Usuario.class.getName());
+			} 
 			return removedRows;
 
 		} catch (SQLException e) {
@@ -262,7 +273,7 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 
 	@Override
 	public long countAll(Connection c) 
-			throws Exception {
+			throws DataException {
  
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -299,7 +310,8 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 	
 
 	@Override
-	public Favorito createFavoritos(Connection connection, Favorito f) throws Exception {
+	public Favorito createFavoritos(Connection connection, Favorito f) 
+			throws DuplicateInstanceException, DataException {
 		
 		logger.debug("Favorito = {}",f);
 		PreparedStatement preparedStatement = null;
@@ -336,7 +348,8 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 	}
 
 	@Override
-	public Favorito updateFavoritos(Favorito f, Connection c) throws DataException {
+	public Favorito updateFavoritos(Favorito f, Connection c) 
+			throws InstanceNotFoundException, DataException {
 		logger.debug("Favorito = {} ", f);
 		PreparedStatement preparedStatement = null;
 		StringBuilder queryString = null;
@@ -352,23 +365,32 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 			preparedStatement.setString(i++, f.getEmail());
 			preparedStatement.setInt(i++, f.getIdContenido());
 			
-			@SuppressWarnings("unused")
-			int insertedRows = preparedStatement.executeUpdate();
+			int updatedRows = preparedStatement.executeUpdate();
+
+			if (updatedRows == 0) {
+				throw new InstanceNotFoundException(f.getEmail(), Usuario.class.getName());
+			}
+
+			if (updatedRows > 1) {
+				throw new SQLException("Duplicate row for email = '" + 
+						f.getEmail() + "' in table 'Usuario_contenido'");
+			}     
+			
 			 return f;
 
 
 		} catch (SQLException ex) {
 			logger.warn(ex.getMessage(), ex);
-			try {
-				throw new DataException(ex);
+			throw new DataException(ex);
 		} finally {
 			JDBCUtils.closeStatement(preparedStatement);			
 		}
-		}
+		
 	}
 
 	@Override
-	public Boolean existsFavorito(String email, Integer idContenido, Connection c) throws Exception {
+	public Boolean existsFavorito(String email, Integer idContenido, Connection c) 
+			throws DataException {
 		logger.debug("Email = {} IdContenido = {}", email, idContenido);
 		boolean exist = false;
 		PreparedStatement preparedStatement = null;

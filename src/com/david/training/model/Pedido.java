@@ -1,5 +1,7 @@
 package com.david.training.model;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 
 
@@ -10,8 +12,10 @@ public  class Pedido extends AbstractValueObject{
 	private Double precioTotal = null;
 	private String email = null;
 	
+	private List<LineaPedido> lineas = null;
+	
 	public Pedido() {
-		
+		lineas = new ArrayList<LineaPedido>();
 	}
 
 	public Double getPrecioTotal() {
@@ -46,6 +50,15 @@ public  class Pedido extends AbstractValueObject{
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
+	public List<LineaPedido> getLineas() {
+		return lineas;
+	}
+
+	public void setLineas(List<LineaPedido> lineas) {
+		this.lineas = lineas;
+	}
+	
 	
 //	@Override
 //	public String toString() {

@@ -11,10 +11,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.david.training.dao.PaisDAO;
-
 import com.david.training.dao.util.JDBCUtils;
 import com.david.training.exceptions.DataException;
-
+import com.david.training.exceptions.InstanceNotFoundException;
 import com.david.training.model.Pais;
 
 
@@ -23,7 +22,7 @@ public class PaisDAOImpl implements PaisDAO{
 	public static Logger logger = LogManager.getLogger(PaisDAOImpl.class);
 	@Override
 	public Pais findById(Integer id, String idioma, Connection c) 
-			throws Exception {
+			throws InstanceNotFoundException, DataException {
 		logger.debug("Id = {} Idioma ={}", id, idioma);
 		Pais pa = null;
 		PreparedStatement preparedStatement = null;
@@ -46,10 +45,8 @@ public class PaisDAOImpl implements PaisDAO{
 			if (resultSet.next()) {
 				pa = loadNext(resultSet);
 			} else {
-				throw new Exception("No se encontró pais con id:"+id);			
-			} 
-			if (resultSet.next()) {
-				throw new Exception("Pais "+id+" duplicado");
+				throw new InstanceNotFoundException("Pais with id " + id + 
+						"not found", Pais.class.getName());
 			}
 		} catch (SQLException ex) {
 			logger.warn(ex.getMessage(),ex);
@@ -61,7 +58,7 @@ public class PaisDAOImpl implements PaisDAO{
 		return pa;
 
 	}
-	private Pais loadNext(ResultSet resultSet) throws Exception {
+	private Pais loadNext(ResultSet resultSet) throws SQLException, DataException {
 
 		int i = 1;
 		Integer idPais = resultSet.getInt(i++);
@@ -75,7 +72,7 @@ public class PaisDAOImpl implements PaisDAO{
 		return pa;
 	}
 	@Override
-	public List<Pais> findAll(String idioma, Connection c) throws Exception {
+	public List<Pais> findAll(String idioma, Connection c) throws DataException {
 
 
 		PreparedStatement preparedStatement = null;

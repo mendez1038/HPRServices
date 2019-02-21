@@ -12,9 +12,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.david.training.dao.CategoriaDAO;
-
 import com.david.training.dao.util.JDBCUtils;
 import com.david.training.exceptions.DataException;
+import com.david.training.exceptions.InstanceNotFoundException;
 import com.david.training.model.Categoria;
 
 public class CategoriaDAOImpl implements CategoriaDAO{
@@ -25,7 +25,7 @@ public class CategoriaDAOImpl implements CategoriaDAO{
 	}
 
 	public Categoria findById(Integer id, String idioma, Connection c)
-			throws Exception {
+			throws InstanceNotFoundException, DataException {
 		logger.debug("Id = {} Idioma = {}", id, idioma);
 		Categoria ca = null;
 		PreparedStatement preparedStatement = null;
@@ -48,12 +48,10 @@ public class CategoriaDAOImpl implements CategoriaDAO{
 			if (resultSet.next()) {
 				ca = loadNext(resultSet);
 			} else {
-				throw new Exception("No se encontró categoria"+id);			
-			} 
-			if (resultSet.next()) {
-				
-				throw new Exception("Categoria"+id+"duplicada");
+				throw new InstanceNotFoundException("Categories with id " + id + 
+						"not found", Categoria.class.getName());
 			}
+			return ca;
 		} catch (SQLException ex) {
 			logger.warn(ex.getMessage(), ex);
 			throw new DataException(ex);
@@ -61,7 +59,7 @@ public class CategoriaDAOImpl implements CategoriaDAO{
 			JDBCUtils.closeResultSet(resultSet);
 			JDBCUtils.closeStatement(preparedStatement);
 		}
-		return ca;
+		
 	}
 
 
@@ -116,7 +114,7 @@ public class CategoriaDAOImpl implements CategoriaDAO{
 	}
 
 
-	private Categoria loadNext(ResultSet resultSet) throws Exception {
+	private Categoria loadNext(ResultSet resultSet) throws SQLException, DataException {
 
 		int i = 1;
 		Integer idCategoria = resultSet.getInt(i++);
@@ -132,7 +130,8 @@ public class CategoriaDAOImpl implements CategoriaDAO{
 
 
 	@Override
-	public List<Categoria> findAll(String idioma, Connection c) throws Exception {
+	public List<Categoria> findAll(String idioma, Connection c) 
+			throws DataException {
 		
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -173,7 +172,8 @@ public class CategoriaDAOImpl implements CategoriaDAO{
 
 
 	@Override
-	public List<Categoria> findByContenido(Integer idContenido, String idioma, Connection c) throws Exception {
+	public List<Categoria> findByContenido(Integer idContenido, String idioma, Connection c) 
+			throws DataException {
 		logger.debug("Id = {} Idioma = {}", idContenido, idioma);
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;

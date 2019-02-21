@@ -7,6 +7,7 @@ import com.david.training.dao.LineaPedidoDAO;
 import com.david.training.dao.impl.LineaPedidoDAOImpl;
 import com.david.training.dao.util.ConnectionManager;
 import com.david.training.model.LineaPedido;
+import com.david.training.model.LineaPedidoId;
 
 public class LineaPedidoDAOTest {
 	
@@ -20,8 +21,10 @@ public class LineaPedidoDAOTest {
 		throws Exception{
 		Connection c = ConnectionManager.getConnection();
 		System.out.println("Buscando la linea de pedido solicitada");
-		
-		LineaPedido lp = dao.findById(c,3,101);
+		LineaPedidoId id = new LineaPedidoId();
+		id.setIdPedido(3);
+		id.setIdContenido(101);
+		LineaPedido lp = dao.findById(c, id);
 		System.out.println(lp);
 			
 			
@@ -44,10 +47,12 @@ public class LineaPedidoDAOTest {
 			throws Exception{
 		
 		Connection c = ConnectionManager.getConnection();
-		Integer idPedido = 1;
-		Integer idContenido = 1;
-		dao.delete(c,idPedido, idContenido);
-		System.out.println("Eliminada linea de pedido numero "+idContenido+" del pedido con id: "+idPedido);
+		
+		LineaPedidoId id = new LineaPedidoId();
+		id.setIdPedido(1);
+		id.setIdContenido(1);
+		dao.delete(c, id);
+		System.out.println("Eliminada linea de pedido numero "+id.getIdContenido()+" del pedido con id: "+id.getIdPedido());
 			
 		
 	}

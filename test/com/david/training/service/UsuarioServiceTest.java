@@ -92,7 +92,7 @@ public class UsuarioServiceTest {
 			Favorito f = new Favorito();
 			f.setFavorito(false);
 			f.setEmail("aa@a.com");
-			f.setIdContenido(4);;
+			f.setIdContenido(5);;
 			servicio.eliminarFavorito(f);
 			System.out.println(f);
 			} catch (Exception e) {
@@ -105,7 +105,7 @@ public class UsuarioServiceTest {
 			Favorito f = new Favorito();
 			
 			f.setEmail("aa@a.com");
-			f.setIdContenido(5);
+			f.setIdContenido(500);
 			f.setFavorito(true);
 			
 			servicio.añadirFavorito(f);

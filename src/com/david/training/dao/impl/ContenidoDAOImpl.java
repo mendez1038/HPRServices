@@ -15,6 +15,8 @@ import org.apache.logging.log4j.Logger;
 import com.david.training.dao.ContenidoDAO;
 import com.david.training.dao.util.JDBCUtils;
 import com.david.training.exceptions.DataException;
+import com.david.training.exceptions.DuplicateInstanceException;
+import com.david.training.exceptions.InstanceNotFoundException;
 import com.david.training.model.Artista;
 import com.david.training.model.Categoria;
 import com.david.training.model.Contenido;
@@ -30,7 +32,7 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 	}
 
 	public Contenido findPorId(Connection connection, Integer id)
-			throws Exception {
+			throws InstanceNotFoundException, DataException {
 		logger.debug("Id = {} ",id);
 		Contenido c = null;
 		PreparedStatement preparedStatement = null;
@@ -55,8 +57,10 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 			if (resultSet.next()) {
 				c = loadNext(resultSet);
 			} else {
-				throw new Exception("Non se encontrou o contenido "+id);
-			}
+				throw new InstanceNotFoundException("Products with id " + id + 
+						"not found", Contenido.class.getName());
+				}
+			return c;
 		} catch (SQLException ex) {
 			logger.warn(ex.getMessage(), ex);
 			throw new DataException(ex);
@@ -64,11 +68,11 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 			JDBCUtils.closeResultSet(resultSet);
 			JDBCUtils.closeStatement(preparedStatement);
 		}
-		return c;		
+				
 	}
 
 	public Contenido findById(Connection connection, Integer id, String idioma)
-			throws Exception {
+			throws InstanceNotFoundException, DataException {
 				logger.debug("Id = {} idioma = {)", id, idioma);
 				PreparedStatement preparedStatement = null;
 				ResultSet resultSet = null;
@@ -88,12 +92,11 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 					if (resultSet.next()) {
 						c = loadNext(resultSet);
 					} else {
-						throw new Exception("Non se encontrou o contenido "+id);
-					}
-					if (resultSet.next()) {
-						throw new Exception("Contenido"+id+" duplicado");
-					}
-		
+						throw new InstanceNotFoundException("Products with id " + id + 
+								"not found", Contenido.class.getName());
+						}
+					
+					return c;
 				} catch (SQLException ex) {
 					logger.warn(ex.getMessage(), ex);
 					throw new DataException(ex);
@@ -101,12 +104,12 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 					JDBCUtils.closeResultSet(resultSet);
 					JDBCUtils.closeStatement(preparedStatement);
 				}
-				return c;		
+						
 	}
 
 
 	public Contenido create (Connection connection, Contenido c)
-			throws Exception {
+			throws DuplicateInstanceException, DataException {
 		logger.debug("Contenido = {}", c);
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -145,7 +148,7 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 		}	
 	}
 
-	private Contenido loadNext(ResultSet resultSet) throws Exception {
+	private Contenido loadNext(ResultSet resultSet) throws SQLException, DataException {
 		Contenido c = new Contenido();
 		int i = 1;
 		Integer idContenido = resultSet.getInt(i++);
@@ -180,7 +183,7 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 
 	@Override
 	public List<Contenido> findByCriteria(Connection connection, ProductoCriteria pc, String idioma) 
-			throws Exception {
+			throws DataException {
 		logger.debug("Producto = {} Idioma = {}", pc, idioma);
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -381,7 +384,8 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 	}
 
 	@Override
-	public long delete(Connection connection, Integer id) throws Exception {
+	public long delete(Connection connection, Integer id) 
+			throws InstanceNotFoundException, DataException {
 		logger.debug("Id = {}", id);
 		PreparedStatement preparedStatement = null;
 		StringBuilder queryString = null;
@@ -397,6 +401,10 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 
 			long removedRows = preparedStatement.executeUpdate(); 
 
+			if (removedRows == 0) {
+				throw new InstanceNotFoundException(id,Contenido.class.getName());
+			} 
+			
 			return removedRows;
 
 		} catch (SQLException e) {
@@ -409,7 +417,8 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 	}
 
 	@Override
-	public List<Contenido> findLista(Connection connection, String email, String idioma) throws Exception {
+	public List<Contenido> findLista(Connection connection, String email, String idioma) 
+			throws DataException {
 		logger.debug("Email = {} Idioma = {}", email, idioma);
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -449,7 +458,8 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 	}
 
 	@Override
-	public List<Contenido> findFavoritos(Connection connection, String email, String idioma) throws Exception {
+	public List<Contenido> findFavoritos(Connection connection, String email, String idioma) 
+			throws DataException {
 		logger.debug("Email = {} Idioma = {}", email, idioma);
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;

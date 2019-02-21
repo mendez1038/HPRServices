@@ -13,7 +13,7 @@ import org.apache.logging.log4j.Logger;
 import com.david.training.dao.TipoContenidoDAO;
 import com.david.training.dao.util.JDBCUtils;
 import com.david.training.exceptions.DataException;
-
+import com.david.training.exceptions.InstanceNotFoundException;
 import com.david.training.model.TipoContenido;
 
 public class TipoContenidoDAOImpl implements TipoContenidoDAO{
@@ -21,7 +21,8 @@ public class TipoContenidoDAOImpl implements TipoContenidoDAO{
 	public static Logger logger = LogManager.getLogger(ContenidoDAOImpl.class);
 
 	@Override
-	public TipoContenido findById(String id, String idioma, Connection c) throws Exception {
+	public TipoContenido findById(String id, String idioma, Connection c) 
+			throws InstanceNotFoundException, DataException {
 		logger.debug("Id = {} Idioma = {}", id, idioma);
 		TipoContenido tc = null;
 		PreparedStatement preparedStatement = null;
@@ -46,10 +47,8 @@ public class TipoContenidoDAOImpl implements TipoContenidoDAO{
 			if (resultSet.next()) {
 				tc = loadNext(resultSet);
 			} else {
-				throw new Exception("No se encontró pais con id:"+id);			
-			} 
-			if (resultSet.next()) {
-				throw new Exception("Pais "+id+" duplicado");
+				throw new InstanceNotFoundException("Tipo contenido with id " + id + 
+						"not found", TipoContenido.class.getName());
 			}
 		} catch (SQLException ex) {
 			logger.warn(ex.getMessage(),ex);
@@ -63,7 +62,8 @@ public class TipoContenidoDAOImpl implements TipoContenidoDAO{
 	}
 
 	@Override
-	public List<TipoContenido> findByNombre(String nombre, String idioma, Connection c) throws Exception {
+	public List<TipoContenido> findByNombre(String nombre, String idioma, Connection c) 
+			throws DataException {
 		logger.debug("Nombre = {} Idioma = {}", nombre, idioma);
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -102,7 +102,8 @@ public class TipoContenidoDAOImpl implements TipoContenidoDAO{
 
 	}
 
-	private TipoContenido loadNext(ResultSet resultSet) throws Exception {
+	private TipoContenido loadNext(ResultSet resultSet) 
+			throws SQLException, DataException {
 
 		int i = 1;
 		String idTipoContenido = resultSet.getString(i++);

@@ -13,7 +13,7 @@ import org.apache.logging.log4j.Logger;
 import com.david.training.dao.RolDAO;
 import com.david.training.dao.util.JDBCUtils;
 import com.david.training.exceptions.DataException;
-
+import com.david.training.exceptions.InstanceNotFoundException;
 import com.david.training.model.Rol;
 
 public class RolDAOImpl implements RolDAO{
@@ -21,7 +21,8 @@ public class RolDAOImpl implements RolDAO{
 	public static Logger logger = LogManager.getLogger(RolDAOImpl.class);
 
 	@Override
-	public Rol findById(String id, String idioma, Connection c) throws Exception {
+	public Rol findById(String id, String idioma, Connection c) 
+			throws InstanceNotFoundException, DataException {
 		logger.debug("Id = {} Idioma = {}", id, idioma);
 		Rol r = null;
 		PreparedStatement preparedStatement = null;
@@ -45,10 +46,8 @@ public class RolDAOImpl implements RolDAO{
 			if (resultSet.next()) {
 				r = loadNext(resultSet);
 			} else {
-				throw new Exception("No se encontró pais con id:"+id);			
-			} 
-			if (resultSet.next()) {
-				throw new Exception("Pais "+id+" duplicado");
+				throw new InstanceNotFoundException("Rol with id " + id + 
+						"not found", Rol.class.getName());
 			}
 		} catch (SQLException ex) {
 			logger.warn(ex.getMessage(), ex);
@@ -63,7 +62,8 @@ public class RolDAOImpl implements RolDAO{
 	}
 
 	@Override
-	public List<Rol> findByNombre(String nombre, String idioma, Connection c) throws Exception {
+	public List<Rol> findByNombre(String nombre, String idioma, Connection c) 
+			throws DataException {
 		logger.debug("Nombre = {} Idioma = {}", nombre, idioma);
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -102,7 +102,8 @@ public class RolDAOImpl implements RolDAO{
 		} 
 
 	}
-	private Rol loadNext(ResultSet resultSet) throws Exception {
+	private Rol loadNext(ResultSet resultSet) 
+			throws SQLException, DataException {
 
 		int i = 1;
 		String idRol = resultSet.getString(i++);

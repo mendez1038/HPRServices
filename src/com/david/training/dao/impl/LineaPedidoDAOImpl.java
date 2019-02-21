@@ -12,10 +12,13 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.david.training.dao.LineaPedidoDAO;
-
 import com.david.training.dao.util.JDBCUtils;
 import com.david.training.exceptions.DataException;
+import com.david.training.exceptions.DuplicateInstanceException;
+import com.david.training.exceptions.InstanceNotFoundException;
 import com.david.training.model.LineaPedido;
+import com.david.training.model.LineaPedidoId;
+import com.david.training.model.Usuario;
 
 
 
@@ -26,8 +29,9 @@ public class LineaPedidoDAOImpl implements LineaPedidoDAO{
 		
 	}
 	@Override
-	public LineaPedido findById(Connection c, Integer idp, Integer idc) throws DataException {
-		logger.debug("Id Pedido = {} Id Contenido = {}", idp, idc);
+	public LineaPedido findById(Connection c, LineaPedidoId id) 
+			throws InstanceNotFoundException,DataException {
+		logger.debug("Id Linea Pedido = {}", id);
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		StringBuilder queryString = null;
@@ -41,8 +45,8 @@ public class LineaPedidoDAOImpl implements LineaPedidoDAO{
 					ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 
 			int i = 1;                
-			preparedStatement.setInt(i++, idp);
-			preparedStatement.setInt(i++, idc);
+			preparedStatement.setInt(i++, id.getIdPedido());
+			preparedStatement.setInt(i++, id.getIdContenido());
 
 			resultSet = preparedStatement.executeQuery();
 
@@ -51,7 +55,8 @@ public class LineaPedidoDAOImpl implements LineaPedidoDAO{
 			if (resultSet.next()) {
 				lp = loadNext( resultSet);				
 			} else {
-
+				throw new InstanceNotFoundException("PedidoDetails not found", Usuario.class.getName());
+				
 			}
 
 			return lp;
@@ -67,7 +72,8 @@ public class LineaPedidoDAOImpl implements LineaPedidoDAO{
 	}	
 
 	@Override
-	public List<LineaPedido> findByPedido(Connection c,  Integer idPedido) throws DataException {
+	public List<LineaPedido> findByPedido(Connection c,  Integer idPedido) 
+			throws DataException {
 		logger.debug("Id = {}", idPedido);
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -107,7 +113,8 @@ public class LineaPedidoDAOImpl implements LineaPedidoDAO{
 	}
 
 	@Override
-	public LineaPedido create(Connection c,  LineaPedido lp) throws DataException {
+	public LineaPedido create(Connection c,  LineaPedido lp) 
+			throws DuplicateInstanceException, DataException {
 		logger.debug("Linea Pedido = {}", lp);
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -141,8 +148,9 @@ public class LineaPedidoDAOImpl implements LineaPedidoDAO{
 	}
 
 	@Override
-	public long delete(Connection c, Integer idPedido, Integer idContenido) throws DataException {
-		 logger.debug("Id pedido = {} Id contenido = {}", idPedido, idContenido);
+	public long delete(Connection c, LineaPedidoId id) 
+			throws InstanceNotFoundException, DataException {
+		 logger.debug("Id linea pedido = {} ", id);
 		PreparedStatement preparedStatement = null;
 		StringBuilder queryString = null;
 		try {
@@ -155,11 +163,13 @@ public class LineaPedidoDAOImpl implements LineaPedidoDAO{
 			preparedStatement = c.prepareStatement(queryString.toString());
 
 			int i = 1;
-			preparedStatement.setInt(i++, idPedido);
-			preparedStatement.setInt(i++,idContenido);
+			preparedStatement.setInt(i++, id.getIdPedido());
+			preparedStatement.setInt(i++,id.getIdContenido());
 
 			int removedRows = preparedStatement.executeUpdate();
-
+			if (removedRows == 0) {
+				throw new InstanceNotFoundException(id, LineaPedido.class.getName());
+			} 
 			return removedRows;
 
 		} catch (SQLException e) {

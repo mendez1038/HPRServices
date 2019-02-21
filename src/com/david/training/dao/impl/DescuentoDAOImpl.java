@@ -16,6 +16,7 @@ import com.david.training.dao.DescuentoDAO;
 import com.david.training.dao.util.ConnectionManager;
 import com.david.training.dao.util.JDBCUtils;
 import com.david.training.exceptions.DataException;
+import com.david.training.exceptions.InstanceNotFoundException;
 import com.david.training.model.Descuento;
 
 
@@ -27,7 +28,7 @@ public class DescuentoDAOImpl implements DescuentoDAO{
 	}
 
 	public Descuento findById(Integer id, String idioma, Connection c)
-			throws Exception {
+			throws InstanceNotFoundException, DataException {
 		logger.debug("Id = {} Idioma = {}", id, idioma);
 		Descuento d = null;
 		PreparedStatement preparedStatement = null;
@@ -50,11 +51,10 @@ public class DescuentoDAOImpl implements DescuentoDAO{
 			if (resultSet.next()) {
 				d = loadNext(resultSet);
 			} else {
-				throw new Exception("Non se encontrou o descuento "+id);
+				throw new InstanceNotFoundException("Discount with id " + id + 
+						"not found", Descuento.class.getName());
 			}
-			if (resultSet.next()) {
-				throw new Exception("Descuento"+id+" duplicado");
-			}
+			return d;
 		} catch (SQLException ex) {
 			logger.warn(ex.getMessage(),ex);
 			throw new DataException(ex);
@@ -62,7 +62,7 @@ public class DescuentoDAOImpl implements DescuentoDAO{
 			JDBCUtils.closeResultSet(resultSet);
 			JDBCUtils.closeStatement(preparedStatement);
 		}
-		return d;
+		
 	}
 
 
@@ -116,7 +116,7 @@ public class DescuentoDAOImpl implements DescuentoDAO{
 	}
 
 
-	private Descuento loadNext(ResultSet resultSet) throws Exception {
+	private Descuento loadNext(ResultSet resultSet) throws SQLException, DataException {
 		Descuento d = new Descuento();
 		int i = 1;
 
@@ -217,7 +217,8 @@ public class DescuentoDAOImpl implements DescuentoDAO{
 	}
 
 
-	public List<Descuento> findAll(Connection c) throws Exception {
+	public List<Descuento> findAll(Connection c) 
+			throws DataException {
 		
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -255,7 +256,7 @@ public class DescuentoDAOImpl implements DescuentoDAO{
 
 	@Override
 	public List<Descuento> findByPorcentaje(Integer porcentaje, String idioma, Connection c) 
-			throws Exception {
+			throws InstanceNotFoundException, DataException {
 		logger.debug("Porcentaje = {} Idioma = {}", porcentaje, idioma);
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
