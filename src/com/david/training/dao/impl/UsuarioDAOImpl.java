@@ -133,14 +133,22 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 		ResultSet resultSet = null;
 		StringBuilder queryString = null;
 		try {
-		queryString = new StringBuilder("INSERT INTO USUARIO(EMAIL, CONTRASENA) "
-					+ "VALUES (?,?)");
+		queryString = new StringBuilder("INSERT INTO USUARIO(EMAIL, CONTRASENA, NOMBRE, APELLIDOS, GENERO, FECHA_NACIMIENTO, TELEFONO) "
+					+ "VALUES (?,?,?,?,?,?,?)");
 
 			preparedStatement = c.prepareStatement(queryString.toString(), Statement.RETURN_GENERATED_KEYS);
 
 			int i = 1;
 			preparedStatement.setString(i++, u.getEmail());
 			preparedStatement.setString(i++, PasswordEncryptionUtil.encryptPassword(u.getContrasena()));
+			preparedStatement.setString(i++, u.getNombre());
+			preparedStatement.setString(i++, u.getApellidos());
+			preparedStatement.setString(i++, u.getGenero());
+			preparedStatement.setDate(i++,  new java.sql.Date(u.getFechaNacimiento().getTime()));
+			preparedStatement.setString(i++, u.getTelefono());
+			
+			
+			
 			
 			// Execute query
 			int insertedRows = preparedStatement.executeUpdate();

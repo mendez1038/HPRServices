@@ -6,6 +6,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.david.training.dao.impl.ContenidoDAOImpl;
+import com.david.training.exceptions.MailException;
 import com.david.training.service.MailService;
 
 
@@ -20,7 +21,7 @@ public class MailServiceImpl implements MailService{
 		
 	
 	@Override
-	public void sendEmail(String mensajeHTML, String asunto, String... para) throws Exception {
+	public void sendEmail(String mensajeHTML, String asunto, String... para) throws MailException {
 
 		
 		try {

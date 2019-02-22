@@ -11,6 +11,7 @@ import com.david.training.dao.ContenidoDAO;
 import com.david.training.dao.impl.ContenidoDAOImpl;
 import com.david.training.dao.util.ConnectionManager;
 import com.david.training.dao.util.JDBCUtils;
+import com.david.training.exceptions.DataException;
 import com.david.training.model.Contenido;
 import com.david.training.model.ProductoCriteria;
 import com.david.training.service.ContenidoService;
@@ -25,7 +26,8 @@ public class ContenidoServiceImpl implements ContenidoService{
 	}
 
 	@Override
-	public List<Contenido> miLista(String email, String idioma) throws Exception {
+	public List<Contenido> miLista(String email, String idioma) 
+			throws DataException {
 		boolean commit = false;
 		Connection c = null;
 		try {
@@ -37,15 +39,15 @@ public class ContenidoServiceImpl implements ContenidoService{
 			return lista;
 		}  catch (SQLException e) {
 			logger.warn(e.getMessage(),e);
-			
-			throw e;
+			throw new DataException(e);
 		} finally {
 			JDBCUtils.closeConnection(c, commit);
 			}
 	}
 
 	@Override
-	public List<Contenido> favoritos(String email, String idioma) throws Exception {
+	public List<Contenido> favoritos(String email, String idioma) 
+			throws DataException {
 		
 		boolean commit = false;
 		Connection c = null;
@@ -58,14 +60,14 @@ public class ContenidoServiceImpl implements ContenidoService{
 			return favoritos;
 		}  catch (SQLException e) {
 			logger.warn(e.getMessage(),e);
-			throw e;
+			throw new DataException(e);
 		} finally {
 			JDBCUtils.closeConnection(c, commit);
 			}}
 	
 	
 	
-	public Double sacarPrecioDescontado(Integer id) throws Exception {
+	public Double sacarPrecioDescontado(Integer id) throws DataException {
 		boolean commit = false;
 		Connection connection = null;
 		try {
@@ -78,14 +80,14 @@ public class ContenidoServiceImpl implements ContenidoService{
 			return precioDescontado;
 		} catch (SQLException e) {
 			logger.warn(e.getMessage(),e);
-			throw e;
+			throw new DataException(e);
 		} finally {
 			JDBCUtils.closeConnection(connection, commit);
 			}
 	}
 
 	@Override
-	public void precioDescontado(Contenido c) throws Exception {
+	public void precioDescontado(Contenido c) throws DataException {
 		boolean commit = false;
 		Connection connection = null;
 		try {
@@ -96,7 +98,7 @@ public class ContenidoServiceImpl implements ContenidoService{
 			
 		} catch (SQLException e) {
 			logger.warn(e.getMessage(),e);
-			throw e;
+			throw new DataException(e);
 		} finally {
 			JDBCUtils.closeConnection(connection, commit);
 			}
@@ -104,7 +106,8 @@ public class ContenidoServiceImpl implements ContenidoService{
 	}
 
 	@Override
-	public List<Contenido> busquedaEstructurada(ProductoCriteria producto, String idioma) throws Exception {
+	public List<Contenido> busquedaEstructurada(ProductoCriteria producto, String idioma) 
+			throws DataException {
 		boolean commit=false;
 		Connection c=null;
 		try {
@@ -116,9 +119,9 @@ public class ContenidoServiceImpl implements ContenidoService{
 		
 		}catch(SQLException e) {
 			logger.warn(e.getMessage(),e);
-			throw e;
+			throw new DataException(e);
 		}finally {
 			JDBCUtils.closeConnection(c, commit);
-		}}
-
+		}
+		}
 }

@@ -14,6 +14,9 @@ import com.david.training.dao.impl.LineaPedidoDAOImpl;
 import com.david.training.dao.impl.PedidoDAOImpl;
 import com.david.training.dao.util.ConnectionManager;
 import com.david.training.dao.util.JDBCUtils;
+import com.david.training.exceptions.DataException;
+import com.david.training.exceptions.DuplicateInstanceException;
+import com.david.training.exceptions.InstanceNotFoundException;
 import com.david.training.model.LineaPedido;
 import com.david.training.model.LineaPedidoId;
 import com.david.training.model.Pedido;
@@ -33,7 +36,7 @@ public class PedidoServiceImpl implements PedidoService{
 	}
 
 	@Override
-	public List<Pedido> historial(String email) throws Exception {
+	public List<Pedido> historial(String email) throws DataException {
 		boolean commit = false;
 		Connection c = null;
 		try {
@@ -45,7 +48,7 @@ public class PedidoServiceImpl implements PedidoService{
 			return historial;
 		}  catch (SQLException e) {
 			logger.warn(e.getMessage(),e);
-			throw e;
+			throw new DataException(e);
 		} finally {
 			JDBCUtils.closeConnection(c, commit);
 			}
@@ -53,7 +56,7 @@ public class PedidoServiceImpl implements PedidoService{
 	}
 	
 	@Override
-	public Pedido carrito(Pedido p) throws Exception {
+	public Pedido carrito(Pedido p) throws DuplicateInstanceException, DataException {
 		boolean commit=false;
 		Connection c=null;
 		try {
@@ -68,14 +71,14 @@ public class PedidoServiceImpl implements PedidoService{
 		
 		}catch(SQLException ed) {
 			ed.printStackTrace();
-			throw ed;
+			throw new DataException(ed);
 		}finally {
 			JDBCUtils.closeConnection(c, commit);
 		}
 	}
 
 	@Override
-	public LineaPedido carritoAmplidado(LineaPedido lp) throws Exception {
+	public LineaPedido carritoAmplidado(LineaPedido lp) throws DuplicateInstanceException, DataException {
 		boolean commit=false;
 		Connection c=null;
 		try {
@@ -90,14 +93,14 @@ public class PedidoServiceImpl implements PedidoService{
 		
 		}catch(SQLException ed) {
 			ed.printStackTrace();
-			throw ed;
+			throw new DataException(ed);
 		}finally {
 			JDBCUtils.closeConnection(c, commit);
 		}
 	}
 	
 	@Override
-	public void eliminarLineaPedido(LineaPedidoId id) throws Exception {
+	public void eliminarLineaPedido(LineaPedidoId id) throws InstanceNotFoundException, DataException {
 		boolean commit=false;
 		Connection c=null;
 		try {
@@ -110,7 +113,7 @@ public class PedidoServiceImpl implements PedidoService{
             commit = true;
             
         } catch (SQLException ed) {
-            throw new Exception(ed);
+        	throw new DataException(ed);
 
         } finally {
         	JDBCUtils.closeConnection(c, commit);
@@ -123,7 +126,7 @@ public class PedidoServiceImpl implements PedidoService{
 	
 
 	@Override
-	public List<LineaPedido> historialAmpliado(Integer id) throws Exception {
+	public List<LineaPedido> historialAmpliado(Integer id) throws DataException {
 		boolean commit = false;
 		Connection c = null;
 		try {
@@ -135,7 +138,7 @@ public class PedidoServiceImpl implements PedidoService{
 			return ampliacion;
 		}  catch (SQLException e) {
 			logger.warn(e.getMessage(),e);
-			throw e;
+			throw new DataException(e);
 		} finally {
 			JDBCUtils.closeConnection(c, commit);
 			}

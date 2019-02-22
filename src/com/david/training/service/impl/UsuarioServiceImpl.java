@@ -11,6 +11,10 @@ import com.david.training.dao.impl.ContenidoDAOImpl;
 import com.david.training.dao.impl.UsuarioDAOImpl;
 import com.david.training.dao.util.ConnectionManager;
 import com.david.training.dao.util.JDBCUtils;
+import com.david.training.exceptions.DataException;
+import com.david.training.exceptions.DuplicateInstanceException;
+import com.david.training.exceptions.InstanceNotFoundException;
+import com.david.training.exceptions.MailException;
 import com.david.training.model.Favorito;
 import com.david.training.model.Usuario;
 import com.david.training.service.MailService;
@@ -26,7 +30,8 @@ public class UsuarioServiceImpl implements UsuarioService{
 	}
 	
 	@Override
-	public Usuario signUp(Usuario u) throws Exception {
+	public Usuario signUp(Usuario u) 
+			throws DuplicateInstanceException, DataException, MailException{
 		boolean commit = false;
 		Connection c = null;
 		MailService mailService = null;
@@ -41,7 +46,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 		return u;
 		} catch (SQLException e) {
 			logger.warn(e.getMessage(),e);
-			throw e;
+			throw new DataException(e);
 		} finally {
 			JDBCUtils.closeConnection(c, commit);
 			}
@@ -49,7 +54,8 @@ public class UsuarioServiceImpl implements UsuarioService{
 	
 
 	@Override
-	public void update(Usuario u) throws Exception {
+	public void update(Usuario u) 
+			throws InstanceNotFoundException, DataException {
 		boolean commit = false;
 		Connection c = null;
 		try {
@@ -61,7 +67,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 		
 		} catch (SQLException e) {
 			logger.warn(e.getMessage(),e);
-			throw e;
+			throw new DataException(e);
 		} finally {
 			JDBCUtils.closeConnection(c, commit);
 			}
@@ -69,7 +75,8 @@ public class UsuarioServiceImpl implements UsuarioService{
 	}
 
 	@Override
-	public boolean delete(String email) throws Exception {
+	public boolean delete(String email) 
+			throws InstanceNotFoundException, DataException{
 		boolean commit = false;
 		Connection c = null;
 		try {
@@ -82,14 +89,15 @@ public class UsuarioServiceImpl implements UsuarioService{
 		return commit;
 		} catch (SQLException e) {
 			logger.warn(e.getMessage(),e);
-			throw e;
+			throw new DataException(e);
 		} finally {
 			JDBCUtils.closeConnection(c, commit);
 			}
 	}
 
 	@Override
-	public Usuario findByEmail(String email) throws Exception {
+	public Usuario findByEmail(String email) 
+			throws DataException {
 		boolean commit = false;
 		Connection c = null;
 		try {
@@ -102,14 +110,15 @@ public class UsuarioServiceImpl implements UsuarioService{
 		return u;
 		} catch (SQLException e) {
 			logger.warn(e.getMessage(),e);
-			throw e;
+			throw new DataException(e);
 		} finally {
 			JDBCUtils.closeConnection(c, commit);
 			}
 	}
 
 	@Override
-	public Usuario signIn(String email, String contrasena) throws Exception {
+	public Usuario signIn(String email, String contrasena) 
+			throws DataException {
 		
 		//Validaciones
 		
@@ -124,7 +133,8 @@ public class UsuarioServiceImpl implements UsuarioService{
 	}
 
 	@Override
-	public Favorito añadirFavorito(Favorito f) throws Exception {
+	public Favorito añadirFavorito(Favorito f) 
+			throws DataException {
 		boolean commit = false;
 		Connection c = null;
 		try {
@@ -139,14 +149,14 @@ public class UsuarioServiceImpl implements UsuarioService{
 		return f;
 		} catch (SQLException e) {
 			logger.warn(e.getMessage(),e);
-			throw e;
+			throw new DataException(e);
 		} finally {
 			JDBCUtils.closeConnection(c, commit);
 			}
 	}
 
 	@Override
-	public void eliminarFavorito(Favorito f) throws Exception {
+	public void eliminarFavorito(Favorito f) throws DataException {
 		boolean commit = false;
 		Connection c = null;
 		try {
@@ -158,7 +168,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 		
 		} catch (SQLException e) {
 			logger.warn(e.getMessage(),e);
-			throw e;
+			throw new DataException(e);
 		} finally {
 			JDBCUtils.closeConnection(c, commit);
 			}

@@ -339,7 +339,8 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 	}
 
 	@Override
-	public boolean update(Connection connection, Contenido d) throws Exception {
+	public boolean update(Connection connection, Contenido d) 
+			throws InstanceNotFoundException, DataException {
 		logger.debug("Contenido = {}", d);
 		PreparedStatement preparedStatement = null;
 		StringBuilder queryString = null;

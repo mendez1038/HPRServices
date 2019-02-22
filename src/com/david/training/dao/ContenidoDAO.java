@@ -22,7 +22,7 @@ public interface ContenidoDAO {
 			throws DataException;
 	
 	public boolean update(Connection connection, Contenido d)
-			throws Exception;
+			throws InstanceNotFoundException, DataException;
 	
 	public long delete (Connection c, Integer id)
 			throws InstanceNotFoundException, DataException;
