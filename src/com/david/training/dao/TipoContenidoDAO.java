@@ -14,5 +14,8 @@ public interface TipoContenidoDAO {
 	
 	public List<TipoContenido> findByNombre(String nombre, String idioma, Connection c)
 			throws DataException;
+	
+	public List<TipoContenido> findAll (String idioma, Connection c)
+			throws DataException;
 
 }

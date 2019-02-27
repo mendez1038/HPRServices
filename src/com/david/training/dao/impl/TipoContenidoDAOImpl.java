@@ -117,4 +117,41 @@ public class TipoContenidoDAOImpl implements TipoContenidoDAO{
 		return tc;
 	}
 
+	@Override
+	public List<TipoContenido> findAll(String idioma, Connection c) throws DataException {
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		StringBuilder sql = null;
+		try {
+
+			sql = new StringBuilder(
+					  "SELECT ID_TIPO_CONTENIDO, NOMBRE_CONTENIDO "
+					+ "FROM TIPO_CONTENIDO_IDIOMA "
+					+ "WHERE ID_IDIOMA = ? ");
+
+			preparedStatement = c.prepareStatement(sql.toString(), ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			int i = 1;
+			preparedStatement.setString(i++, idioma);
+			resultSet = preparedStatement.executeQuery();			
+			//STEP 5: Extract data from result set			
+
+			List<TipoContenido> results = new ArrayList<TipoContenido>();                        
+			TipoContenido a = null;
+
+			while(resultSet.next()) {
+				a = loadNext(resultSet);
+				results.add(a);               	
+			}
+
+			return results;
+
+		} catch (SQLException ex) {
+			logger.warn(ex.getMessage(),ex);
+			throw new DataException(ex);
+		} finally {            
+			JDBCUtils.closeResultSet(resultSet);
+			JDBCUtils.closeStatement(preparedStatement);
+		}
+	}
+
 }
