@@ -98,6 +98,14 @@ public class UsuarioServiceImpl implements UsuarioService{
 	@Override
 	public Usuario findByEmail(String email) 
 			throws DataException {
+		
+//		if(!null) {
+			//exitocache
+//		} else {
+//			
+			//fallocache		
+//			}
+ 		
 		boolean commit = false;
 		Connection c = null;
 		try {
@@ -114,6 +122,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 		} finally {
 			JDBCUtils.closeConnection(c, commit);
 			}
+		
 	}
 
 	@Override
