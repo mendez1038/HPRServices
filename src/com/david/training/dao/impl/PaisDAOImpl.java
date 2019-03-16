@@ -15,6 +15,7 @@ import com.david.training.dao.util.JDBCUtils;
 import com.david.training.exceptions.DataException;
 import com.david.training.exceptions.InstanceNotFoundException;
 import com.david.training.model.Pais;
+import com.david.training.service.Results;
 
 
 public class PaisDAOImpl implements PaisDAO{
@@ -33,7 +34,8 @@ public class PaisDAOImpl implements PaisDAO{
 					+"FROM PAIS P "
 					+"INNER JOIN PAIS_IDIOMA PI ON P.ID_PAIS=PI.ID_PAIS "
 					+"WHERE P.ID_PAIS = ? "
-					+"AND ID_IDIOMA = ? ");
+					+"AND ID_IDIOMA = ? "
+					+"ORDER BY PI.NOMBRE_PAIS ASC ");
 
 			preparedStatement = c.prepareStatement(sql.toString(), ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 
@@ -72,18 +74,19 @@ public class PaisDAOImpl implements PaisDAO{
 		return pa;
 	}
 	@Override
-	public List<Pais> findAll(String idioma, Connection c) throws DataException {
-
+	public Results<Pais> findAll(String idioma, Connection c, int startIndex, int count) 
+			throws DataException {
 
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		StringBuilder sql = null;
 		try {
-
 			sql = new StringBuilder("SELECT P.ID_PAIS, PI.NOMBRE_PAIS, P.CAPITAL "
 					+ "FROM PAIS P "
 					+ "INNER JOIN PAIS_IDIOMA PI ON PI.ID_PAIS = P.ID_PAIS "
-					+ "WHERE ID_IDIOMA = ? ");
+					+ "WHERE ID_IDIOMA = ? "
+					+ "ORDER BY PI.NOMBRE_PAIS ASC");
+
 			preparedStatement = c.prepareStatement(sql.toString(), ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 
 			int i= 1;
@@ -92,10 +95,19 @@ public class PaisDAOImpl implements PaisDAO{
 
 			List<Pais> paises = new ArrayList<Pais>();
 			Pais p = null;
-			while (resultSet.next()) {
-				p = loadNext(resultSet);
-				paises.add(p);
-			} return paises;
+			int currentCount = 0;
+
+			if ((startIndex >= 1) && resultSet.absolute(startIndex)) { 
+				do {
+					p = loadNext(resultSet);
+					paises.add(p);
+					currentCount++;
+				} while ((currentCount < count) && resultSet.next());
+			}
+			int total = JDBCUtils.getTotalRows(resultSet);
+
+			Results<Pais> results = new Results<Pais>(paises, startIndex, total);  
+			return results;
 		} catch (SQLException ex) {
 			logger.warn(ex.getMessage(),ex);
 			throw new DataException(ex);

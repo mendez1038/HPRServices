@@ -15,6 +15,7 @@ import com.david.training.dao.util.JDBCUtils;
 import com.david.training.exceptions.DataException;
 import com.david.training.exceptions.InstanceNotFoundException;
 import com.david.training.model.TipoContenido;
+import com.david.training.service.Results;
 
 public class TipoContenidoDAOImpl implements TipoContenidoDAO{
 
@@ -118,7 +119,8 @@ public class TipoContenidoDAOImpl implements TipoContenidoDAO{
 	}
 
 	@Override
-	public List<TipoContenido> findAll(String idioma, Connection c) throws DataException {
+	public Results<TipoContenido> findAll(String idioma, Connection c, int startIndex, int count) 
+			throws DataException {
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		StringBuilder sql = null;
@@ -127,22 +129,29 @@ public class TipoContenidoDAOImpl implements TipoContenidoDAO{
 			sql = new StringBuilder(
 					  "SELECT ID_TIPO_CONTENIDO, NOMBRE_CONTENIDO "
 					+ "FROM TIPO_CONTENIDO_IDIOMA "
-					+ "WHERE ID_IDIOMA = ? ");
+					+ "WHERE ID_IDIOMA = ? "
+					+ "ORDER BY NOMBRE_CONTENIDO ASC");
 
 			preparedStatement = c.prepareStatement(sql.toString(), ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			int i = 1;
 			preparedStatement.setString(i++, idioma);
 			resultSet = preparedStatement.executeQuery();			
-			//STEP 5: Extract data from result set			
 
-			List<TipoContenido> results = new ArrayList<TipoContenido>();                        
+			List<TipoContenido> tipos = new ArrayList<TipoContenido>();                        
 			TipoContenido a = null;
+			int currentCount = 0;
 
-			while(resultSet.next()) {
-				a = loadNext(resultSet);
-				results.add(a);               	
+			if ((startIndex >= 1) && resultSet.absolute(startIndex)) { 
+				do {
+					a = loadNext(resultSet);
+					tipos.add(a);
+					currentCount++;
+				} while ((currentCount < count) && resultSet.next());
 			}
 
+			int total = JDBCUtils.getTotalRows(resultSet);
+
+			Results<TipoContenido> results = new Results<TipoContenido>(tipos, startIndex, total);  
 			return results;
 
 		} catch (SQLException ex) {

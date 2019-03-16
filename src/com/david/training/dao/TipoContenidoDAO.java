@@ -6,6 +6,7 @@ import java.util.List;
 import com.david.training.exceptions.DataException;
 import com.david.training.exceptions.InstanceNotFoundException;
 import com.david.training.model.TipoContenido;
+import com.david.training.service.Results;
 
 public interface TipoContenidoDAO {
 	
@@ -15,7 +16,7 @@ public interface TipoContenidoDAO {
 	public List<TipoContenido> findByNombre(String nombre, String idioma, Connection c)
 			throws DataException;
 	
-	public List<TipoContenido> findAll (String idioma, Connection c)
+	public Results<TipoContenido> findAll (String idioma, Connection c, int startIndex, int count)
 			throws DataException;
 
 }

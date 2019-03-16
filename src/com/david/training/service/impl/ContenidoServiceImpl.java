@@ -2,7 +2,6 @@ package com.david.training.service.impl;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,6 +14,7 @@ import com.david.training.exceptions.DataException;
 import com.david.training.model.Contenido;
 import com.david.training.model.ProductoCriteria;
 import com.david.training.service.ContenidoService;
+import com.david.training.service.Results;
 
 
 public class ContenidoServiceImpl implements ContenidoService{
@@ -26,15 +26,14 @@ public class ContenidoServiceImpl implements ContenidoService{
 	}
 
 	@Override
-	public List<Contenido> miLista(String email, String idioma) 
+	public Results<Contenido> miLista(String email, String idioma, int startIndex, int count) 
 			throws DataException {
 		boolean commit = false;
 		Connection c = null;
 		try {
 			c = ConnectionManager.getConnection();
 			c.setAutoCommit(false);
-			List<Contenido> lista = dao.findLista(c, email, idioma);
-			
+			Results<Contenido> lista = dao.findLista(c, email, idioma, startIndex, count);
 			commit = true; 
 			return lista;
 		}  catch (SQLException e) {
@@ -46,16 +45,14 @@ public class ContenidoServiceImpl implements ContenidoService{
 	}
 
 	@Override
-	public List<Contenido> favoritos(String email, String idioma) 
+	public Results<Contenido> favoritos(String email, String idioma, int startIndex, int count) 
 			throws DataException {
-		
 		boolean commit = false;
 		Connection c = null;
 		try {
 			c = ConnectionManager.getConnection();
 			c.setAutoCommit(false);
-			List<Contenido> favoritos = dao.findFavoritos(c, email, idioma);
-			
+			Results<Contenido> favoritos = dao.findFavoritos(c, email, idioma, startIndex, count);
 			commit = true; 
 			return favoritos;
 		}  catch (SQLException e) {
@@ -69,10 +66,14 @@ public class ContenidoServiceImpl implements ContenidoService{
 	
 	public Double sacarPrecioDescontado(Integer id) throws DataException {
 		boolean commit = false;
+		
 		Connection connection = null;
 		try {
+			
 			Contenido c = new Contenido();
 			connection = ConnectionManager.getConnection();
+			
+			
 			connection.setAutoCommit(false);
 			c = dao.findPorId(connection, id);
 			Double precioDescontado = c.getPorcentaje()*c.getPrecio()/100;
@@ -83,9 +84,13 @@ public class ContenidoServiceImpl implements ContenidoService{
 			throw new DataException(e);
 		} finally {
 			JDBCUtils.closeConnection(connection, commit);
-			}
-	}
+			
+			
 
+			}
+		
+	}
+	
 	@Override
 	public void precioDescontado(Contenido c) throws DataException {
 		boolean commit = false;
@@ -106,15 +111,19 @@ public class ContenidoServiceImpl implements ContenidoService{
 	}
 
 	@Override
-	public List<Contenido> busquedaEstructurada(ProductoCriteria producto, String idioma) 
+	public Results<Contenido> busquedaEstructurada(ProductoCriteria producto, String idioma, int startIndex, int count) 
 			throws DataException {
+		long t0 = 0,t1 = 0,t2 = 0,t3=0;
 		boolean commit=false;
 		Connection c=null;
 		try {
+		t0 = System.currentTimeMillis();
 		c=ConnectionManager.getConnection();
+		t1= System.currentTimeMillis();
 		c.setAutoCommit(false);
 		
-		List<Contenido> productos = dao.findByCriteria(c, producto, idioma);
+		Results<Contenido> productos = dao.findByCriteria(c, producto, idioma, startIndex, count);
+		t2= System.currentTimeMillis();
 		return productos;
 		
 		}catch(SQLException e) {
@@ -122,6 +131,10 @@ public class ContenidoServiceImpl implements ContenidoService{
 			throw new DataException(e);
 		}finally {
 			JDBCUtils.closeConnection(c, commit);
+			t3= System.currentTimeMillis();
+			
+			System.out.println("Get c: "+(t1-t0)+", dao: "+(t2-t1)+" Close c: "+(t3-t2));			
 		}
+		
 		}
 }

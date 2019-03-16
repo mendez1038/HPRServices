@@ -8,6 +8,7 @@ import com.david.training.dao.PedidoDAO;
 import com.david.training.dao.impl.PedidoDAOImpl;
 import com.david.training.dao.util.ConnectionManager;
 import com.david.training.model.Pedido;
+import com.david.training.service.Results;
 
 public class PedidoDAOTest {
 
@@ -29,12 +30,7 @@ public class PedidoDAOTest {
 			throws Exception{
 			System.out.println("Buscando pedidos del usuario solicitado ...");
 			Connection c = ConnectionManager.getConnection();
-			List<Pedido> pedidos = dao.findByUsuario(c,"AA@A.COM");
-				
-			
-				for (Pedido p: pedidos) {
-					System.out.println(p);
-				}
+			Results<Pedido> pedidos = dao.findByUsuario(c,"AA@A.COM", 0, 0);
 				
 		}
 	public void testCreate()

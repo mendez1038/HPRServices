@@ -9,6 +9,7 @@ import com.david.training.exceptions.DuplicateInstanceException;
 import com.david.training.exceptions.InstanceNotFoundException;
 import com.david.training.model.Contenido;
 import com.david.training.model.ProductoCriteria;
+import com.david.training.service.Results;
 
 public interface ContenidoDAO {
 	
@@ -18,7 +19,7 @@ public interface ContenidoDAO {
 	public Contenido create (Connection connection, Contenido c)
 			throws DuplicateInstanceException, DataException;
 	
-	public List<Contenido> findByCriteria(Connection c, ProductoCriteria producto, String idioma)
+	public Results<Contenido> findByCriteria(Connection c, ProductoCriteria producto, String idioma, int startIndex, int count)
 			throws DataException;
 	
 	public boolean update(Connection connection, Contenido d)
@@ -27,10 +28,10 @@ public interface ContenidoDAO {
 	public long delete (Connection c, Integer id)
 			throws InstanceNotFoundException, DataException;
 	
-	public List<Contenido> findLista(Connection connection, String email, String idioma) 
+	public Results<Contenido> findLista(Connection connection, String email, String idioma, int startIndex, int count) 
 			throws InstanceNotFoundException, DataException;
 	
-	public List<Contenido> findFavoritos(Connection connection, String email, String idioma)
+	public Results<Contenido> findFavoritos(Connection connection, String email, String idioma, int startIndex, int count)
 		throws InstanceNotFoundException, DataException;
 	
 	public Contenido findPorId(Connection c, Integer id) 

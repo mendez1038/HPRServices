@@ -1,5 +1,7 @@
 package com.david.training.model;
 
+import java.util.Objects;
+
 public class Favorito extends AbstractValueObject{
 
 	private String email =null;
@@ -25,4 +27,21 @@ public class Favorito extends AbstractValueObject{
 	public void setFavorito(Boolean favorito) {
 		this.favorito = favorito;
 	}
+	
+	public boolean equals(Object o) {
+		if (o == null) {
+			return false;}
+		Favorito f = (Favorito) o;
+		if(this.getEmail()!=null && this.getIdContenido()!= null) {
+		
+		return true;
+		}
+		return false;
+	}
+	
+	public int hashCode() {
+		return Objects.hash(email,idContenido);
+		
+	}
 }
+

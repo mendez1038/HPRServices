@@ -21,6 +21,7 @@ import com.david.training.model.LineaPedido;
 import com.david.training.model.LineaPedidoId;
 import com.david.training.model.Pedido;
 import com.david.training.service.PedidoService;
+import com.david.training.service.Results;
 
 
 
@@ -36,14 +37,14 @@ public class PedidoServiceImpl implements PedidoService{
 	}
 
 	@Override
-	public List<Pedido> historial(String email) throws DataException {
+	public Results<Pedido> historial(String email, int startIndex, int count) 
+			throws DataException {
 		boolean commit = false;
 		Connection c = null;
 		try {
 			c = ConnectionManager.getConnection();
 			c.setAutoCommit(false);
-			List<Pedido> historial = dao.findByUsuario(c, email);
-			
+			Results<Pedido> historial = dao.findByUsuario(c, email, startIndex, count);
 			commit = true; 
 			return historial;
 		}  catch (SQLException e) {

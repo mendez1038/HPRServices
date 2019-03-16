@@ -22,6 +22,7 @@ import com.david.training.model.Categoria;
 import com.david.training.model.Contenido;
 import com.david.training.model.Pais;
 import com.david.training.model.ProductoCriteria;
+import com.david.training.service.Results;
 
 
 public class ContenidoDAOImpl implements ContenidoDAO{
@@ -163,7 +164,8 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 		Integer idDescuento = resultSet.getInt(i++);
 		String tipoContenido = resultSet.getString(i++);
 		Integer porcentaje = resultSet.getInt(i++);
-
+		
+		
 		c = new Contenido();
 
 		c.setIdContenido(idContenido);
@@ -178,11 +180,12 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 		c.setIdDescuento(idDescuento);
 		c.setTipoContenido(tipoContenido);
 		c.setPorcentaje(porcentaje);
+		
 		return c;
 	}
 
 	@Override
-	public List<Contenido> findByCriteria(Connection connection, ProductoCriteria pc, String idioma) 
+	public Results<Contenido> findByCriteria(Connection connection, ProductoCriteria pc, String idioma, int startIndex, int count) 
 			throws DataException {
 		logger.debug("Producto = {} Idioma = {}", pc, idioma);
 		PreparedStatement preparedStatement = null;
@@ -285,7 +288,7 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 				addClause(queryString, first,addArtista(pc.getA()).toString());	
 				first = false;
 			}
-
+			queryString.append("ORDER BY C.FECHA_LANZAMIENTO DESC ");
 
 			preparedStatement = connection.prepareStatement(queryString.toString(),
 					ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
@@ -317,17 +320,24 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 				preparedStatement.setInt(i++, pc.getPorcentaje());}
 			if(idioma!=null)
 			preparedStatement.setString(i++, idioma);
-
 			resultSet = preparedStatement.executeQuery();
 
-			List<Contenido> results = new ArrayList<Contenido>();                        
+			List<Contenido> contenidos = new ArrayList<Contenido>();                        
 			Contenido e = null;
-
-			while (resultSet.next()) {
-				e=loadNext(resultSet);
-				results.add(e);	
-			}
-			return results;
+			int currentCount = 0;
+			
+			 if ((startIndex >= 1) && resultSet.absolute(startIndex)) { 
+			 do {
+				e = loadNext(resultSet);
+				contenidos.add(e);
+				currentCount++;
+			 } while ((currentCount < count) && resultSet.next());
+			 }
+			 
+			 int total = JDBCUtils.getTotalRows(resultSet);
+			 
+			 Results<Contenido> results = new Results<Contenido>(contenidos, startIndex, total);  
+			 return results;
 		} catch (SQLException e) {
 			logger.warn(e.getMessage(), e);
 			throw new DataException(e);
@@ -418,7 +428,7 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 	}
 
 	@Override
-	public List<Contenido> findLista(Connection connection, String email, String idioma) 
+	public Results<Contenido> findLista(Connection connection, String email, String idioma, int startIndex, int count) 
 			throws DataException {
 		logger.debug("Email = {} Idioma = {}", email, idioma);
 		PreparedStatement preparedStatement = null;
@@ -427,12 +437,12 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 		try{
 			sql = new StringBuilder("SELECT C.ID_CONTENIDO, CI.TITULO, C.RESTRICCION_EDAD, C.PORTADA, C.FECHA_LANZAMIENTO, "
 					+ "CI.DESCRIPCION_BREVE, C.PRECIO, C.PRECIO_DESCONTADO, C.DURACION, C.ID_DESCUENTO, C.ID_TIPO_CONTENIDO, "
-					+ "D.PORCENTAJE "
-					+"FROM CONTENIDO C INNER JOIN CONTENIDO_IDIOMA CI ON C.ID_CONTENIDO = CI.ID_CONTENIDO "
+					+ "D.PORCENTAJE, P.FECHA_PEDIDO "
+					+ "FROM CONTENIDO C INNER JOIN CONTENIDO_IDIOMA CI ON C.ID_CONTENIDO = CI.ID_CONTENIDO "
 					+ "INNER JOIN LINEAPEDIDO LP ON LP.ID_CONTENIDO = C.ID_CONTENIDO "
 					+ "INNER JOIN PEDIDO P ON P.ID_PEDIDO = LP.ID_PEDIDO "
 					+ "INNER JOIN DESCUENTO D ON D.ID_DESCUENTO = C.ID_DESCUENTO "
-					+"WHERE P.EMAIL = ? AND CI.ID_IDIOMA = ?"
+					+ "WHERE P.EMAIL = ? AND CI.ID_IDIOMA = ?"
 					+ "ORDER BY P.FECHA_PEDIDO DESC ");
 
 			preparedStatement = connection.prepareStatement(sql.toString(), ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
@@ -444,10 +454,20 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 
 			List<Contenido> contenidos = new ArrayList<Contenido>();
 			Contenido c = null;
-			while (resultSet.next()) {
+			int currentCount = 0;
+			
+			 if ((startIndex >= 1) && resultSet.absolute(startIndex)) { 
+			 do {
 				c = loadNext(resultSet);
 				contenidos.add(c);
-			} return contenidos;
+				currentCount++;
+			 } while ((currentCount < count) && resultSet.next());
+			 }
+			 
+			 int total = JDBCUtils.getTotalRows(resultSet);
+			 
+			 Results<Contenido> results = new Results<Contenido>(contenidos, startIndex, total);  
+			 return results;
 		} catch (SQLException ex) {
 			logger.warn(ex.getMessage(), ex);
 			throw new DataException(ex);
@@ -459,7 +479,7 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 	}
 
 	@Override
-	public List<Contenido> findFavoritos(Connection connection, String email, String idioma) 
+	public Results<Contenido> findFavoritos(Connection connection, String email, String idioma, int startIndex, int count) 
 			throws DataException {
 		logger.debug("Email = {} Idioma = {}", email, idioma);
 		PreparedStatement preparedStatement = null;
@@ -469,10 +489,11 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 			sql = new StringBuilder("SELECT C.ID_CONTENIDO, CI.TITULO, C.RESTRICCION_EDAD, C.PORTADA, C.FECHA_LANZAMIENTO, "
 					+ "CI.DESCRIPCION_BREVE, C.PRECIO, C.PRECIO_DESCONTADO, C.DURACION, C.ID_DESCUENTO, C.ID_TIPO_CONTENIDO, "
 					+ "D.PORCENTAJE "
-					+"FROM CONTENIDO C INNER JOIN CONTENIDO_IDIOMA CI ON C.ID_CONTENIDO = CI.ID_CONTENIDO "
+					+ "FROM CONTENIDO C INNER JOIN CONTENIDO_IDIOMA CI ON C.ID_CONTENIDO = CI.ID_CONTENIDO "
 					+ "INNER JOIN USUARIO_CONTENIDO UC ON UC.ID_CONTENIDO = C.ID_CONTENIDO "
 					+ "INNER JOIN DESCUENTO D ON D.ID_DESCUENTO = C.ID_DESCUENTO "
-					+"WHERE UC.EMAIL = ? AND CI.ID_IDIOMA = ? AND FAVORITO = 1 ");
+					+ "WHERE UC.EMAIL = ? AND CI.ID_IDIOMA = ? AND FAVORITO = 1 "
+					+ "ORDER BY C.ID_CONTENIDO DESC ");
 
 			preparedStatement = connection.prepareStatement(sql.toString(), ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 
@@ -483,10 +504,20 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 
 			List<Contenido> contenidos = new ArrayList<Contenido>();
 			Contenido c = null;
-			while (resultSet.next()) {
+			int currentCount = 0;
+			
+			 if ((startIndex >= 1) && resultSet.absolute(startIndex)) { 
+			 do {
 				c = loadNext(resultSet);
 				contenidos.add(c);
-			} return contenidos;
+				currentCount++;
+			 } while ((currentCount < count) && resultSet.next());
+			 }
+			 
+			 int total = JDBCUtils.getTotalRows(resultSet);
+			 
+			 Results<Contenido> results = new Results<Contenido>(contenidos, startIndex, total);  
+			 return results;
 		} catch (SQLException ex) {
 			logger.warn(ex.getMessage(), ex);
 			throw new DataException(ex);

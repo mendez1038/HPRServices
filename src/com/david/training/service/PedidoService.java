@@ -13,7 +13,7 @@ import com.david.training.model.Pedido;
 public interface PedidoService {
 	
 	// Amosa os pedidos realizados polo usuario
-	public List<Pedido> historial(String email)
+	public Results<Pedido> historial(String email, int startIndex, int count)
 			throws DataException;
 	// Detalla o historial cos productos comprados en cada pedido
 	public List<LineaPedido> historialAmpliado(Integer id)

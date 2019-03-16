@@ -18,6 +18,8 @@ public class Contenido extends AbstractValueObject  implements Comparable<Conten
 	private Integer idDescuento = null;
 	private String tipoContenido = null;
 	private Integer porcentaje = null;
+	private Date fechaPedido = null;
+	
 	
 	
 	public Contenido() {
@@ -123,12 +125,30 @@ public class Contenido extends AbstractValueObject  implements Comparable<Conten
 	public void setTipoContenido(String tipoContenido) {
 		this.tipoContenido = tipoContenido;
 	}
+	
+	public Date getFechaPedido() {
+		return fechaPedido;
+	}
 
+	public void setFechaPedido(Date fechaPedido) {
+		this.fechaPedido = fechaPedido;
+	}
+	
+	public Double getPrecioDescontado() {
+		return precioDescontado;
+	}
 
+	public void setPrecioDescontado(Double precioDescontado) {
+		this.precioDescontado = precioDescontado;
+	}
 
+	public Integer getPorcentaje() {
+		return porcentaje;
+	}
 
-
-
+	public void setPorcentaje(Integer porcentaje) {
+		this.porcentaje = porcentaje;
+	}
 	
 	@Override
 	public int compareTo(Contenido c) {
@@ -149,21 +169,7 @@ public class Contenido extends AbstractValueObject  implements Comparable<Conten
 //		
 //	}
 
-	public Double getPrecioDescontado() {
-		return precioDescontado;
-	}
-
-	public void setPrecioDescontado(Double precioDescontado) {
-		this.precioDescontado = precioDescontado;
-	}
-
-	public Integer getPorcentaje() {
-		return porcentaje;
-	}
-
-	public void setPorcentaje(Integer porcentaje) {
-		this.porcentaje = porcentaje;
-	}
+	
 	
 
 	/*	for (Usuario: usuarios) {

@@ -20,6 +20,7 @@ import com.david.training.exceptions.DuplicateInstanceException;
 import com.david.training.exceptions.InstanceNotFoundException;
 import com.david.training.model.LineaPedido;
 import com.david.training.model.Pedido;
+import com.david.training.service.Results;
 
 
 
@@ -96,9 +97,9 @@ public class PedidoDAOImpl implements PedidoDAO{
 	}
 
 	@Override
-	public List<Pedido> findByUsuario(Connection c, String email) 
+	public Results<Pedido> findByUsuario(Connection c, String email, int startIndex, int count) 
 			throws DataException {
-		logger.debug("Email = {}", email);
+		logger.debug("Email = {}, StartIndex = {}, Count = {}", email, startIndex, count);
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		StringBuilder queryString = null;
@@ -107,24 +108,30 @@ public class PedidoDAOImpl implements PedidoDAO{
 					"SELECT P.ID_PEDIDO, P.FECHA_PEDIDO, P.PRECIO_TOTAL, P.EMAIL " + 
 					"FROM PEDIDO P " +
 					"INNER JOIN USUARIO U "+
-					"ON P.EMAIL = U.EMAIL AND P.EMAIL = ? ");
+					"ON P.EMAIL = U.EMAIL AND P.EMAIL = ? "
+					+ "ORDER BY P.FECHA_PEDIDO DESC");
 
 			preparedStatement = c.prepareStatement(queryString.toString(),
 					ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-
 			int i = 1;                
 			preparedStatement.setString(i++, email);
-
 			resultSet = preparedStatement.executeQuery();
 
-			List<Pedido> results = new ArrayList<Pedido>();  
-
+			List<Pedido> pedidos = new ArrayList<Pedido>();  
 			Pedido p = null;
+			int currentCount = 0;
 
-			while (resultSet.next()) {
-				p = loadNext (resultSet);
-				results.add(p);
+			if ((startIndex >= 1) && resultSet.absolute(startIndex)) { 
+				do {
+					p = loadNext(resultSet);
+					pedidos.add(p);
+					currentCount++;
+				} while ((currentCount < count) && resultSet.next());
 			}
+
+			int total = JDBCUtils.getTotalRows(resultSet);
+
+			Results<Pedido> results = new Results<Pedido>(pedidos, startIndex, total);  
 			return results;
 
 		} catch (SQLException e) {

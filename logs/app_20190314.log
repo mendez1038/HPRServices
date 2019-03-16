@@ -1,0 +1,8 @@
+2019-03-14 10:43:21.329 DEBUG ContenidoDAOImpl.findLista:423 - Email = AA@A.COM Idioma = en
+2019-03-14 10:44:20.535 DEBUG ContenidoDAOImpl.findLista:423 - Email = aa@a.com Idioma = en
+2019-03-14 11:11:25.300 DEBUG ContenidoDAOImpl.findLista:423 - Email = aa@a.com Idioma = en
+2019-03-14 11:12:04.742 DEBUG ContenidoDAOImpl.findLista:423 - Email = aa@a.com Idioma = en
+2019-03-14 11:12:28.499 DEBUG ContenidoDAOImpl.findLista:423 - Email = aa@a.com Idioma = en
+2019-03-14 11:15:05.527 DEBUG ContenidoDAOImpl.findLista:423 - Email = aa@a.com Idioma = en
+2019-03-14 11:15:19.168 DEBUG ContenidoDAOImpl.findByCriteria:187 - Producto = com.david.training.model.ProductoCriteria@350ec41e[categoria=[com.david.training.model.Categoria@277f7dd3[idCategoria=13,nombreCategoria=<null>]],pais=[],a=<null>,idContenido=<null>,titulo=<null>,restriccionEdad=<null>,portada=<null>,fechaLanzamiento=<null>,descripcionBreve=<null>,precio=<null>,precioDescontado=<null>,duracion=<null>,idDescuento=<null>,tipoContenido=<null>,porcentaje=<null>] Idioma = en
+2019-03-14 11:19:03.803 DEBUG ContenidoDAOImpl.findByCriteria:187 - Producto = com.david.training.model.ProductoCriteria@470a696f[categoria=[com.david.training.model.Categoria@1c55f277[idCategoria=13,nombreCategoria=<null>]],pais=[],a=<null>,idContenido=<null>,titulo=<null>,restriccionEdad=<null>,portada=<null>,fechaLanzamiento=<null>,descripcionBreve=<null>,precio=<null>,precioDescontado=<null>,duracion=<null>,idDescuento=<null>,tipoContenido=<null>,porcentaje=<null>] Idioma = en

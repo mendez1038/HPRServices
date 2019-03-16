@@ -2,7 +2,6 @@ package com.david.training.service.impl;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.List;
 
 import com.david.training.dao.PaisDAO;
 import com.david.training.dao.impl.PaisDAOImpl;
@@ -11,6 +10,7 @@ import com.david.training.dao.util.JDBCUtils;
 import com.david.training.exceptions.DataException;
 import com.david.training.model.Pais;
 import com.david.training.service.PaisService;
+import com.david.training.service.Results;
 
 public class PaisServiceImpl implements PaisService{
 	
@@ -21,20 +21,20 @@ public class PaisServiceImpl implements PaisService{
 	}
 
 	@Override
-	public List<Pais> findAll(String idioma) throws DataException {
+	public Results<Pais> findAll(String idioma, int startIndex, int count) 
+			throws DataException {
+		boolean commit = false;
 		Connection connection = null;
-
 		try {
-
 			connection = ConnectionManager.getConnection();
-			connection.setAutoCommit(true);
-
-			return dao.findAll(idioma, connection);
-
+			connection.setAutoCommit(false);
+			Results<Pais> paises = dao.findAll(idioma, connection, startIndex, count);
+			commit = true;
+			return paises;
 		} catch (SQLException e){
 			throw new DataException(e);
 		} finally {
-			JDBCUtils.closeConnection(connection);
+			JDBCUtils.closeConnection(connection, commit);
 		}
 	}
 	

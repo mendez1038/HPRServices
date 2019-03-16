@@ -10,6 +10,7 @@ import com.david.training.dao.util.ConnectionManager;
 import com.david.training.model.Categoria;
 import com.david.training.model.Contenido;
 import com.david.training.model.ProductoCriteria;
+import com.david.training.service.Results;
 
 public class ContenidoDAOTest {
 	
@@ -32,20 +33,16 @@ public class ContenidoDAOTest {
 			throws Exception {
 			Connection connection = ConnectionManager.getConnection();
 			String idioma = "en";
-			List<Contenido> contenidos = dao.findLista(connection, "AA@A.COM", idioma);
-			for(Contenido c: contenidos) {
-				System.out.println(c);
-			}
+			Results<Contenido> contenidos = dao.findLista(connection, "AA@A.COM", idioma, 0, 0);
+			
 	}
 	
 	public void testFindFavoritos()
 		throws Exception {
 		Connection connection = ConnectionManager.getConnection();
 		String idioma = "en";
-		List<Contenido> contenidos = dao.findFavoritos(connection, "AA@A.COM", idioma);
-		for(Contenido c: contenidos) {
-			System.out.println(c);
-		}
+		Results<Contenido> contenidos = dao.findFavoritos(connection, "AA@A.COM", idioma, 0, 0);
+		
 	}
 
 	public void testCreate()
@@ -82,13 +79,17 @@ public class ContenidoDAOTest {
 	
 	public void testFindByCriteria()
 			throws Exception{
+		Connection connection = ConnectionManager.getConnection();
 		
-		ProductoCriteria pc = new ProductoCriteria();
+		
+		
 		Categoria ca = new Categoria();
 		List<Categoria> categorias = new ArrayList<Categoria>();
 		ca.setIdCategoria(1);
 		categorias.add(ca);
+		ProductoCriteria pc = new ProductoCriteria();
 		pc.setCategoria(categorias);
+		dao.findByCriteria(connection, pc, "es", 0, 0);
 		
 	}
 	

@@ -16,6 +16,7 @@ import com.david.training.dao.util.JDBCUtils;
 import com.david.training.exceptions.DataException;
 import com.david.training.exceptions.InstanceNotFoundException;
 import com.david.training.model.Categoria;
+import com.david.training.service.Results;
 
 public class CategoriaDAOImpl implements CategoriaDAO{
 
@@ -59,7 +60,7 @@ public class CategoriaDAOImpl implements CategoriaDAO{
 			JDBCUtils.closeResultSet(resultSet);
 			JDBCUtils.closeStatement(preparedStatement);
 		}
-		
+
 	}
 
 
@@ -130,35 +131,40 @@ public class CategoriaDAOImpl implements CategoriaDAO{
 
 
 	@Override
-	public List<Categoria> findAll(String idioma, Connection c) 
+	public Results<Categoria> findAll(String idioma, Connection c, int startIndex, int count) 
 			throws DataException {
-		
+
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		StringBuilder sql = null;
 		try {
-
 			sql = new StringBuilder(
-					  "SELECT ID_CATEGORIA, NOMBRE_CATEGORIA "
-					+ "FROM CATEGORIA_IDIOMA "
-					+ "WHERE ID_IDIOMA = ? ");
+					"SELECT ID_CATEGORIA, NOMBRE_CATEGORIA "
+							+ "FROM CATEGORIA_IDIOMA "
+							+ "WHERE ID_IDIOMA = ? "
+							+ "ORDER BY NOMBRE_CATEGORIA ASC");
 
 			preparedStatement = c.prepareStatement(sql.toString(), ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			int i = 1;
 			preparedStatement.setString(i++, idioma);
 			resultSet = preparedStatement.executeQuery();			
-			//STEP 5: Extract data from result set			
 
-			List<Categoria> results = new ArrayList<Categoria>();                        
+			List<Categoria> categorias = new ArrayList<Categoria>();                        
 			Categoria a = null;
+			int currentCount = 0;
 
-			while(resultSet.next()) {
-				a = loadNext(resultSet);
-				results.add(a);               	
+			if ((startIndex >= 1) && resultSet.absolute(startIndex)) { 
+				do {
+					a = loadNext(resultSet);
+					categorias.add(a);
+					currentCount++;
+				} while ((currentCount < count) && resultSet.next());
 			}
 
-			return results;
+			int total = JDBCUtils.getTotalRows(resultSet);
 
+			Results<Categoria> results = new Results<Categoria>(categorias, startIndex, total);  
+			return results;
 		} catch (SQLException ex) {
 			logger.warn(ex.getMessage(),ex);
 			throw new DataException(ex);

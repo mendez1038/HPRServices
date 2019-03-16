@@ -7,6 +7,7 @@ import com.david.training.dao.CategoriaDAO;
 import com.david.training.dao.impl.CategoriaDAOImpl;
 import com.david.training.dao.util.ConnectionManager;
 import com.david.training.model.Categoria;
+import com.david.training.service.Results;
 
 
 public class CategoriaDAOTest {
@@ -40,13 +41,11 @@ public class CategoriaDAOTest {
 			throws Exception{
 		Connection c = ConnectionManager.getConnection();
 		String idioma = "es";
-		List<Categoria> categorias = null;
+		Results<Categoria> categorias = null;
 
-		categorias = dao.findAll(idioma, c);
+		categorias = dao.findAll(idioma, c, 0, 0);
 
-		for (Categoria a : categorias) {
-			System.out.println(a);
-		}
+	
 	}
 	
 
