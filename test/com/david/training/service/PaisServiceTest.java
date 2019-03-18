@@ -1,5 +1,7 @@
 package com.david.training.service;
 
+import java.util.List;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -20,24 +22,14 @@ public class PaisServiceTest {
 		logger.info("Testing findAll ...");
 		int pageSize = 5; 	
 		try {
-			Results<Pais> results = null;
-			int startIndex = 1; 
-			int total = 1;
+			List<Pais> results = null;
 			String idioma ="es";
-			do {
-				results = paisService.findAll(idioma, startIndex, pageSize);
-				logger.info("Found "+results.getTotal()+" results.");
-				if (results.getPage().size()>0) {
-					logger.info("Page ["+startIndex+" - "+(startIndex+results.getPage().size()-1)+"] : ");				
-					for (Pais pais: results.getPage()) {
-						logger.info("Result "+total+": "+ToStringUtil.toString(pais));
-						total++;
+				results = paisService.findAll(idioma);
+							
+					for (Pais pais: results) {
+						logger.info("Result "+ToStringUtil.toString(pais));
+			
 					}
-					startIndex = startIndex + pageSize;
-				}
-
-			} while (results.getPage().size()==pageSize);
-
 		} catch (Throwable t) {
 			logger.error(t.getMessage(), t);
 		}

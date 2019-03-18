@@ -1,5 +1,7 @@
 package com.david.training.service;
 
+import java.util.List;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -17,27 +19,14 @@ public class CategoriaServiceTest {
 	}
 
 	public void testFindAll() {
-		logger.info("Testing findAll ...");
-		int pageSize = 5; 	
+		logger.info("Testing findAll ...");	
 		try {
-			Results<Categoria> results = null;
-			int startIndex = 1; 
-			int total = 1;
+			List<Categoria> results = null;
 			String idioma ="es";
-			do {
-				results = categoriaService.findAll(idioma, startIndex, pageSize);
-				logger.info("Found "+results.getTotal()+" results.");
-				if (results.getPage().size()>0) {
-					logger.info("Page ["+startIndex+" - "+(startIndex+results.getPage().size()-1)+"] : ");				
-					for (Categoria cat: results.getPage()) {
-						logger.info("Result "+total+": "+ToStringUtil.toString(cat));
-						total++;
-					}
-					startIndex = startIndex + pageSize;
-				}
-
-			} while (results.getPage().size()==pageSize);
-
+			results = categoriaService.findAll(idioma);
+			for (Categoria cat: results) {
+			logger.info("Result "+ToStringUtil.toString(cat));
+									}
 		} catch (Throwable t) {
 			logger.error(t.getMessage(), t);
 		}
