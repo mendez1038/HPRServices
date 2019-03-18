@@ -16,7 +16,6 @@ import com.david.training.dao.util.JDBCUtils;
 import com.david.training.exceptions.DataException;
 import com.david.training.exceptions.InstanceNotFoundException;
 import com.david.training.model.Categoria;
-import com.david.training.service.Results;
 
 public class CategoriaDAOImpl implements CategoriaDAO{
 
@@ -131,7 +130,7 @@ public class CategoriaDAOImpl implements CategoriaDAO{
 
 
 	@Override
-	public Results<Categoria> findAll(String idioma, Connection c, int startIndex, int count) 
+	public List<Categoria> findAll(String idioma, Connection c) 
 			throws DataException {
 
 		PreparedStatement preparedStatement = null;
@@ -151,20 +150,11 @@ public class CategoriaDAOImpl implements CategoriaDAO{
 
 			List<Categoria> categorias = new ArrayList<Categoria>();                        
 			Categoria a = null;
-			int currentCount = 0;
-
-			if ((startIndex >= 1) && resultSet.absolute(startIndex)) { 
-				do {
-					a = loadNext(resultSet);
-					categorias.add(a);
-					currentCount++;
-				} while ((currentCount < count) && resultSet.next());
+			while (resultSet.next()) {
+				a = loadNext (resultSet);
+				categorias.add(a);
 			}
-
-			int total = JDBCUtils.getTotalRows(resultSet);
-
-			Results<Categoria> results = new Results<Categoria>(categorias, startIndex, total);  
-			return results;
+			return categorias;
 		} catch (SQLException ex) {
 			logger.warn(ex.getMessage(),ex);
 			throw new DataException(ex);

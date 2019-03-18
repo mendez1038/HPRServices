@@ -74,7 +74,7 @@ public class PaisDAOImpl implements PaisDAO{
 		return pa;
 	}
 	@Override
-	public Results<Pais> findAll(String idioma, Connection c, int startIndex, int count) 
+	public List<Pais> findAll(String idioma, Connection c) 
 			throws DataException {
 
 		PreparedStatement preparedStatement = null;
@@ -95,19 +95,11 @@ public class PaisDAOImpl implements PaisDAO{
 
 			List<Pais> paises = new ArrayList<Pais>();
 			Pais p = null;
-			int currentCount = 0;
-
-			if ((startIndex >= 1) && resultSet.absolute(startIndex)) { 
-				do {
-					p = loadNext(resultSet);
-					paises.add(p);
-					currentCount++;
-				} while ((currentCount < count) && resultSet.next());
-			}
-			int total = JDBCUtils.getTotalRows(resultSet);
-
-			Results<Pais> results = new Results<Pais>(paises, startIndex, total);  
-			return results;
+			while (resultSet.next()) {
+				p = loadNext (resultSet);
+				paises.add(p);
+			} 
+			return paises;
 		} catch (SQLException ex) {
 			logger.warn(ex.getMessage(),ex);
 			throw new DataException(ex);

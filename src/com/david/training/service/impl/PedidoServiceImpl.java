@@ -85,11 +85,8 @@ public class PedidoServiceImpl implements PedidoService{
 		try {
 		c=ConnectionManager.getConnection();
 		c.setAutoCommit(false);
-		
 		lp = daoLp.create(c,lp);
-
 		commit=true;
-		
 		return lp;
 		
 		}catch(SQLException ed) {

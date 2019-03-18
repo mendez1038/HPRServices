@@ -15,7 +15,6 @@ import com.david.training.dao.util.JDBCUtils;
 import com.david.training.exceptions.DataException;
 import com.david.training.exceptions.InstanceNotFoundException;
 import com.david.training.model.TipoContenido;
-import com.david.training.service.Results;
 
 public class TipoContenidoDAOImpl implements TipoContenidoDAO{
 
@@ -119,13 +118,12 @@ public class TipoContenidoDAOImpl implements TipoContenidoDAO{
 	}
 
 	@Override
-	public Results<TipoContenido> findAll(String idioma, Connection c, int startIndex, int count) 
+	public List<TipoContenido> findAll(String idioma, Connection c) 
 			throws DataException {
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		StringBuilder sql = null;
 		try {
-
 			sql = new StringBuilder(
 					  "SELECT ID_TIPO_CONTENIDO, NOMBRE_CONTENIDO "
 					+ "FROM TIPO_CONTENIDO_IDIOMA "
@@ -139,20 +137,11 @@ public class TipoContenidoDAOImpl implements TipoContenidoDAO{
 
 			List<TipoContenido> tipos = new ArrayList<TipoContenido>();                        
 			TipoContenido a = null;
-			int currentCount = 0;
-
-			if ((startIndex >= 1) && resultSet.absolute(startIndex)) { 
-				do {
-					a = loadNext(resultSet);
-					tipos.add(a);
-					currentCount++;
-				} while ((currentCount < count) && resultSet.next());
-			}
-
-			int total = JDBCUtils.getTotalRows(resultSet);
-
-			Results<TipoContenido> results = new Results<TipoContenido>(tipos, startIndex, total);  
-			return results;
+			while (resultSet.next()) {
+				a = loadNext (resultSet);
+				tipos.add(a);
+			} 
+			return tipos;
 
 		} catch (SQLException ex) {
 			logger.warn(ex.getMessage(),ex);

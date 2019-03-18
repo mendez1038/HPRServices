@@ -94,7 +94,6 @@ public class LineaPedidoDAOImpl implements LineaPedidoDAO{
 			resultSet = preparedStatement.executeQuery();
 
 			List<LineaPedido> results = new ArrayList<LineaPedido>();  
-
 			LineaPedido lp = null;
 
 			while (resultSet.next()) {
