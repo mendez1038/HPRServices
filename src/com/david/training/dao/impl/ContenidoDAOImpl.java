@@ -207,7 +207,7 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 			}
 
 			if(!pc.getPais().isEmpty()) {
-				queryString.append(" inner join pais_contenido pc on c.id_contenido=pc.id_contenido inner join pais p on pc.id_pais=c.id_pais ");
+				queryString.append(" inner join pais_contenido pc on c.id_contenido=pc.id_contenido inner join pais p on pc.id_pais=p.id_pais ");
 			}
 			
 			if(pc.getA()!=null) {

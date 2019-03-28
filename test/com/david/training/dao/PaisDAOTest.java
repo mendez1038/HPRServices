@@ -31,7 +31,7 @@ public class PaisDAOTest {
 			throws Exception {
 		Connection c = ConnectionManager.getConnection();
 		String idioma = "en";
-		Results<Pais> paises = dao.findAll(idioma, c, 0, 0);
+		List<Pais> paises = dao.findAll(idioma, c);
 		
 	}
 	

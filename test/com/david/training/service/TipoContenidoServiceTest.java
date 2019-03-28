@@ -1,5 +1,7 @@
 package com.david.training.service;
 
+import java.util.List;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -20,23 +22,21 @@ public class TipoContenidoServiceTest {
 		logger.info("Testing findAll ...");
 		int pageSize = 3; 	
 		try {
-			Results<TipoContenido> results = null;
-			int startIndex = 1; 
-			int total = 1;
+			List<TipoContenido> results = null;
+			
 			String idioma = "es";
-			do {
-				results = tipoConteniodService.findAll(idioma, startIndex, pageSize);
-				logger.info("Found "+results.getTotal()+" results.");
-				if (results.getPage().size()>0) {
-					logger.info("Page ["+startIndex+" - "+(startIndex+results.getPage().size()-1)+"] : ");				
-					for (TipoContenido tc: results.getPage()) {
-						logger.info("Result "+total+": "+ToStringUtil.toString(tc));
-						total++;
+			
+				results = tipoConteniodService.findAll(idioma);
+				logger.info("Found "+results+" results.");
+								
+					for (TipoContenido tc: results) {
+						logger.info("Result : "+ToStringUtil.toString(tc));
+						
 					}
-					startIndex = startIndex + pageSize;
-				}
+					
+				
 
-			} while (results.getPage().size()==pageSize);
+			
 
 		} catch (Throwable t) {
 			logger.error(t.getMessage(), t);

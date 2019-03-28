@@ -97,20 +97,23 @@ public class ContenidoServiceTest {
 
 	public void testBusquedaEstructurada() {
 		logger.info("Testing Busqueda Estructurada ...");
-		int pageSize = 5;
+		int pageSize = 3;
 		
 		List<Categoria> categorias = new ArrayList<Categoria>();
 		Categoria uno = new Categoria();
-		uno.setIdCategoria(1);
+		uno.setIdCategoria(13);
 		categorias.add(uno);
 
 		List<Pais> paises = new ArrayList<Pais>();
 		Pais pais = new Pais();
-		pais.setIdPais(1);
+		pais.setIdPais(2);
+		paises.add(pais);
 
+		String titulo = "vo";
 		ProductoCriteria pc = new ProductoCriteria();
 		pc.setCategoria(categorias);
 		pc.setPais(paises);
+		pc.setTitulo(titulo);
 
 		try {
 			Results<Contenido> contenidos = null;
@@ -138,10 +141,10 @@ public class ContenidoServiceTest {
 
 	public static void main(String[] args) {
 		ContenidoServiceTest test = new ContenidoServiceTest();
-		test.testMiLista();
+		//test.testMiLista();
 		//test.testFavoritos();
 		//test.testPrecioDescontado();
-		//test.testBusquedaEstructurada();
+		test.testBusquedaEstructurada();
 	}
 
 }

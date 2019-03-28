@@ -18,7 +18,7 @@ import com.david.training.service.Results;
 
 
 public class ContenidoServiceImpl implements ContenidoService{
-	
+
 	private ContenidoDAO dao = null;
 	public static Logger logger = LogManager.getLogger(ContenidoDAOImpl.class);
 	public ContenidoServiceImpl()  {
@@ -41,7 +41,7 @@ public class ContenidoServiceImpl implements ContenidoService{
 			throw new DataException(e);
 		} finally {
 			JDBCUtils.closeConnection(c, commit);
-			}
+		}
 	}
 
 	@Override
@@ -60,37 +60,37 @@ public class ContenidoServiceImpl implements ContenidoService{
 			throw new DataException(e);
 		} finally {
 			JDBCUtils.closeConnection(c, commit);
-			}}
-	
-	
-	
+		}}
+
+
+
 	public Double sacarPrecioDescontado(Integer id) throws DataException {
 		boolean commit = false;
-		
+
 		Connection connection = null;
 		try {
-			
+
 			Contenido c = new Contenido();
 			connection = ConnectionManager.getConnection();
-			
-			
+
+
 			connection.setAutoCommit(false);
 			c = dao.findPorId(connection, id);
 			Double precioDescontado = c.getPorcentaje()*c.getPrecio()/100;
-			
+
 			return precioDescontado;
 		} catch (SQLException e) {
 			logger.warn(e.getMessage(),e);
 			throw new DataException(e);
 		} finally {
 			JDBCUtils.closeConnection(connection, commit);
-			
-			
 
-			}
-		
+
+
+		}
+
 	}
-	
+
 	@Override
 	public void precioDescontado(Contenido c) throws DataException {
 		boolean commit = false;
@@ -100,14 +100,14 @@ public class ContenidoServiceImpl implements ContenidoService{
 			connection.setAutoCommit(false);
 			dao.update(connection, c);
 			commit = true;
-			
+
 		} catch (SQLException e) {
 			logger.warn(e.getMessage(),e);
 			throw new DataException(e);
 		} finally {
 			JDBCUtils.closeConnection(connection, commit);
-			}
-		
+		}
+
 	}
 
 	@Override
@@ -117,24 +117,24 @@ public class ContenidoServiceImpl implements ContenidoService{
 		boolean commit=false;
 		Connection c=null;
 		try {
-		t0 = System.currentTimeMillis();
-		c=ConnectionManager.getConnection();
-		t1= System.currentTimeMillis();
-		c.setAutoCommit(false);
-		
-		Results<Contenido> productos = dao.findByCriteria(c, producto, idioma, startIndex, count);
-		t2= System.currentTimeMillis();
-		return productos;
-		
+			t0 = System.currentTimeMillis();
+			c=ConnectionManager.getConnection();
+			t1= System.currentTimeMillis();
+			c.setAutoCommit(false);
+
+			Results<Contenido> productos = dao.findByCriteria(c, producto, idioma, startIndex, count);
+			t2= System.currentTimeMillis();
+			return productos;
+
 		}catch(SQLException e) {
 			logger.warn(e.getMessage(),e);
 			throw new DataException(e);
 		}finally {
 			JDBCUtils.closeConnection(c, commit);
 			t3= System.currentTimeMillis();
-			
+
 			System.out.println("Get c: "+(t1-t0)+", dao: "+(t2-t1)+" Close c: "+(t3-t2));			
 		}
-		
-		}
+
+	}
 }

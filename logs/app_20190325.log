@@ -1,0 +1,37 @@
+2019-03-25 09:49:43.418 DEBUG UsuarioDAOImpl.delete:253 - Email = d.mendez_97@hotmail.com
+2019-03-25 12:10:39.782 DEBUG UsuarioDAOImpl.findByEmail:33 - email = dmendez1038@gmail.com
+2019-03-25 12:10:39.787 DEBUG UsuarioDAOImpl.findByEmail:44 - SELECT EMAIL, CONTRASENA, NOMBRE, APELLIDOS, GENERO, FECHA_NACIMIENTO, TELEFONO FROM USUARIO  WHERE EMAIL = ? 
+2019-03-25 12:11:26.215 DEBUG UsuarioDAOImpl.findByEmail:33 - email = dmendez1038@gmail.com
+2019-03-25 12:11:26.219 DEBUG UsuarioDAOImpl.findByEmail:44 - SELECT EMAIL, CONTRASENA, NOMBRE, APELLIDOS, GENERO, FECHA_NACIMIENTO, TELEFONO FROM USUARIO  WHERE EMAIL = ? 
+2019-03-25 13:08:58.385 DEBUG ContenidoDAOImpl.signIn:131 - email: dmendez1038@gmail.com; contrasena: false
+2019-03-25 13:08:59.156 DEBUG UsuarioDAOImpl.findByEmail:33 - email = dmendez1038@gmail.com
+2019-03-25 13:08:59.157 DEBUG UsuarioDAOImpl.findByEmail:44 - SELECT EMAIL, CONTRASENA, NOMBRE, APELLIDOS, GENERO, FECHA_NACIMIENTO, TELEFONO FROM USUARIO  WHERE EMAIL = ? 
+2019-03-25 13:08:59.245 DEBUG ContenidoDAOImpl.signIn:148 - Psswd inorrecta
+2019-03-25 13:10:38.822 DEBUG ContenidoDAOImpl.signIn:131 - email: dmendez1038@gmail.com; contrasena: false
+2019-03-25 13:10:39.509 DEBUG UsuarioDAOImpl.findByEmail:33 - email = dmendez1038@gmail.com
+2019-03-25 13:10:39.510 DEBUG UsuarioDAOImpl.findByEmail:44 - SELECT EMAIL, CONTRASENA, NOMBRE, APELLIDOS, GENERO, FECHA_NACIMIENTO, TELEFONO FROM USUARIO  WHERE EMAIL = ? 
+2019-03-25 13:23:29.430 DEBUG UsuarioDAOImpl.create:131 - Usuario = Email: d.mendez_97@hotmail.com, Contraseña: hidden , Nombre: null, Apellidos: null, Genero: null, Fecha de nacimiento: Sat Apr 03 00:00:00 CEST 1999 y Telefono: null
+2019-03-25 13:29:52.406 DEBUG UsuarioDAOImpl.delete:253 - Email = bb@b.com
+2019-03-25 13:29:52.457 WARN  UsuarioDAOImpl.delete:273 - Cannot delete or update a parent row: a foreign key constraint fails (`hpr`.`pedido`, CONSTRAINT `fk_PEDIDO_USUARIO` FOREIGN KEY (`EMAIL`) REFERENCES `usuario` (`email`))
+java.sql.SQLIntegrityConstraintViolationException: Cannot delete or update a parent row: a foreign key constraint fails (`hpr`.`pedido`, CONSTRAINT `fk_PEDIDO_USUARIO` FOREIGN KEY (`EMAIL`) REFERENCES `usuario` (`email`))
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:117) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:97) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:974) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdateInternal(ClientPreparedStatement.java:1113) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdateInternal(ClientPreparedStatement.java:1061) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeLargeUpdate(ClientPreparedStatement.java:1381) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdate(ClientPreparedStatement.java:1046) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.david.training.dao.impl.UsuarioDAOImpl.delete(UsuarioDAOImpl.java:265) [bin/:?]
+	at com.david.training.service.impl.UsuarioServiceImpl.delete(UsuarioServiceImpl.java:87) [bin/:?]
+	at com.david.training.service.UsuarioServiceTest.testRemoveAccount(UsuarioServiceTest.java:76) [bin/:?]
+	at com.david.training.service.UsuarioServiceTest.main(UsuarioServiceTest.java:129) [bin/:?]
+2019-03-25 13:31:03.762 DEBUG UsuarioDAOImpl.delete:253 - Email = jj@j.com
+2019-03-25 13:31:17.673 DEBUG UsuarioDAOImpl.delete:253 - Email = ii@i.com
+2019-03-25 13:32:01.454 DEBUG UsuarioDAOImpl.delete:253 - Email = varelavazquez.pablo@gmail.com
+2019-03-25 13:32:19.805 DEBUG UsuarioDAOImpl.delete:253 - Email = SUMARO@HOTMAIL.ES
+2019-03-25 13:32:52.868 DEBUG UsuarioDAOImpl.delete:253 - Email = oo@o.com
+2019-03-25 13:33:10.258 DEBUG UsuarioDAOImpl.delete:253 - Email = nn@n.com
+2019-03-25 13:33:51.886 DEBUG UsuarioDAOImpl.delete:253 - Email = HH@H.COM
+2019-03-25 13:43:26.984 DEBUG UsuarioDAOImpl.create:131 - Usuario = Email: hh@h.com, Contraseña: hidden , Nombre: null, Apellidos: null, Genero: null, Fecha de nacimiento: Sat Apr 03 00:00:00 CEST 1999 y Telefono: null
+2019-03-25 13:50:06.317 DEBUG UsuarioDAOImpl.delete:253 - Email = HH@H.COM

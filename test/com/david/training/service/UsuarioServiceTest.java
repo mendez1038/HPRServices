@@ -1,5 +1,7 @@
 package com.david.training.service;
 
+import java.text.SimpleDateFormat;
+
 import com.david.training.model.Favorito;
 import com.david.training.model.Usuario;
 import com.david.training.service.impl.UsuarioServiceImpl;
@@ -16,13 +18,13 @@ public class UsuarioServiceTest {
 	public void testSignUp() {
 		try {
 		Usuario u = new Usuario();
-		u.setEmail("zz@z.com");
-		u.setContrasena("123456");
+		u.setEmail("hh@h.com");
+		u.setContrasena("abcd");
 		u.setNombre(null);
 		u.setApellidos(null);
 		u.setGenero(null);
-		u.setFechaNacimiento(null);
-		//u.setFechaNacimiento(new SimpleDateFormat( "yyyyMMdd" ).parse( "19470403" ));
+		//u.setFechaNacimiento(null);
+		u.setFechaNacimiento(new SimpleDateFormat( "yyyyMMdd" ).parse( "19990403" ));
 		u.setTelefono(null);
 		
 		servicio.signUp(u);
@@ -39,7 +41,7 @@ public class UsuarioServiceTest {
 		String email= "dmendez1038@gmail.com";
 		String contrasena= "123456";
 		u = servicio.signIn(email,contrasena);
-		System.out.println(u);
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -69,7 +71,7 @@ public class UsuarioServiceTest {
 	
 	public void testRemoveAccount() {
 		try {
-		String email = "rr@r.com";
+		String email = "HH@H.COM";
 		//servicio.exists(email); implementarlo en el service
 		servicio.delete(email);
 		System.out.println("Usuario eliminado con email "+email);
@@ -124,9 +126,9 @@ public class UsuarioServiceTest {
 			//test.testSignIn();
 			//test.testFindByEmail();
 			//test.testEditProfile();
-			//test.testRemoveAccount();
+			test.testRemoveAccount();
 			//test.testEliminarFavoritos();
-			test.testAñadirFavoritos();
+			//test.testAñadirFavoritos();
 	}
 	
 }

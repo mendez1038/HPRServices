@@ -128,17 +128,34 @@ public class UsuarioServiceImpl implements UsuarioService{
 	@Override
 	public Usuario signIn(String email, String contrasena) 
 			throws DataException {
-		
-		//Validaciones
-		
-		Usuario u = findByEmail(email);
-		if (u==null) {
-			return null;
+		if(logger.isDebugEnabled()) logger.debug("email: {}; contrasena: {}", email, contrasena==null);
+		Connection c = null;
+		try {
+			c = ConnectionManager.getConnection();
+			if (email == null || contrasena == null) {
+				return null;
+			}
+
+			Usuario u = dao.findByEmail(email, c);
+
+			if(u==null) {
+				return u;
+			}
+
+			if(PasswordEncryptionUtil.checkPassword(contrasena, u.getContrasena())) {
+				return u;
+			}else {
+				if(logger.isDebugEnabled()) logger.debug("Contrasena inorrecta");
+				throw new DataException("Datos mal introducidos");
+			}
+
+		}catch (SQLException ex) {
+			logger.warn(ex.getMessage(), ex);
+			throw new DataException(ex);
 		}
-		if (PasswordEncryptionUtil.checkPassword(contrasena, u.getContrasena())) {
-			return u;
+		finally {
+			JDBCUtils.closeConnection(c);
 		}
-		return null;
 	}
 
 	@Override

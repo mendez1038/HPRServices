@@ -41,9 +41,9 @@ public class CategoriaDAOTest {
 			throws Exception{
 		Connection c = ConnectionManager.getConnection();
 		String idioma = "es";
-		Results<Categoria> categorias = null;
+		List<Categoria> categorias = null;
 
-		categorias = dao.findAll(idioma, c, 0, 0);
+		categorias = dao.findAll(idioma, c);
 
 	
 	}
