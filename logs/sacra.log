@@ -1,73 +1,17 @@
-2019-03-16 18:23:07.695 INFO  ContenidoServiceTest.testMiLista:29 - Testing miLista ...
-2019-03-16 18:23:10.401 DEBUG ContenidoDAOImpl.findLista:433 - Email = aa@a.com Idioma = en
-2019-03-16 18:23:10.463 INFO  ContenidoServiceTest.testMiLista:39 - Found 6 results.
-2019-03-16 18:23:10.464 INFO  ContenidoServiceTest.testMiLista:41 - Page [1 - 5] : 
-2019-03-16 18:23:10.477 INFO  ContenidoServiceTest.testMiLista:43 - Result 1: com.david.training.model.Contenido@2a39fe6a[idContenido=8,titulo=DJANGO UNCHAINED,restriccionEdad=TP,portada=URL,fechaLanzamiento=2018-12-10,descripcionBreve=,precio=3.0,precioDescontado=0.75,duracion=90,idDescuento=8,tipoContenido=PEL,porcentaje=5,fechaPedido=2012-01-01]
-2019-03-16 18:23:10.478 INFO  ContenidoServiceTest.testMiLista:43 - Result 2: com.david.training.model.Contenido@7e242b4d[idContenido=101,titulo=STRANGER THINGS,restriccionEdad=12+,portada=URL,fechaLanzamiento=2018-12-10,descripcionBreve=,precio=5.0,precioDescontado=0.0,duracion=90,idDescuento=4,tipoContenido=SER,porcentaje=25,fechaPedido=2012-01-01]
-2019-03-16 18:23:10.479 INFO  ContenidoServiceTest.testMiLista:43 - Result 3: com.david.training.model.Contenido@305f031[idContenido=201,titulo=VOX: FREEFALLING,restriccionEdad=18+,portada=URL,fechaLanzamiento=2018-12-10,descripcionBreve=,precio=1.0,precioDescontado=0.0,duracion=90,idDescuento=5,tipoContenido=DOC,porcentaje=30,fechaPedido=2011-01-01]
-2019-03-16 18:23:10.479 INFO  ContenidoServiceTest.testMiLista:43 - Result 4: com.david.training.model.Contenido@592e843a[idContenido=1,titulo=RESERVOIR DOGS,restriccionEdad=16+,portada=URL,fechaLanzamiento=2018-12-10,descripcionBreve=,precio=3.0,precioDescontado=0.0,duracion=90,idDescuento=1,tipoContenido=PEL,porcentaje=15,fechaPedido=2010-01-01]
-2019-03-16 18:23:10.480 INFO  ContenidoServiceTest.testMiLista:43 - Result 5: com.david.training.model.Contenido@1d1f7216[idContenido=2,titulo=PULP FICTION,restriccionEdad=16+,portada=URL,fechaLanzamiento=2018-12-10,descripcionBreve=,precio=3.0,precioDescontado=1.5,duracion=90,idDescuento=2,tipoContenido=PEL,porcentaje=50,fechaPedido=2010-01-01]
-2019-03-16 18:23:10.496 DEBUG ContenidoDAOImpl.findLista:433 - Email = aa@a.com Idioma = en
-2019-03-16 18:23:10.501 INFO  ContenidoServiceTest.testMiLista:39 - Found 6 results.
-2019-03-16 18:23:10.502 INFO  ContenidoServiceTest.testMiLista:41 - Page [6 - 6] : 
-2019-03-16 18:23:10.502 INFO  ContenidoServiceTest.testMiLista:43 - Result 6: com.david.training.model.Contenido@43b4fe19[idContenido=3,titulo=JACKIE BROWN,restriccionEdad=16+,portada=URL,fechaLanzamiento=2018-12-10,descripcionBreve=,precio=3.0,precioDescontado=0.3,duracion=90,idDescuento=3,tipoContenido=PEL,porcentaje=10,fechaPedido=2010-01-01]
-2019-03-16 18:23:10.503 INFO  ContenidoServiceTest.testMiLista:52 - Test testMiLista finished.
+2019-03-28 13:06:42.893 INFO  ContenidoServiceTest.testBusquedaEstructurada:99 - Testing Busqueda Estructurada ...
+2019-03-28 13:06:43.639 DEBUG ContenidoDAOImpl.findByCriteria:190 - Producto = com.david.training.model.ProductoCriteria@6f0ca692[categoria=<null>,pais=<null>,a=<null>,idContenido=<null>,titulo=vo,restriccionEdad=<null>,portada=<null>,fechaLanzamiento=<null>,descripcionBreve=<null>,precio=<null>,precioDescontado=<null>,duracion=<null>,idDescuento=<null>,tipoContenido=<null>,porcentaje=<null>,fechaPedido=<null>] Idioma = es
+2019-03-28 13:06:43.642 ERROR ContenidoServiceTest.testBusquedaEstructurada:136 - null
+java.lang.NullPointerException: null
+	at com.david.training.dao.impl.ContenidoDAOImpl.findByCriteria(ContenidoDAOImpl.java:205) ~[bin/:?]
+	at com.david.training.service.impl.ContenidoServiceImpl.busquedaEstructurada(ContenidoServiceImpl.java:125) ~[bin/:?]
+	at com.david.training.service.ContenidoServiceTest.testBusquedaEstructurada(ContenidoServiceTest.java:124) [bin/:?]
+	at com.david.training.service.ContenidoServiceTest.main(ContenidoServiceTest.java:146) [bin/:?]
+2019-03-28 13:06:43.647 INFO  ContenidoServiceTest.testBusquedaEstructurada:138 - Test testBusquedaEstructurada finished.
 
-2019-03-16 18:23:57.526 INFO  ContenidoServiceTest.testFavoritos:56 - Testing favoritos ...
-2019-03-16 18:23:58.326 DEBUG ContenidoDAOImpl.findFavoritos:484 - Email = EE@E.com Idioma = en
-2019-03-16 18:23:58.369 WARN  ContenidoDAOImpl.findFavoritos:522 - Column Index out of range, 13 > 12. 
-java.sql.SQLException: Column Index out of range, 13 > 12. 
-	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:129) ~[mysql-connector-java-8.0.13.jar:8.0.13]
-	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:97) ~[mysql-connector-java-8.0.13.jar:8.0.13]
-	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:89) ~[mysql-connector-java-8.0.13.jar:8.0.13]
-	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:63) ~[mysql-connector-java-8.0.13.jar:8.0.13]
-	at com.mysql.cj.jdbc.result.ResultSetImpl.checkColumnBounds(ResultSetImpl.java:494) ~[mysql-connector-java-8.0.13.jar:8.0.13]
-	at com.mysql.cj.jdbc.result.ResultSetImpl.getDate(ResultSetImpl.java:846) ~[mysql-connector-java-8.0.13.jar:8.0.13]
-	at com.david.training.dao.impl.ContenidoDAOImpl.loadNext(ContenidoDAOImpl.java:167) ~[bin/:?]
-	at com.david.training.dao.impl.ContenidoDAOImpl.findFavoritos(ContenidoDAOImpl.java:511) [bin/:?]
-	at com.david.training.service.impl.ContenidoServiceImpl.favoritos(ContenidoServiceImpl.java:55) [bin/:?]
-	at com.david.training.service.ContenidoServiceTest.testFavoritos(ContenidoServiceTest.java:66) [bin/:?]
-	at com.david.training.service.ContenidoServiceTest.main(ContenidoServiceTest.java:141) [bin/:?]
-2019-03-16 18:24:58.174 INFO  ContenidoServiceTest.testMiLista:29 - Testing miLista ...
-2019-03-16 18:24:58.996 DEBUG ContenidoDAOImpl.findLista:433 - Email = aa@a.com Idioma = en
-2019-03-16 18:24:59.056 INFO  ContenidoServiceTest.testMiLista:39 - Found 6 results.
-2019-03-16 18:24:59.056 INFO  ContenidoServiceTest.testMiLista:41 - Page [1 - 5] : 
-2019-03-16 18:24:59.069 INFO  ContenidoServiceTest.testMiLista:43 - Result 1: com.david.training.model.Contenido@3faf2e7d[idContenido=8,titulo=DJANGO UNCHAINED,restriccionEdad=TP,portada=URL,fechaLanzamiento=2018-12-10,descripcionBreve=,precio=3.0,precioDescontado=0.75,duracion=90,idDescuento=8,tipoContenido=PEL,porcentaje=5,fechaPedido=<null>]
-2019-03-16 18:24:59.070 INFO  ContenidoServiceTest.testMiLista:43 - Result 2: com.david.training.model.Contenido@76ba13c[idContenido=101,titulo=STRANGER THINGS,restriccionEdad=12+,portada=URL,fechaLanzamiento=2018-12-10,descripcionBreve=,precio=5.0,precioDescontado=0.0,duracion=90,idDescuento=4,tipoContenido=SER,porcentaje=25,fechaPedido=<null>]
-2019-03-16 18:24:59.070 INFO  ContenidoServiceTest.testMiLista:43 - Result 3: com.david.training.model.Contenido@eb6449b[idContenido=201,titulo=VOX: FREEFALLING,restriccionEdad=18+,portada=URL,fechaLanzamiento=2018-12-10,descripcionBreve=,precio=1.0,precioDescontado=0.0,duracion=90,idDescuento=5,tipoContenido=DOC,porcentaje=30,fechaPedido=<null>]
-2019-03-16 18:24:59.071 INFO  ContenidoServiceTest.testMiLista:43 - Result 4: com.david.training.model.Contenido@7c351808[idContenido=1,titulo=RESERVOIR DOGS,restriccionEdad=16+,portada=URL,fechaLanzamiento=2018-12-10,descripcionBreve=,precio=3.0,precioDescontado=0.0,duracion=90,idDescuento=1,tipoContenido=PEL,porcentaje=15,fechaPedido=<null>]
-2019-03-16 18:24:59.072 INFO  ContenidoServiceTest.testMiLista:43 - Result 5: com.david.training.model.Contenido@180e6ac4[idContenido=2,titulo=PULP FICTION,restriccionEdad=16+,portada=URL,fechaLanzamiento=2018-12-10,descripcionBreve=,precio=3.0,precioDescontado=1.5,duracion=90,idDescuento=2,tipoContenido=PEL,porcentaje=50,fechaPedido=<null>]
-2019-03-16 18:24:59.085 DEBUG ContenidoDAOImpl.findLista:433 - Email = aa@a.com Idioma = en
-2019-03-16 18:24:59.091 INFO  ContenidoServiceTest.testMiLista:39 - Found 6 results.
-2019-03-16 18:24:59.091 INFO  ContenidoServiceTest.testMiLista:41 - Page [6 - 6] : 
-2019-03-16 18:24:59.092 INFO  ContenidoServiceTest.testMiLista:43 - Result 6: com.david.training.model.Contenido@2a39fe6a[idContenido=3,titulo=JACKIE BROWN,restriccionEdad=16+,portada=URL,fechaLanzamiento=2018-12-10,descripcionBreve=,precio=3.0,precioDescontado=0.3,duracion=90,idDescuento=3,tipoContenido=PEL,porcentaje=10,fechaPedido=<null>]
-2019-03-16 18:24:59.092 INFO  ContenidoServiceTest.testMiLista:52 - Test testMiLista finished.
-
-2019-03-16 18:25:41.577 INFO  ContenidoServiceTest.testFavoritos:56 - Testing favoritos ...
-2019-03-16 18:25:42.403 DEBUG ContenidoDAOImpl.findFavoritos:484 - Email = EE@E.com Idioma = en
-2019-03-16 18:25:42.466 INFO  ContenidoServiceTest.testFavoritos:67 - Found 1 results.
-2019-03-16 18:25:42.466 INFO  ContenidoServiceTest.testFavoritos:69 - Page [1 - 1] : 
-2019-03-16 18:25:42.481 INFO  ContenidoServiceTest.testFavoritos:71 - Result 1: com.david.training.model.Contenido@3faf2e7d[idContenido=102,titulo=DRAGON BALL,restriccionEdad=TP,portada=URL,fechaLanzamiento=2018-12-10,descripcionBreve=,precio=5.0,precioDescontado=0.75,duracion=90,idDescuento=1,tipoContenido=SER,porcentaje=15,fechaPedido=<null>]
-2019-03-16 18:26:57.266 INFO  ContenidoServiceTest.testFavoritos:56 - Testing favoritos ...
-2019-03-16 18:26:58.130 DEBUG ContenidoDAOImpl.findFavoritos:484 - Email = aa@a.com Idioma = en
-2019-03-16 18:26:58.187 INFO  ContenidoServiceTest.testFavoritos:67 - Found 2 results.
-2019-03-16 18:26:58.188 INFO  ContenidoServiceTest.testFavoritos:69 - Page [1 - 2] : 
-2019-03-16 18:26:58.201 INFO  ContenidoServiceTest.testFavoritos:71 - Result 1: com.david.training.model.Contenido@3faf2e7d[idContenido=4,titulo=KILL BILL VOL 1,restriccionEdad=16+,portada=URL,fechaLanzamiento=2018-12-10,descripcionBreve=,precio=3.0,precioDescontado=0.0,duracion=90,idDescuento=4,tipoContenido=PEL,porcentaje=25,fechaPedido=<null>]
-2019-03-16 18:26:58.202 INFO  ContenidoServiceTest.testFavoritos:71 - Result 2: com.david.training.model.Contenido@76ba13c[idContenido=5,titulo=KILL BILL VOL 2,restriccionEdad=18+,portada=URL,fechaLanzamiento=2018-12-10,descripcionBreve=,precio=3.0,precioDescontado=0.0,duracion=90,idDescuento=5,tipoContenido=PEL,porcentaje=30,fechaPedido=<null>]
-2019-03-16 18:26:58.214 DEBUG ContenidoDAOImpl.findFavoritos:484 - Email = aa@a.com Idioma = en
-2019-03-16 18:26:58.218 INFO  ContenidoServiceTest.testFavoritos:67 - Found 2 results.
-2019-03-16 18:28:08.067 INFO  ContenidoServiceTest.testFavoritos:56 - Testing favoritos ...
-2019-03-16 18:28:08.842 DEBUG ContenidoDAOImpl.findFavoritos:484 - Email = aa@a.com Idioma = en
-2019-03-16 18:28:08.897 INFO  ContenidoServiceTest.testFavoritos:67 - Found 2 results.
-2019-03-16 18:28:08.897 INFO  ContenidoServiceTest.testFavoritos:69 - Page [1 - 2] : 
-2019-03-16 18:28:08.911 INFO  ContenidoServiceTest.testFavoritos:71 - Result 1: com.david.training.model.Contenido@3faf2e7d[idContenido=5,titulo=KILL BILL VOL 2,restriccionEdad=18+,portada=URL,fechaLanzamiento=2018-12-10,descripcionBreve=,precio=3.0,precioDescontado=0.0,duracion=90,idDescuento=5,tipoContenido=PEL,porcentaje=30,fechaPedido=<null>]
-2019-03-16 18:28:08.911 INFO  ContenidoServiceTest.testFavoritos:71 - Result 2: com.david.training.model.Contenido@76ba13c[idContenido=4,titulo=KILL BILL VOL 1,restriccionEdad=16+,portada=URL,fechaLanzamiento=2018-12-10,descripcionBreve=,precio=3.0,precioDescontado=0.0,duracion=90,idDescuento=4,tipoContenido=PEL,porcentaje=25,fechaPedido=<null>]
-2019-03-16 18:28:08.924 DEBUG ContenidoDAOImpl.findFavoritos:484 - Email = aa@a.com Idioma = en
-2019-03-16 18:28:08.929 INFO  ContenidoServiceTest.testFavoritos:67 - Found 2 results.
-2019-03-16 18:28:26.579 INFO  ContenidoServiceTest.testBusquedaEstructurada:99 - Testing findAll ...
-2019-03-16 18:28:27.438 DEBUG ContenidoDAOImpl.findByCriteria:190 - Producto = com.david.training.model.ProductoCriteria@51850751[categoria=[com.david.training.model.Categoria@2c3dec30[idCategoria=13,nombreCategoria=<null>]],pais=[],a=<null>,idContenido=<null>,titulo=<null>,restriccionEdad=<null>,portada=<null>,fechaLanzamiento=<null>,descripcionBreve=<null>,precio=<null>,precioDescontado=<null>,duracion=<null>,idDescuento=<null>,tipoContenido=<null>,porcentaje=<null>,fechaPedido=<null>] Idioma = es
-2019-03-16 18:28:27.519 WARN  ContenidoDAOImpl.findByCriteria:342 - Unknown column 'C.FECHA_LAZAMIENTO' in 'order clause'
-java.sql.SQLSyntaxErrorException: Unknown column 'C.FECHA_LAZAMIENTO' in 'order clause'
+2019-03-28 13:09:16.727 INFO  ContenidoServiceTest.testBusquedaEstructurada:99 - Testing Busqueda Estructurada ...
+2019-03-28 13:09:17.431 DEBUG ContenidoDAOImpl.findByCriteria:190 - Producto = com.david.training.model.ProductoCriteria@e260766[categoria=[com.david.training.model.Categoria@3fc9dfc5[idCategoria=<null>,nombreCategoria=<null>]],pais=[com.david.training.model.Pais@40258c2f[idPais=<null>,nombrePais=<null>,capitalPais=<null>]],a=<null>,idContenido=<null>,titulo=vo,restriccionEdad=<null>,portada=<null>,fechaLanzamiento=<null>,descripcionBreve=<null>,precio=<null>,precioDescontado=<null>,duracion=<null>,idDescuento=<null>,tipoContenido=<null>,porcentaje=<null>,fechaPedido=<null>] Idioma = es
+2019-03-28 13:09:17.489 WARN  ContenidoDAOImpl.findByCriteria:342 - Unknown column 'c.id_pais' in 'on clause'
+java.sql.SQLSyntaxErrorException: Unknown column 'c.id_pais' in 'on clause'
 	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:120) ~[mysql-connector-java-8.0.13.jar:8.0.13]
 	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:97) ~[mysql-connector-java-8.0.13.jar:8.0.13]
 	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122) ~[mysql-connector-java-8.0.13.jar:8.0.13]
@@ -75,203 +19,81 @@ java.sql.SQLSyntaxErrorException: Unknown column 'C.FECHA_LAZAMIENTO' in 'order 
 	at com.mysql.cj.jdbc.ClientPreparedStatement.executeQuery(ClientPreparedStatement.java:1024) ~[mysql-connector-java-8.0.13.jar:8.0.13]
 	at com.david.training.dao.impl.ContenidoDAOImpl.findByCriteria(ContenidoDAOImpl.java:323) [bin/:?]
 	at com.david.training.service.impl.ContenidoServiceImpl.busquedaEstructurada(ContenidoServiceImpl.java:125) [bin/:?]
-	at com.david.training.service.ContenidoServiceTest.testBusquedaEstructurada(ContenidoServiceTest.java:122) [bin/:?]
-	at com.david.training.service.ContenidoServiceTest.main(ContenidoServiceTest.java:143) [bin/:?]
-2019-03-16 18:32:23.279 INFO  ContenidoServiceTest.testBusquedaEstructurada:99 - Testing Busqueda Estructurada ...
-2019-03-16 18:32:24.112 DEBUG ContenidoDAOImpl.findByCriteria:190 - Producto = com.david.training.model.ProductoCriteria@51850751[categoria=[com.david.training.model.Categoria@2c3dec30[idCategoria=13,nombreCategoria=<null>]],pais=[],a=<null>,idContenido=<null>,titulo=<null>,restriccionEdad=<null>,portada=<null>,fechaLanzamiento=<null>,descripcionBreve=<null>,precio=<null>,precioDescontado=<null>,duracion=<null>,idDescuento=<null>,tipoContenido=<null>,porcentaje=<null>,fechaPedido=<null>] Idioma = es
-2019-03-16 18:32:24.166 INFO  ContenidoServiceTest.testBusquedaEstructurada:123 - Found 1 results.
-2019-03-16 18:32:24.166 INFO  ContenidoServiceTest.testBusquedaEstructurada:125 - Page [1 - 1] : 
-2019-03-16 18:32:24.167 INFO  ContenidoServiceTest.testBusquedaEstructurada:127 - Result 1: com.david.training.model.Contenido@42b64ab8[idContenido=201,titulo=VOX: LA DECADENCIA,restriccionEdad=18+,portada=URL,fechaLanzamiento=2018-12-10,descripcionBreve=,precio=1.0,precioDescontado=0.0,duracion=90,idDescuento=5,tipoContenido=DOC,porcentaje=30,fechaPedido=<null>]
-2019-03-16 18:32:24.167 INFO  ContenidoServiceTest.testBusquedaEstructurada:136 - Test testBusquedaEstructurada finished.
+	at com.david.training.service.ContenidoServiceTest.testBusquedaEstructurada(ContenidoServiceTest.java:125) [bin/:?]
+	at com.david.training.service.ContenidoServiceTest.main(ContenidoServiceTest.java:147) [bin/:?]
+2019-03-28 13:09:17.495 ERROR ContenidoServiceTest.testBusquedaEstructurada:137 - null
+com.david.training.exceptions.DataException: null
+	at com.david.training.dao.impl.ContenidoDAOImpl.findByCriteria(ContenidoDAOImpl.java:343) ~[bin/:?]
+	at com.david.training.service.impl.ContenidoServiceImpl.busquedaEstructurada(ContenidoServiceImpl.java:125) ~[bin/:?]
+	at com.david.training.service.ContenidoServiceTest.testBusquedaEstructurada(ContenidoServiceTest.java:125) [bin/:?]
+	at com.david.training.service.ContenidoServiceTest.main(ContenidoServiceTest.java:147) [bin/:?]
+Caused by: java.sql.SQLSyntaxErrorException: Unknown column 'c.id_pais' in 'on clause'
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:120) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:97) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:974) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeQuery(ClientPreparedStatement.java:1024) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.david.training.dao.impl.ContenidoDAOImpl.findByCriteria(ContenidoDAOImpl.java:323) ~[bin/:?]
+	... 3 more
+2019-03-28 13:09:17.496 INFO  ContenidoServiceTest.testBusquedaEstructurada:139 - Test testBusquedaEstructurada finished.
 
-2019-03-16 18:33:16.186 INFO  ContenidoServiceTest.testBusquedaEstructurada:99 - Testing Busqueda Estructurada ...
-2019-03-16 18:33:17.018 DEBUG ContenidoDAOImpl.findByCriteria:190 - Producto = com.david.training.model.ProductoCriteria@51850751[categoria=[com.david.training.model.Categoria@2c3dec30[idCategoria=10,nombreCategoria=<null>]],pais=[],a=<null>,idContenido=<null>,titulo=<null>,restriccionEdad=<null>,portada=<null>,fechaLanzamiento=<null>,descripcionBreve=<null>,precio=<null>,precioDescontado=<null>,duracion=<null>,idDescuento=<null>,tipoContenido=<null>,porcentaje=<null>,fechaPedido=<null>] Idioma = es
-2019-03-16 18:33:17.073 INFO  ContenidoServiceTest.testBusquedaEstructurada:123 - Found 1 results.
-2019-03-16 18:33:17.074 INFO  ContenidoServiceTest.testBusquedaEstructurada:125 - Page [1 - 1] : 
-2019-03-16 18:33:17.075 INFO  ContenidoServiceTest.testBusquedaEstructurada:127 - Result 1: com.david.training.model.Contenido@42b64ab8[idContenido=9,titulo=LOS ODIOSOS OCHO,restriccionEdad=16+,portada=URL,fechaLanzamiento=2018-12-10,descripcionBreve=,precio=3.0,precioDescontado=0.0,duracion=90,idDescuento=2,tipoContenido=PEL,porcentaje=50,fechaPedido=<null>]
-2019-03-16 18:33:17.075 INFO  ContenidoServiceTest.testBusquedaEstructurada:136 - Test testBusquedaEstructurada finished.
+2019-03-28 13:11:36.482 INFO  ContenidoServiceTest.testBusquedaEstructurada:99 - Testing Busqueda Estructurada ...
+2019-03-28 13:11:37.174 DEBUG ContenidoDAOImpl.findByCriteria:190 - Producto = com.david.training.model.ProductoCriteria@e260766[categoria=[com.david.training.model.Categoria@3fc9dfc5[idCategoria=13,nombreCategoria=<null>]],pais=[com.david.training.model.Pais@40258c2f[idPais=2,nombrePais=<null>,capitalPais=<null>]],a=<null>,idContenido=<null>,titulo=vo,restriccionEdad=<null>,portada=<null>,fechaLanzamiento=<null>,descripcionBreve=<null>,precio=<null>,precioDescontado=<null>,duracion=<null>,idDescuento=<null>,tipoContenido=<null>,porcentaje=<null>,fechaPedido=<null>] Idioma = es
+2019-03-28 13:11:37.203 WARN  ContenidoDAOImpl.findByCriteria:342 - Unknown column 'c.id_pais' in 'on clause'
+java.sql.SQLSyntaxErrorException: Unknown column 'c.id_pais' in 'on clause'
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:120) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:97) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:974) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeQuery(ClientPreparedStatement.java:1024) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.david.training.dao.impl.ContenidoDAOImpl.findByCriteria(ContenidoDAOImpl.java:323) [bin/:?]
+	at com.david.training.service.impl.ContenidoServiceImpl.busquedaEstructurada(ContenidoServiceImpl.java:125) [bin/:?]
+	at com.david.training.service.ContenidoServiceTest.testBusquedaEstructurada(ContenidoServiceTest.java:125) [bin/:?]
+	at com.david.training.service.ContenidoServiceTest.main(ContenidoServiceTest.java:147) [bin/:?]
+2019-03-28 13:11:37.210 ERROR ContenidoServiceTest.testBusquedaEstructurada:137 - null
+com.david.training.exceptions.DataException: null
+	at com.david.training.dao.impl.ContenidoDAOImpl.findByCriteria(ContenidoDAOImpl.java:343) ~[bin/:?]
+	at com.david.training.service.impl.ContenidoServiceImpl.busquedaEstructurada(ContenidoServiceImpl.java:125) ~[bin/:?]
+	at com.david.training.service.ContenidoServiceTest.testBusquedaEstructurada(ContenidoServiceTest.java:125) [bin/:?]
+	at com.david.training.service.ContenidoServiceTest.main(ContenidoServiceTest.java:147) [bin/:?]
+Caused by: java.sql.SQLSyntaxErrorException: Unknown column 'c.id_pais' in 'on clause'
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:120) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:97) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:974) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeQuery(ClientPreparedStatement.java:1024) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.david.training.dao.impl.ContenidoDAOImpl.findByCriteria(ContenidoDAOImpl.java:323) ~[bin/:?]
+	... 3 more
+2019-03-28 13:11:37.211 INFO  ContenidoServiceTest.testBusquedaEstructurada:139 - Test testBusquedaEstructurada finished.
 
-2019-03-16 18:33:33.271 INFO  ContenidoServiceTest.testBusquedaEstructurada:99 - Testing Busqueda Estructurada ...
-2019-03-16 18:33:34.109 DEBUG ContenidoDAOImpl.findByCriteria:190 - Producto = com.david.training.model.ProductoCriteria@51850751[categoria=[com.david.training.model.Categoria@2c3dec30[idCategoria=3,nombreCategoria=<null>]],pais=[],a=<null>,idContenido=<null>,titulo=<null>,restriccionEdad=<null>,portada=<null>,fechaLanzamiento=<null>,descripcionBreve=<null>,precio=<null>,precioDescontado=<null>,duracion=<null>,idDescuento=<null>,tipoContenido=<null>,porcentaje=<null>,fechaPedido=<null>] Idioma = es
-2019-03-16 18:33:34.158 INFO  ContenidoServiceTest.testBusquedaEstructurada:123 - Found 0 results.
-2019-03-16 18:33:34.158 INFO  ContenidoServiceTest.testBusquedaEstructurada:136 - Test testBusquedaEstructurada finished.
+2019-03-28 13:16:04.930 INFO  ContenidoServiceTest.testBusquedaEstructurada:99 - Testing Busqueda Estructurada ...
+2019-03-28 13:16:05.615 DEBUG ContenidoDAOImpl.findByCriteria:190 - Producto = com.david.training.model.ProductoCriteria@e260766[categoria=[com.david.training.model.Categoria@3fc9dfc5[idCategoria=13,nombreCategoria=<null>]],pais=[com.david.training.model.Pais@40258c2f[idPais=2,nombrePais=<null>,capitalPais=<null>]],a=<null>,idContenido=<null>,titulo=vo,restriccionEdad=<null>,portada=<null>,fechaLanzamiento=<null>,descripcionBreve=<null>,precio=<null>,precioDescontado=<null>,duracion=<null>,idDescuento=<null>,tipoContenido=<null>,porcentaje=<null>,fechaPedido=<null>] Idioma = es
+2019-03-28 13:16:05.684 INFO  ContenidoServiceTest.testBusquedaEstructurada:126 - Found 1 results.
+2019-03-28 13:16:05.685 INFO  ContenidoServiceTest.testBusquedaEstructurada:128 - Page [1 - 1] : 
+2019-03-28 13:16:05.686 INFO  ContenidoServiceTest.testBusquedaEstructurada:130 - Result 1: com.david.training.model.Contenido@d5ae57e[idContenido=201,titulo=VOX: LA DECADENCIA,restriccionEdad=18+,portada=URL,fechaLanzamiento=2018-12-10,descripcionBreve=,precio=1.0,precioDescontado=0.0,duracion=90,idDescuento=5,tipoContenido=DOC,porcentaje=30,fechaPedido=<null>]
+2019-03-28 13:16:05.686 INFO  ContenidoServiceTest.testBusquedaEstructurada:139 - Test testBusquedaEstructurada finished.
 
-2019-03-16 18:34:14.418 INFO  ContenidoServiceTest.testBusquedaEstructurada:99 - Testing Busqueda Estructurada ...
-2019-03-16 18:34:15.206 DEBUG ContenidoDAOImpl.findByCriteria:190 - Producto = com.david.training.model.ProductoCriteria@51850751[categoria=[com.david.training.model.Categoria@2c3dec30[idCategoria=1,nombreCategoria=<null>]],pais=[],a=<null>,idContenido=<null>,titulo=<null>,restriccionEdad=<null>,portada=<null>,fechaLanzamiento=<null>,descripcionBreve=<null>,precio=<null>,precioDescontado=<null>,duracion=<null>,idDescuento=<null>,tipoContenido=<null>,porcentaje=<null>,fechaPedido=<null>] Idioma = es
-2019-03-16 18:34:15.251 INFO  ContenidoServiceTest.testBusquedaEstructurada:123 - Found 4 results.
-2019-03-16 18:34:15.252 INFO  ContenidoServiceTest.testBusquedaEstructurada:125 - Page [1 - 4] : 
-2019-03-16 18:34:15.253 INFO  ContenidoServiceTest.testBusquedaEstructurada:127 - Result 1: com.david.training.model.Contenido@42b64ab8[idContenido=1,titulo=RESERVOIR DOGS,restriccionEdad=16+,portada=URL,fechaLanzamiento=2018-12-10,descripcionBreve=,precio=3.0,precioDescontado=0.0,duracion=90,idDescuento=1,tipoContenido=PEL,porcentaje=15,fechaPedido=<null>]
-2019-03-16 18:34:15.253 INFO  ContenidoServiceTest.testBusquedaEstructurada:127 - Result 2: com.david.training.model.Contenido@7e985ce9[idContenido=4,titulo=KILL BILL VOL 1,restriccionEdad=16+,portada=URL,fechaLanzamiento=2018-12-10,descripcionBreve=,precio=3.0,precioDescontado=0.0,duracion=90,idDescuento=4,tipoContenido=PEL,porcentaje=25,fechaPedido=<null>]
-2019-03-16 18:34:15.253 INFO  ContenidoServiceTest.testBusquedaEstructurada:127 - Result 3: com.david.training.model.Contenido@2a39fe6a[idContenido=5,titulo=KILL BILL VOL 2,restriccionEdad=18+,portada=URL,fechaLanzamiento=2018-12-10,descripcionBreve=,precio=3.0,precioDescontado=0.0,duracion=90,idDescuento=5,tipoContenido=PEL,porcentaje=30,fechaPedido=<null>]
-2019-03-16 18:34:15.254 INFO  ContenidoServiceTest.testBusquedaEstructurada:127 - Result 4: com.david.training.model.Contenido@410ae9a3[idContenido=6,titulo=DEATH PROOF,restriccionEdad=12+,portada=URL,fechaLanzamiento=2018-12-10,descripcionBreve=,precio=3.0,precioDescontado=0.0,duracion=90,idDescuento=6,tipoContenido=PEL,porcentaje=5,fechaPedido=<null>]
-2019-03-16 18:34:15.254 INFO  ContenidoServiceTest.testBusquedaEstructurada:136 - Test testBusquedaEstructurada finished.
+2019-03-28 13:16:58.974 INFO  ContenidoServiceTest.testBusquedaEstructurada:99 - Testing Busqueda Estructurada ...
+2019-03-28 13:16:59.764 DEBUG ContenidoDAOImpl.findByCriteria:190 - Producto = com.david.training.model.ProductoCriteria@e260766[categoria=<null>,pais=<null>,a=<null>,idContenido=<null>,titulo=vo,restriccionEdad=<null>,portada=<null>,fechaLanzamiento=<null>,descripcionBreve=<null>,precio=<null>,precioDescontado=<null>,duracion=<null>,idDescuento=<null>,tipoContenido=<null>,porcentaje=<null>,fechaPedido=<null>] Idioma = es
+2019-03-28 13:16:59.768 ERROR ContenidoServiceTest.testBusquedaEstructurada:137 - null
+java.lang.NullPointerException: null
+	at com.david.training.dao.impl.ContenidoDAOImpl.findByCriteria(ContenidoDAOImpl.java:205) ~[bin/:?]
+	at com.david.training.service.impl.ContenidoServiceImpl.busquedaEstructurada(ContenidoServiceImpl.java:125) ~[bin/:?]
+	at com.david.training.service.ContenidoServiceTest.testBusquedaEstructurada(ContenidoServiceTest.java:125) [bin/:?]
+	at com.david.training.service.ContenidoServiceTest.main(ContenidoServiceTest.java:147) [bin/:?]
+2019-03-28 13:16:59.772 INFO  ContenidoServiceTest.testBusquedaEstructurada:139 - Test testBusquedaEstructurada finished.
 
-2019-03-16 18:41:47.147 INFO  ContenidoServiceTest.testBusquedaEstructurada:99 - Testing Busqueda Estructurada ...
-2019-03-16 18:41:47.971 DEBUG ContenidoDAOImpl.findByCriteria:190 - Producto = com.david.training.model.ProductoCriteria@51850751[categoria=[com.david.training.model.Categoria@2c3dec30[idCategoria=1,nombreCategoria=<null>]],pais=[],a=<null>,idContenido=<null>,titulo=<null>,restriccionEdad=<null>,portada=<null>,fechaLanzamiento=<null>,descripcionBreve=<null>,precio=<null>,precioDescontado=<null>,duracion=<null>,idDescuento=<null>,tipoContenido=<null>,porcentaje=<null>,fechaPedido=<null>] Idioma = es
-2019-03-16 18:41:48.026 INFO  ContenidoServiceTest.testBusquedaEstructurada:123 - Found 4 results.
-2019-03-16 18:41:48.026 INFO  ContenidoServiceTest.testBusquedaEstructurada:125 - Page [1 - 4] : 
-2019-03-16 18:41:48.028 INFO  ContenidoServiceTest.testBusquedaEstructurada:127 - Result 1: com.david.training.model.Contenido@42b64ab8[idContenido=1,titulo=RESERVOIR DOGS,restriccionEdad=16+,portada=URL,fechaLanzamiento=2018-12-10,descripcionBreve=,precio=3.0,precioDescontado=0.0,duracion=90,idDescuento=1,tipoContenido=PEL,porcentaje=15,fechaPedido=<null>]
-2019-03-16 18:41:48.028 INFO  ContenidoServiceTest.testBusquedaEstructurada:127 - Result 2: com.david.training.model.Contenido@7e985ce9[idContenido=4,titulo=KILL BILL VOL 1,restriccionEdad=16+,portada=URL,fechaLanzamiento=2018-12-10,descripcionBreve=,precio=3.0,precioDescontado=0.0,duracion=90,idDescuento=4,tipoContenido=PEL,porcentaje=25,fechaPedido=<null>]
-2019-03-16 18:41:48.029 INFO  ContenidoServiceTest.testBusquedaEstructurada:127 - Result 3: com.david.training.model.Contenido@2a39fe6a[idContenido=6,titulo=DEATH PROOF,restriccionEdad=12+,portada=URL,fechaLanzamiento=2018-12-10,descripcionBreve=,precio=3.0,precioDescontado=0.0,duracion=90,idDescuento=6,tipoContenido=PEL,porcentaje=5,fechaPedido=<null>]
-2019-03-16 18:41:48.029 INFO  ContenidoServiceTest.testBusquedaEstructurada:127 - Result 4: com.david.training.model.Contenido@410ae9a3[idContenido=5,titulo=KILL BILL VOL 2,restriccionEdad=18+,portada=URL,fechaLanzamiento=2018-12-11,descripcionBreve=,precio=3.0,precioDescontado=0.0,duracion=90,idDescuento=5,tipoContenido=PEL,porcentaje=30,fechaPedido=<null>]
-2019-03-16 18:41:48.029 INFO  ContenidoServiceTest.testBusquedaEstructurada:136 - Test testBusquedaEstructurada finished.
+2019-03-28 13:17:23.697 INFO  ContenidoServiceTest.testBusquedaEstructurada:99 - Testing Busqueda Estructurada ...
+2019-03-28 13:17:24.377 DEBUG ContenidoDAOImpl.findByCriteria:190 - Producto = com.david.training.model.ProductoCriteria@e260766[categoria=[com.david.training.model.Categoria@3fc9dfc5[idCategoria=13,nombreCategoria=<null>]],pais=<null>,a=<null>,idContenido=<null>,titulo=vo,restriccionEdad=<null>,portada=<null>,fechaLanzamiento=<null>,descripcionBreve=<null>,precio=<null>,precioDescontado=<null>,duracion=<null>,idDescuento=<null>,tipoContenido=<null>,porcentaje=<null>,fechaPedido=<null>] Idioma = es
+2019-03-28 13:17:24.379 ERROR ContenidoServiceTest.testBusquedaEstructurada:137 - null
+java.lang.NullPointerException: null
+	at com.david.training.dao.impl.ContenidoDAOImpl.findByCriteria(ContenidoDAOImpl.java:209) ~[bin/:?]
+	at com.david.training.service.impl.ContenidoServiceImpl.busquedaEstructurada(ContenidoServiceImpl.java:125) ~[bin/:?]
+	at com.david.training.service.ContenidoServiceTest.testBusquedaEstructurada(ContenidoServiceTest.java:125) [bin/:?]
+	at com.david.training.service.ContenidoServiceTest.main(ContenidoServiceTest.java:147) [bin/:?]
+2019-03-28 13:17:24.383 INFO  ContenidoServiceTest.testBusquedaEstructurada:139 - Test testBusquedaEstructurada finished.
 
-2019-03-16 18:42:43.483 INFO  ContenidoServiceTest.testBusquedaEstructurada:99 - Testing Busqueda Estructurada ...
-2019-03-16 18:42:44.276 DEBUG ContenidoDAOImpl.findByCriteria:190 - Producto = com.david.training.model.ProductoCriteria@51850751[categoria=[com.david.training.model.Categoria@2c3dec30[idCategoria=1,nombreCategoria=<null>]],pais=[],a=<null>,idContenido=<null>,titulo=<null>,restriccionEdad=<null>,portada=<null>,fechaLanzamiento=<null>,descripcionBreve=<null>,precio=<null>,precioDescontado=<null>,duracion=<null>,idDescuento=<null>,tipoContenido=<null>,porcentaje=<null>,fechaPedido=<null>] Idioma = es
-2019-03-16 18:42:44.329 INFO  ContenidoServiceTest.testBusquedaEstructurada:123 - Found 4 results.
-2019-03-16 18:42:44.329 INFO  ContenidoServiceTest.testBusquedaEstructurada:125 - Page [1 - 4] : 
-2019-03-16 18:42:44.330 INFO  ContenidoServiceTest.testBusquedaEstructurada:127 - Result 1: com.david.training.model.Contenido@42b64ab8[idContenido=5,titulo=KILL BILL VOL 2,restriccionEdad=18+,portada=URL,fechaLanzamiento=2018-12-11,descripcionBreve=,precio=3.0,precioDescontado=0.0,duracion=90,idDescuento=5,tipoContenido=PEL,porcentaje=30,fechaPedido=<null>]
-2019-03-16 18:42:44.331 INFO  ContenidoServiceTest.testBusquedaEstructurada:127 - Result 2: com.david.training.model.Contenido@7e985ce9[idContenido=1,titulo=RESERVOIR DOGS,restriccionEdad=16+,portada=URL,fechaLanzamiento=2018-12-10,descripcionBreve=,precio=3.0,precioDescontado=0.0,duracion=90,idDescuento=1,tipoContenido=PEL,porcentaje=15,fechaPedido=<null>]
-2019-03-16 18:42:44.332 INFO  ContenidoServiceTest.testBusquedaEstructurada:127 - Result 3: com.david.training.model.Contenido@2a39fe6a[idContenido=4,titulo=KILL BILL VOL 1,restriccionEdad=16+,portada=URL,fechaLanzamiento=2018-12-10,descripcionBreve=,precio=3.0,precioDescontado=0.0,duracion=90,idDescuento=4,tipoContenido=PEL,porcentaje=25,fechaPedido=<null>]
-2019-03-16 18:42:44.333 INFO  ContenidoServiceTest.testBusquedaEstructurada:127 - Result 4: com.david.training.model.Contenido@410ae9a3[idContenido=6,titulo=DEATH PROOF,restriccionEdad=12+,portada=URL,fechaLanzamiento=2018-12-10,descripcionBreve=,precio=3.0,precioDescontado=0.0,duracion=90,idDescuento=6,tipoContenido=PEL,porcentaje=5,fechaPedido=<null>]
-2019-03-16 18:42:44.333 INFO  ContenidoServiceTest.testBusquedaEstructurada:136 - Test testBusquedaEstructurada finished.
-
-2019-03-16 18:46:24.599 INFO  ContenidoServiceTest.testHistorial:24 - Testing Historial ...
-2019-03-16 18:46:25.463 DEBUG PedidoDAOImpl.findByUsuario:102 - Email = AA@A.COM, StartIndex = 1, Count = 2
-2019-03-16 18:46:25.523 INFO  ContenidoServiceTest.testHistorial:33 - Found 3 results.
-2019-03-16 18:46:25.527 INFO  ContenidoServiceTest.testHistorial:35 - Page [1 - 2] : 
-2019-03-16 18:46:25.542 INFO  ContenidoServiceTest.testHistorial:37 - Result 1: com.david.training.model.Pedido@76ba13c[idPedido=3,fechaPedido=2012-01-01,precioTotal=12.98,email=AA@A.COM,lineas=[]]
-2019-03-16 18:46:25.542 INFO  ContenidoServiceTest.testHistorial:37 - Result 2: com.david.training.model.Pedido@7e985ce9[idPedido=2,fechaPedido=2011-01-01,precioTotal=0.99,email=AA@A.COM,lineas=[]]
-2019-03-16 18:46:25.560 DEBUG PedidoDAOImpl.findByUsuario:102 - Email = AA@A.COM, StartIndex = 3, Count = 2
-2019-03-16 18:46:25.563 INFO  ContenidoServiceTest.testHistorial:33 - Found 3 results.
-2019-03-16 18:46:25.563 INFO  ContenidoServiceTest.testHistorial:35 - Page [3 - 3] : 
-2019-03-16 18:46:25.564 INFO  ContenidoServiceTest.testHistorial:37 - Result 3: com.david.training.model.Pedido@319988b0[idPedido=1,fechaPedido=2010-01-01,precioTotal=10.47,email=AA@A.COM,lineas=[]]
-2019-03-16 18:46:25.564 INFO  ContenidoServiceTest.testHistorial:46 - Test testHistorial finished.
-
-2019-03-16 18:48:08.324 DEBUG LineaPedidoDAOImpl.findByPedido:77 - Id = 1
-2019-03-16 18:49:28.171 INFO  ContenidoServiceTest.testFindAll:20 - Testing findAll ...
-2019-03-16 18:49:29.020 INFO  ContenidoServiceTest.testFindAll:29 - Found 13 results.
-2019-03-16 18:49:29.020 INFO  ContenidoServiceTest.testFindAll:31 - Page [1 - 2] : 
-2019-03-16 18:49:29.033 INFO  ContenidoServiceTest.testFindAll:33 - Result 1: com.david.training.model.Categoria@7813cb11[idCategoria=7,nombreCategoria=ACCION]
-2019-03-16 18:49:29.033 INFO  ContenidoServiceTest.testFindAll:33 - Result 2: com.david.training.model.Categoria@29ef6856[idCategoria=12,nombreCategoria=ANIMACION]
-2019-03-16 18:49:29.054 INFO  ContenidoServiceTest.testFindAll:29 - Found 13 results.
-2019-03-16 18:49:29.054 INFO  ContenidoServiceTest.testFindAll:31 - Page [3 - 4] : 
-2019-03-16 18:49:29.054 INFO  ContenidoServiceTest.testFindAll:33 - Result 3: com.david.training.model.Categoria@4648ce9[idCategoria=8,nombreCategoria=BELICO]
-2019-03-16 18:49:29.055 INFO  ContenidoServiceTest.testFindAll:33 - Result 4: com.david.training.model.Categoria@569bf9eb[idCategoria=11,nombreCategoria=CIENCIA FICCION]
-2019-03-16 18:49:29.071 INFO  ContenidoServiceTest.testFindAll:29 - Found 13 results.
-2019-03-16 18:49:29.072 INFO  ContenidoServiceTest.testFindAll:31 - Page [5 - 6] : 
-2019-03-16 18:49:29.072 INFO  ContenidoServiceTest.testFindAll:33 - Result 5: com.david.training.model.Categoria@76ba13c[idCategoria=3,nombreCategoria=COMEDIA]
-2019-03-16 18:49:29.072 INFO  ContenidoServiceTest.testFindAll:33 - Result 6: com.david.training.model.Categoria@eb6449b[idCategoria=2,nombreCategoria=CRIMEN]
-2019-03-16 18:49:29.090 INFO  ContenidoServiceTest.testFindAll:29 - Found 13 results.
-2019-03-16 18:49:29.090 INFO  ContenidoServiceTest.testFindAll:31 - Page [7 - 8] : 
-2019-03-16 18:49:29.090 INFO  ContenidoServiceTest.testFindAll:33 - Result 7: com.david.training.model.Categoria@42b64ab8[idCategoria=6,nombreCategoria=DRAMA]
-2019-03-16 18:49:29.091 INFO  ContenidoServiceTest.testFindAll:33 - Result 8: com.david.training.model.Categoria@7e985ce9[idCategoria=5,nombreCategoria=GANSTERS]
-2019-03-16 18:49:29.107 INFO  ContenidoServiceTest.testFindAll:29 - Found 13 results.
-2019-03-16 18:49:29.107 INFO  ContenidoServiceTest.testFindAll:31 - Page [9 - 10] : 
-2019-03-16 18:49:29.107 INFO  ContenidoServiceTest.testFindAll:33 - Result 9: com.david.training.model.Categoria@319988b0[idCategoria=10,nombreCategoria=MISTERIO]
-2019-03-16 18:49:29.108 INFO  ContenidoServiceTest.testFindAll:33 - Result 10: com.david.training.model.Categoria@d5ae57e[idCategoria=13,nombreCategoria=POLITICA]
-2019-03-16 18:49:29.123 INFO  ContenidoServiceTest.testFindAll:29 - Found 13 results.
-2019-03-16 18:49:29.124 INFO  ContenidoServiceTest.testFindAll:31 - Page [11 - 12] : 
-2019-03-16 18:49:29.124 INFO  ContenidoServiceTest.testFindAll:33 - Result 11: com.david.training.model.Categoria@305f031[idCategoria=1,nombreCategoria=SUSPENSE]
-2019-03-16 18:49:29.124 INFO  ContenidoServiceTest.testFindAll:33 - Result 12: com.david.training.model.Categoria@592e843a[idCategoria=4,nombreCategoria=THRILLER]
-2019-03-16 18:49:29.141 INFO  ContenidoServiceTest.testFindAll:29 - Found 13 results.
-2019-03-16 18:49:29.141 INFO  ContenidoServiceTest.testFindAll:31 - Page [13 - 13] : 
-2019-03-16 18:49:29.141 INFO  ContenidoServiceTest.testFindAll:33 - Result 13: com.david.training.model.Categoria@6e16b8b5[idCategoria=9,nombreCategoria=WESTERN]
-2019-03-16 18:49:29.142 INFO  ContenidoServiceTest.testFindAll:44 - Test testFindAll finished.
-
-2019-03-16 18:49:59.468 INFO  ContenidoServiceTest.testFindAll:20 - Testing findAll ...
-2019-03-16 18:50:00.356 INFO  ContenidoServiceTest.testFindAll:29 - Found 13 results.
-2019-03-16 18:50:00.357 INFO  ContenidoServiceTest.testFindAll:31 - Page [1 - 5] : 
-2019-03-16 18:50:00.370 INFO  ContenidoServiceTest.testFindAll:33 - Result 1: com.david.training.model.Categoria@7813cb11[idCategoria=7,nombreCategoria=ACCION]
-2019-03-16 18:50:00.370 INFO  ContenidoServiceTest.testFindAll:33 - Result 2: com.david.training.model.Categoria@29ef6856[idCategoria=12,nombreCategoria=ANIMACION]
-2019-03-16 18:50:00.371 INFO  ContenidoServiceTest.testFindAll:33 - Result 3: com.david.training.model.Categoria@ab7a938[idCategoria=8,nombreCategoria=BELICO]
-2019-03-16 18:50:00.371 INFO  ContenidoServiceTest.testFindAll:33 - Result 4: com.david.training.model.Categoria@3faf2e7d[idCategoria=11,nombreCategoria=CIENCIA FICCION]
-2019-03-16 18:50:00.371 INFO  ContenidoServiceTest.testFindAll:33 - Result 5: com.david.training.model.Categoria@4648ce9[idCategoria=3,nombreCategoria=COMEDIA]
-2019-03-16 18:50:00.388 INFO  ContenidoServiceTest.testFindAll:29 - Found 13 results.
-2019-03-16 18:50:00.388 INFO  ContenidoServiceTest.testFindAll:31 - Page [6 - 10] : 
-2019-03-16 18:50:00.389 INFO  ContenidoServiceTest.testFindAll:33 - Result 6: com.david.training.model.Categoria@274872f8[idCategoria=2,nombreCategoria=CRIMEN]
-2019-03-16 18:50:00.389 INFO  ContenidoServiceTest.testFindAll:33 - Result 7: com.david.training.model.Categoria@76ba13c[idCategoria=6,nombreCategoria=DRAMA]
-2019-03-16 18:50:00.389 INFO  ContenidoServiceTest.testFindAll:33 - Result 8: com.david.training.model.Categoria@eb6449b[idCategoria=5,nombreCategoria=GANSTERS]
-2019-03-16 18:50:00.390 INFO  ContenidoServiceTest.testFindAll:33 - Result 9: com.david.training.model.Categoria@7c351808[idCategoria=10,nombreCategoria=MISTERIO]
-2019-03-16 18:50:00.390 INFO  ContenidoServiceTest.testFindAll:33 - Result 10: com.david.training.model.Categoria@180e6ac4[idCategoria=13,nombreCategoria=POLITICA]
-2019-03-16 18:50:00.407 INFO  ContenidoServiceTest.testFindAll:29 - Found 13 results.
-2019-03-16 18:50:00.407 INFO  ContenidoServiceTest.testFindAll:31 - Page [11 - 13] : 
-2019-03-16 18:50:00.407 INFO  ContenidoServiceTest.testFindAll:33 - Result 11: com.david.training.model.Categoria@2a39fe6a[idCategoria=1,nombreCategoria=SUSPENSE]
-2019-03-16 18:50:00.408 INFO  ContenidoServiceTest.testFindAll:33 - Result 12: com.david.training.model.Categoria@410ae9a3[idCategoria=4,nombreCategoria=THRILLER]
-2019-03-16 18:50:00.408 INFO  ContenidoServiceTest.testFindAll:33 - Result 13: com.david.training.model.Categoria@319988b0[idCategoria=9,nombreCategoria=WESTERN]
-2019-03-16 18:50:00.408 INFO  ContenidoServiceTest.testFindAll:44 - Test testFindAll finished.
-
-2019-03-16 18:52:01.516 INFO  ContenidoServiceTest.testBusquedaEstructurada:99 - Testing Busqueda Estructurada ...
-2019-03-16 18:52:02.355 DEBUG ContenidoDAOImpl.findByCriteria:190 - Producto = com.david.training.model.ProductoCriteria@51850751[categoria=[com.david.training.model.Categoria@2c3dec30[idCategoria=1,nombreCategoria=<null>]],pais=[],a=<null>,idContenido=<null>,titulo=<null>,restriccionEdad=<null>,portada=<null>,fechaLanzamiento=<null>,descripcionBreve=<null>,precio=<null>,precioDescontado=<null>,duracion=<null>,idDescuento=<null>,tipoContenido=<null>,porcentaje=<null>,fechaPedido=<null>] Idioma = es
-2019-03-16 18:52:02.405 INFO  ContenidoServiceTest.testBusquedaEstructurada:123 - Found 4 results.
-2019-03-16 18:52:02.405 INFO  ContenidoServiceTest.testBusquedaEstructurada:125 - Page [1 - 4] : 
-2019-03-16 18:52:02.406 INFO  ContenidoServiceTest.testBusquedaEstructurada:127 - Result 1: com.david.training.model.Contenido@42b64ab8[idContenido=5,titulo=KILL BILL VOL 2,restriccionEdad=18+,portada=URL,fechaLanzamiento=2018-12-11,descripcionBreve=,precio=3.0,precioDescontado=0.0,duracion=90,idDescuento=5,tipoContenido=PEL,porcentaje=30,fechaPedido=<null>]
-2019-03-16 18:52:02.407 INFO  ContenidoServiceTest.testBusquedaEstructurada:127 - Result 2: com.david.training.model.Contenido@7e985ce9[idContenido=1,titulo=RESERVOIR DOGS,restriccionEdad=16+,portada=URL,fechaLanzamiento=2018-12-10,descripcionBreve=,precio=3.0,precioDescontado=0.0,duracion=90,idDescuento=1,tipoContenido=PEL,porcentaje=15,fechaPedido=<null>]
-2019-03-16 18:52:02.407 INFO  ContenidoServiceTest.testBusquedaEstructurada:127 - Result 3: com.david.training.model.Contenido@2a39fe6a[idContenido=4,titulo=KILL BILL VOL 1,restriccionEdad=16+,portada=URL,fechaLanzamiento=2018-12-10,descripcionBreve=,precio=3.0,precioDescontado=0.0,duracion=90,idDescuento=4,tipoContenido=PEL,porcentaje=25,fechaPedido=<null>]
-2019-03-16 18:52:02.409 INFO  ContenidoServiceTest.testBusquedaEstructurada:127 - Result 4: com.david.training.model.Contenido@410ae9a3[idContenido=6,titulo=DEATH PROOF,restriccionEdad=12+,portada=URL,fechaLanzamiento=2018-12-10,descripcionBreve=,precio=3.0,precioDescontado=0.0,duracion=90,idDescuento=6,tipoContenido=PEL,porcentaje=5,fechaPedido=<null>]
-2019-03-16 18:52:02.409 INFO  ContenidoServiceTest.testBusquedaEstructurada:136 - Test testBusquedaEstructurada finished.
-
-2019-03-16 18:54:51.464 INFO  ContenidoServiceTest.testFavoritos:56 - Testing favoritos ...
-2019-03-16 18:54:52.348 DEBUG ContenidoDAOImpl.findFavoritos:484 - Email = aa@a.com Idioma = en
-2019-03-16 18:54:52.404 INFO  ContenidoServiceTest.testFavoritos:67 - Found 2 results.
-2019-03-16 18:54:52.404 INFO  ContenidoServiceTest.testFavoritos:69 - Page [1 - 2] : 
-2019-03-16 18:54:52.417 INFO  ContenidoServiceTest.testFavoritos:71 - Result 1: com.david.training.model.Contenido@3faf2e7d[idContenido=5,titulo=KILL BILL VOL 2,restriccionEdad=18+,portada=URL,fechaLanzamiento=2018-12-11,descripcionBreve=,precio=3.0,precioDescontado=0.0,duracion=90,idDescuento=5,tipoContenido=PEL,porcentaje=30,fechaPedido=<null>]
-2019-03-16 18:54:52.418 INFO  ContenidoServiceTest.testFavoritos:71 - Result 2: com.david.training.model.Contenido@76ba13c[idContenido=4,titulo=KILL BILL VOL 1,restriccionEdad=16+,portada=URL,fechaLanzamiento=2018-12-10,descripcionBreve=,precio=3.0,precioDescontado=0.0,duracion=90,idDescuento=4,tipoContenido=PEL,porcentaje=25,fechaPedido=<null>]
-2019-03-16 18:54:52.431 DEBUG ContenidoDAOImpl.findFavoritos:484 - Email = aa@a.com Idioma = en
-2019-03-16 18:54:52.435 INFO  ContenidoServiceTest.testFavoritos:67 - Found 2 results.
-2019-03-16 18:56:30.649 INFO  ContenidoServiceTest.testMiLista:29 - Testing miLista ...
-2019-03-16 18:56:31.469 DEBUG ContenidoDAOImpl.findLista:433 - Email = aa@a.com Idioma = en
-2019-03-16 18:56:31.525 INFO  ContenidoServiceTest.testMiLista:39 - Found 6 results.
-2019-03-16 18:56:31.526 INFO  ContenidoServiceTest.testMiLista:41 - Page [1 - 5] : 
-2019-03-16 18:56:31.540 INFO  ContenidoServiceTest.testMiLista:43 - Result 1: com.david.training.model.Contenido@3faf2e7d[idContenido=8,titulo=DJANGO UNCHAINED,restriccionEdad=TP,portada=URL,fechaLanzamiento=2018-12-10,descripcionBreve=,precio=3.0,precioDescontado=0.75,duracion=90,idDescuento=8,tipoContenido=PEL,porcentaje=5,fechaPedido=<null>]
-2019-03-16 18:56:31.540 INFO  ContenidoServiceTest.testMiLista:43 - Result 2: com.david.training.model.Contenido@76ba13c[idContenido=101,titulo=STRANGER THINGS,restriccionEdad=12+,portada=URL,fechaLanzamiento=2018-12-10,descripcionBreve=,precio=5.0,precioDescontado=0.0,duracion=90,idDescuento=4,tipoContenido=SER,porcentaje=25,fechaPedido=<null>]
-2019-03-16 18:56:31.541 INFO  ContenidoServiceTest.testMiLista:43 - Result 3: com.david.training.model.Contenido@eb6449b[idContenido=201,titulo=VOX: FREEFALLING,restriccionEdad=18+,portada=URL,fechaLanzamiento=2018-12-10,descripcionBreve=,precio=1.0,precioDescontado=0.0,duracion=90,idDescuento=5,tipoContenido=DOC,porcentaje=30,fechaPedido=<null>]
-2019-03-16 18:56:31.541 INFO  ContenidoServiceTest.testMiLista:43 - Result 4: com.david.training.model.Contenido@7c351808[idContenido=1,titulo=RESERVOIR DOGS,restriccionEdad=16+,portada=URL,fechaLanzamiento=2018-12-10,descripcionBreve=,precio=3.0,precioDescontado=0.0,duracion=90,idDescuento=1,tipoContenido=PEL,porcentaje=15,fechaPedido=<null>]
-2019-03-16 18:56:31.541 INFO  ContenidoServiceTest.testMiLista:43 - Result 5: com.david.training.model.Contenido@180e6ac4[idContenido=2,titulo=PULP FICTION,restriccionEdad=16+,portada=URL,fechaLanzamiento=2018-12-10,descripcionBreve=,precio=3.0,precioDescontado=1.5,duracion=90,idDescuento=2,tipoContenido=PEL,porcentaje=50,fechaPedido=<null>]
-2019-03-16 18:56:31.556 DEBUG ContenidoDAOImpl.findLista:433 - Email = aa@a.com Idioma = en
-2019-03-16 18:56:31.561 INFO  ContenidoServiceTest.testMiLista:39 - Found 6 results.
-2019-03-16 18:56:31.561 INFO  ContenidoServiceTest.testMiLista:41 - Page [6 - 6] : 
-2019-03-16 18:56:31.561 INFO  ContenidoServiceTest.testMiLista:43 - Result 6: com.david.training.model.Contenido@2a39fe6a[idContenido=3,titulo=JACKIE BROWN,restriccionEdad=16+,portada=URL,fechaLanzamiento=2018-12-10,descripcionBreve=,precio=3.0,precioDescontado=0.3,duracion=90,idDescuento=3,tipoContenido=PEL,porcentaje=10,fechaPedido=<null>]
-2019-03-16 18:56:31.562 INFO  ContenidoServiceTest.testMiLista:52 - Test testMiLista finished.
-
-2019-03-16 18:58:44.242 INFO  ContenidoServiceTest.testFindAll:20 - Testing findAll ...
-2019-03-16 18:58:45.115 INFO  ContenidoServiceTest.testFindAll:29 - Found 10 results.
-2019-03-16 18:58:45.115 INFO  ContenidoServiceTest.testFindAll:31 - Page [1 - 2] : 
-2019-03-16 18:58:45.128 INFO  ContenidoServiceTest.testFindAll:33 - Result 1: com.david.training.model.Pais@64beebb7[idPais=8,nombrePais=ARGENTINA,capitalPais=BUENOS AIRES]
-2019-03-16 18:58:45.129 INFO  ContenidoServiceTest.testFindAll:33 - Result 2: com.david.training.model.Pais@545de5a4[idPais=10,nombrePais=CHINA,capitalPais=BEIIJING]
-2019-03-16 18:58:45.146 INFO  ContenidoServiceTest.testFindAll:29 - Found 10 results.
-2019-03-16 18:58:45.147 INFO  ContenidoServiceTest.testFindAll:31 - Page [3 - 4] : 
-2019-03-16 18:58:45.147 INFO  ContenidoServiceTest.testFindAll:33 - Result 3: com.david.training.model.Pais@3faf2e7d[idPais=9,nombrePais=EGIPTO,capitalPais=EL CAIRO]
-2019-03-16 18:58:45.147 INFO  ContenidoServiceTest.testFindAll:33 - Result 4: com.david.training.model.Pais@4648ce9[idPais=2,nombrePais=ESPAÑA,capitalPais=MADRID]
-2019-03-16 18:58:45.163 INFO  ContenidoServiceTest.testFindAll:29 - Found 10 results.
-2019-03-16 18:58:45.164 INFO  ContenidoServiceTest.testFindAll:31 - Page [5 - 6] : 
-2019-03-16 18:58:45.164 INFO  ContenidoServiceTest.testFindAll:33 - Result 5: com.david.training.model.Pais@274872f8[idPais=1,nombrePais=ESTADOS UNIDOS,capitalPais=WASHINGTON DC]
-2019-03-16 18:58:45.164 INFO  ContenidoServiceTest.testFindAll:33 - Result 6: com.david.training.model.Pais@76ba13c[idPais=6,nombrePais=FRANCIA,capitalPais=PARIS]
-2019-03-16 18:58:45.181 INFO  ContenidoServiceTest.testFindAll:29 - Found 10 results.
-2019-03-16 18:58:45.181 INFO  ContenidoServiceTest.testFindAll:31 - Page [7 - 8] : 
-2019-03-16 18:58:45.182 INFO  ContenidoServiceTest.testFindAll:33 - Result 7: com.david.training.model.Pais@180e6ac4[idPais=7,nombrePais=ITALIA,capitalPais=ROMA]
-2019-03-16 18:58:45.182 INFO  ContenidoServiceTest.testFindAll:33 - Result 8: com.david.training.model.Pais@42b64ab8[idPais=3,nombrePais=JAPON,capitalPais=TOKYO]
-2019-03-16 18:58:45.199 INFO  ContenidoServiceTest.testFindAll:29 - Found 10 results.
-2019-03-16 18:58:45.199 INFO  ContenidoServiceTest.testFindAll:31 - Page [9 - 10] : 
-2019-03-16 18:58:45.200 INFO  ContenidoServiceTest.testFindAll:33 - Result 9: com.david.training.model.Pais@410ae9a3[idPais=4,nombrePais=PORTUGAL,capitalPais=LISBOA]
-2019-03-16 18:58:45.200 INFO  ContenidoServiceTest.testFindAll:33 - Result 10: com.david.training.model.Pais@319988b0[idPais=5,nombrePais=REINO UNIDO,capitalPais=LONDON]
-2019-03-16 18:58:45.215 INFO  ContenidoServiceTest.testFindAll:29 - Found 10 results.
-2019-03-16 18:58:45.215 INFO  ContenidoServiceTest.testFindAll:44 - Test testFindAll finished.
-
-2019-03-16 18:59:10.583 INFO  ContenidoServiceTest.testFindAll:20 - Testing findAll ...
-2019-03-16 18:59:11.387 INFO  ContenidoServiceTest.testFindAll:29 - Found 10 results.
-2019-03-16 18:59:11.387 INFO  ContenidoServiceTest.testFindAll:31 - Page [1 - 5] : 
-2019-03-16 18:59:11.397 INFO  ContenidoServiceTest.testFindAll:33 - Result 1: com.david.training.model.Pais@7813cb11[idPais=8,nombrePais=ARGENTINA,capitalPais=BUENOS AIRES]
-2019-03-16 18:59:11.398 INFO  ContenidoServiceTest.testFindAll:33 - Result 2: com.david.training.model.Pais@29ef6856[idPais=10,nombrePais=CHINA,capitalPais=BEIIJING]
-2019-03-16 18:59:11.398 INFO  ContenidoServiceTest.testFindAll:33 - Result 3: com.david.training.model.Pais@ab7a938[idPais=9,nombrePais=EGIPTO,capitalPais=EL CAIRO]
-2019-03-16 18:59:11.398 INFO  ContenidoServiceTest.testFindAll:33 - Result 4: com.david.training.model.Pais@3faf2e7d[idPais=2,nombrePais=ESPAÑA,capitalPais=MADRID]
-2019-03-16 18:59:11.399 INFO  ContenidoServiceTest.testFindAll:33 - Result 5: com.david.training.model.Pais@4648ce9[idPais=1,nombrePais=ESTADOS UNIDOS,capitalPais=WASHINGTON DC]
-2019-03-16 18:59:11.415 INFO  ContenidoServiceTest.testFindAll:29 - Found 10 results.
-2019-03-16 18:59:11.415 INFO  ContenidoServiceTest.testFindAll:31 - Page [6 - 10] : 
-2019-03-16 18:59:11.415 INFO  ContenidoServiceTest.testFindAll:33 - Result 6: com.david.training.model.Pais@274872f8[idPais=6,nombrePais=FRANCIA,capitalPais=PARIS]
-2019-03-16 18:59:11.415 INFO  ContenidoServiceTest.testFindAll:33 - Result 7: com.david.training.model.Pais@76ba13c[idPais=7,nombrePais=ITALIA,capitalPais=ROMA]
-2019-03-16 18:59:11.416 INFO  ContenidoServiceTest.testFindAll:33 - Result 8: com.david.training.model.Pais@eb6449b[idPais=3,nombrePais=JAPON,capitalPais=TOKYO]
-2019-03-16 18:59:11.416 INFO  ContenidoServiceTest.testFindAll:33 - Result 9: com.david.training.model.Pais@7c351808[idPais=4,nombrePais=PORTUGAL,capitalPais=LISBOA]
-2019-03-16 18:59:11.416 INFO  ContenidoServiceTest.testFindAll:33 - Result 10: com.david.training.model.Pais@180e6ac4[idPais=5,nombrePais=REINO UNIDO,capitalPais=LONDON]
-2019-03-16 18:59:11.429 INFO  ContenidoServiceTest.testFindAll:29 - Found 10 results.
-2019-03-16 18:59:11.430 INFO  ContenidoServiceTest.testFindAll:44 - Test testFindAll finished.
-
-2019-03-16 19:00:30.956 INFO  ContenidoServiceTest.testFindAll:20 - Testing findAll ...
-2019-03-16 19:00:31.821 INFO  ContenidoServiceTest.testFindAll:29 - Found 3 results.
-2019-03-16 19:00:31.821 INFO  ContenidoServiceTest.testFindAll:31 - Page [1 - 3] : 
-2019-03-16 19:00:31.834 INFO  ContenidoServiceTest.testFindAll:33 - Result 1: com.david.training.model.TipoContenido@3a320ade[idTipoContenido=DOC,nombreContenido=DOCUMENTAL]
-2019-03-16 19:00:31.839 INFO  ContenidoServiceTest.testFindAll:33 - Result 2: com.david.training.model.TipoContenido@32f0fba8[idTipoContenido=PEL,nombreContenido=PELICULA]
-2019-03-16 19:00:31.839 INFO  ContenidoServiceTest.testFindAll:33 - Result 3: com.david.training.model.TipoContenido@545de5a4[idTipoContenido=SER,nombreContenido=SERIE]
-2019-03-16 19:00:31.856 INFO  ContenidoServiceTest.testFindAll:29 - Found 3 results.
-2019-03-16 19:00:31.857 INFO  ContenidoServiceTest.testFindAll:44 - Test testFindAll finished.
-
+2019-03-28 17:17:00.954 INFO  ContenidoServiceTest.testBusquedaEstructurada:99 - Testing Busqueda Estructurada ...
+2019-03-28 17:19:43.196 INFO  ContenidoServiceTest.testMiLista:29 - Testing miLista ...
+2019-03-28 17:20:47.689 INFO  ContenidoServiceTest.testMiLista:29 - Testing miLista ...
+2019-03-28 17:28:25.920 INFO  ContenidoServiceTest.testBusquedaEstructurada:99 - Testing Busqueda Estructurada ...
