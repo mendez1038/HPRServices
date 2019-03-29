@@ -111,10 +111,10 @@ public class ContenidoServiceTest {
 
 		String titulo = "vo";
 		ProductoCriteria pc = new ProductoCriteria();
-		pc.setCategoria(categorias);
-		pc.setPais(paises);
-		pc.setTitulo(titulo);
-
+		//pc.setCategoria(categorias);
+		//pc.setPais(paises);
+		//pc.setTitulo(titulo);
+		
 		try {
 			Results<Contenido> contenidos = null;
 			int startIndex = 1; 

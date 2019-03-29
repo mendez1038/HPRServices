@@ -1,0 +1,102 @@
+2019-03-28 13:06:42.893 INFO  ContenidoServiceTest.testBusquedaEstructurada:99 - Testing Busqueda Estructurada ...
+2019-03-28 13:06:43.639 DEBUG ContenidoDAOImpl.findByCriteria:190 - Producto = com.david.training.model.ProductoCriteria@6f0ca692[categoria=<null>,pais=<null>,a=<null>,idContenido=<null>,titulo=vo,restriccionEdad=<null>,portada=<null>,fechaLanzamiento=<null>,descripcionBreve=<null>,precio=<null>,precioDescontado=<null>,duracion=<null>,idDescuento=<null>,tipoContenido=<null>,porcentaje=<null>,fechaPedido=<null>] Idioma = es
+2019-03-28 13:06:43.642 ERROR ContenidoServiceTest.testBusquedaEstructurada:136 - null
+java.lang.NullPointerException: null
+	at com.david.training.dao.impl.ContenidoDAOImpl.findByCriteria(ContenidoDAOImpl.java:205) ~[bin/:?]
+	at com.david.training.service.impl.ContenidoServiceImpl.busquedaEstructurada(ContenidoServiceImpl.java:125) ~[bin/:?]
+	at com.david.training.service.ContenidoServiceTest.testBusquedaEstructurada(ContenidoServiceTest.java:124) [bin/:?]
+	at com.david.training.service.ContenidoServiceTest.main(ContenidoServiceTest.java:146) [bin/:?]
+2019-03-28 13:06:43.647 INFO  ContenidoServiceTest.testBusquedaEstructurada:138 - Test testBusquedaEstructurada finished.
+
+2019-03-28 13:09:16.727 INFO  ContenidoServiceTest.testBusquedaEstructurada:99 - Testing Busqueda Estructurada ...
+2019-03-28 13:09:17.431 DEBUG ContenidoDAOImpl.findByCriteria:190 - Producto = com.david.training.model.ProductoCriteria@e260766[categoria=[com.david.training.model.Categoria@3fc9dfc5[idCategoria=<null>,nombreCategoria=<null>]],pais=[com.david.training.model.Pais@40258c2f[idPais=<null>,nombrePais=<null>,capitalPais=<null>]],a=<null>,idContenido=<null>,titulo=vo,restriccionEdad=<null>,portada=<null>,fechaLanzamiento=<null>,descripcionBreve=<null>,precio=<null>,precioDescontado=<null>,duracion=<null>,idDescuento=<null>,tipoContenido=<null>,porcentaje=<null>,fechaPedido=<null>] Idioma = es
+2019-03-28 13:09:17.489 WARN  ContenidoDAOImpl.findByCriteria:342 - Unknown column 'c.id_pais' in 'on clause'
+java.sql.SQLSyntaxErrorException: Unknown column 'c.id_pais' in 'on clause'
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:120) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:97) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:974) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeQuery(ClientPreparedStatement.java:1024) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.david.training.dao.impl.ContenidoDAOImpl.findByCriteria(ContenidoDAOImpl.java:323) [bin/:?]
+	at com.david.training.service.impl.ContenidoServiceImpl.busquedaEstructurada(ContenidoServiceImpl.java:125) [bin/:?]
+	at com.david.training.service.ContenidoServiceTest.testBusquedaEstructurada(ContenidoServiceTest.java:125) [bin/:?]
+	at com.david.training.service.ContenidoServiceTest.main(ContenidoServiceTest.java:147) [bin/:?]
+2019-03-28 13:09:17.495 ERROR ContenidoServiceTest.testBusquedaEstructurada:137 - null
+com.david.training.exceptions.DataException: null
+	at com.david.training.dao.impl.ContenidoDAOImpl.findByCriteria(ContenidoDAOImpl.java:343) ~[bin/:?]
+	at com.david.training.service.impl.ContenidoServiceImpl.busquedaEstructurada(ContenidoServiceImpl.java:125) ~[bin/:?]
+	at com.david.training.service.ContenidoServiceTest.testBusquedaEstructurada(ContenidoServiceTest.java:125) [bin/:?]
+	at com.david.training.service.ContenidoServiceTest.main(ContenidoServiceTest.java:147) [bin/:?]
+Caused by: java.sql.SQLSyntaxErrorException: Unknown column 'c.id_pais' in 'on clause'
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:120) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:97) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:974) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeQuery(ClientPreparedStatement.java:1024) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.david.training.dao.impl.ContenidoDAOImpl.findByCriteria(ContenidoDAOImpl.java:323) ~[bin/:?]
+	... 3 more
+2019-03-28 13:09:17.496 INFO  ContenidoServiceTest.testBusquedaEstructurada:139 - Test testBusquedaEstructurada finished.
+
+2019-03-28 13:11:36.482 INFO  ContenidoServiceTest.testBusquedaEstructurada:99 - Testing Busqueda Estructurada ...
+2019-03-28 13:11:37.174 DEBUG ContenidoDAOImpl.findByCriteria:190 - Producto = com.david.training.model.ProductoCriteria@e260766[categoria=[com.david.training.model.Categoria@3fc9dfc5[idCategoria=13,nombreCategoria=<null>]],pais=[com.david.training.model.Pais@40258c2f[idPais=2,nombrePais=<null>,capitalPais=<null>]],a=<null>,idContenido=<null>,titulo=vo,restriccionEdad=<null>,portada=<null>,fechaLanzamiento=<null>,descripcionBreve=<null>,precio=<null>,precioDescontado=<null>,duracion=<null>,idDescuento=<null>,tipoContenido=<null>,porcentaje=<null>,fechaPedido=<null>] Idioma = es
+2019-03-28 13:11:37.203 WARN  ContenidoDAOImpl.findByCriteria:342 - Unknown column 'c.id_pais' in 'on clause'
+java.sql.SQLSyntaxErrorException: Unknown column 'c.id_pais' in 'on clause'
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:120) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:97) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:974) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeQuery(ClientPreparedStatement.java:1024) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.david.training.dao.impl.ContenidoDAOImpl.findByCriteria(ContenidoDAOImpl.java:323) [bin/:?]
+	at com.david.training.service.impl.ContenidoServiceImpl.busquedaEstructurada(ContenidoServiceImpl.java:125) [bin/:?]
+	at com.david.training.service.ContenidoServiceTest.testBusquedaEstructurada(ContenidoServiceTest.java:125) [bin/:?]
+	at com.david.training.service.ContenidoServiceTest.main(ContenidoServiceTest.java:147) [bin/:?]
+2019-03-28 13:11:37.210 ERROR ContenidoServiceTest.testBusquedaEstructurada:137 - null
+com.david.training.exceptions.DataException: null
+	at com.david.training.dao.impl.ContenidoDAOImpl.findByCriteria(ContenidoDAOImpl.java:343) ~[bin/:?]
+	at com.david.training.service.impl.ContenidoServiceImpl.busquedaEstructurada(ContenidoServiceImpl.java:125) ~[bin/:?]
+	at com.david.training.service.ContenidoServiceTest.testBusquedaEstructurada(ContenidoServiceTest.java:125) [bin/:?]
+	at com.david.training.service.ContenidoServiceTest.main(ContenidoServiceTest.java:147) [bin/:?]
+Caused by: java.sql.SQLSyntaxErrorException: Unknown column 'c.id_pais' in 'on clause'
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:120) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:97) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:974) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeQuery(ClientPreparedStatement.java:1024) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.david.training.dao.impl.ContenidoDAOImpl.findByCriteria(ContenidoDAOImpl.java:323) ~[bin/:?]
+	... 3 more
+2019-03-28 13:11:37.211 INFO  ContenidoServiceTest.testBusquedaEstructurada:139 - Test testBusquedaEstructurada finished.
+
+2019-03-28 13:16:04.930 INFO  ContenidoServiceTest.testBusquedaEstructurada:99 - Testing Busqueda Estructurada ...
+2019-03-28 13:16:05.615 DEBUG ContenidoDAOImpl.findByCriteria:190 - Producto = com.david.training.model.ProductoCriteria@e260766[categoria=[com.david.training.model.Categoria@3fc9dfc5[idCategoria=13,nombreCategoria=<null>]],pais=[com.david.training.model.Pais@40258c2f[idPais=2,nombrePais=<null>,capitalPais=<null>]],a=<null>,idContenido=<null>,titulo=vo,restriccionEdad=<null>,portada=<null>,fechaLanzamiento=<null>,descripcionBreve=<null>,precio=<null>,precioDescontado=<null>,duracion=<null>,idDescuento=<null>,tipoContenido=<null>,porcentaje=<null>,fechaPedido=<null>] Idioma = es
+2019-03-28 13:16:05.684 INFO  ContenidoServiceTest.testBusquedaEstructurada:126 - Found 1 results.
+2019-03-28 13:16:05.685 INFO  ContenidoServiceTest.testBusquedaEstructurada:128 - Page [1 - 1] : 
+2019-03-28 13:16:05.686 INFO  ContenidoServiceTest.testBusquedaEstructurada:130 - Result 1: com.david.training.model.Contenido@d5ae57e[idContenido=201,titulo=VOX: LA DECADENCIA,restriccionEdad=18+,portada=URL,fechaLanzamiento=2018-12-10,descripcionBreve=,precio=1.0,precioDescontado=0.0,duracion=90,idDescuento=5,tipoContenido=DOC,porcentaje=30,fechaPedido=<null>]
+2019-03-28 13:16:05.686 INFO  ContenidoServiceTest.testBusquedaEstructurada:139 - Test testBusquedaEstructurada finished.
+
+2019-03-28 13:16:58.974 INFO  ContenidoServiceTest.testBusquedaEstructurada:99 - Testing Busqueda Estructurada ...
+2019-03-28 13:16:59.764 DEBUG ContenidoDAOImpl.findByCriteria:190 - Producto = com.david.training.model.ProductoCriteria@e260766[categoria=<null>,pais=<null>,a=<null>,idContenido=<null>,titulo=vo,restriccionEdad=<null>,portada=<null>,fechaLanzamiento=<null>,descripcionBreve=<null>,precio=<null>,precioDescontado=<null>,duracion=<null>,idDescuento=<null>,tipoContenido=<null>,porcentaje=<null>,fechaPedido=<null>] Idioma = es
+2019-03-28 13:16:59.768 ERROR ContenidoServiceTest.testBusquedaEstructurada:137 - null
+java.lang.NullPointerException: null
+	at com.david.training.dao.impl.ContenidoDAOImpl.findByCriteria(ContenidoDAOImpl.java:205) ~[bin/:?]
+	at com.david.training.service.impl.ContenidoServiceImpl.busquedaEstructurada(ContenidoServiceImpl.java:125) ~[bin/:?]
+	at com.david.training.service.ContenidoServiceTest.testBusquedaEstructurada(ContenidoServiceTest.java:125) [bin/:?]
+	at com.david.training.service.ContenidoServiceTest.main(ContenidoServiceTest.java:147) [bin/:?]
+2019-03-28 13:16:59.772 INFO  ContenidoServiceTest.testBusquedaEstructurada:139 - Test testBusquedaEstructurada finished.
+
+2019-03-28 13:17:23.697 INFO  ContenidoServiceTest.testBusquedaEstructurada:99 - Testing Busqueda Estructurada ...
+2019-03-28 13:17:24.377 DEBUG ContenidoDAOImpl.findByCriteria:190 - Producto = com.david.training.model.ProductoCriteria@e260766[categoria=[com.david.training.model.Categoria@3fc9dfc5[idCategoria=13,nombreCategoria=<null>]],pais=<null>,a=<null>,idContenido=<null>,titulo=vo,restriccionEdad=<null>,portada=<null>,fechaLanzamiento=<null>,descripcionBreve=<null>,precio=<null>,precioDescontado=<null>,duracion=<null>,idDescuento=<null>,tipoContenido=<null>,porcentaje=<null>,fechaPedido=<null>] Idioma = es
+2019-03-28 13:17:24.379 ERROR ContenidoServiceTest.testBusquedaEstructurada:137 - null
+java.lang.NullPointerException: null
+	at com.david.training.dao.impl.ContenidoDAOImpl.findByCriteria(ContenidoDAOImpl.java:209) ~[bin/:?]
+	at com.david.training.service.impl.ContenidoServiceImpl.busquedaEstructurada(ContenidoServiceImpl.java:125) ~[bin/:?]
+	at com.david.training.service.ContenidoServiceTest.testBusquedaEstructurada(ContenidoServiceTest.java:125) [bin/:?]
+	at com.david.training.service.ContenidoServiceTest.main(ContenidoServiceTest.java:147) [bin/:?]
+2019-03-28 13:17:24.383 INFO  ContenidoServiceTest.testBusquedaEstructurada:139 - Test testBusquedaEstructurada finished.
+
+2019-03-28 17:17:00.954 INFO  ContenidoServiceTest.testBusquedaEstructurada:99 - Testing Busqueda Estructurada ...
+2019-03-28 17:19:43.196 INFO  ContenidoServiceTest.testMiLista:29 - Testing miLista ...
+2019-03-28 17:20:47.689 INFO  ContenidoServiceTest.testMiLista:29 - Testing miLista ...
+2019-03-28 17:28:25.920 INFO  ContenidoServiceTest.testBusquedaEstructurada:99 - Testing Busqueda Estructurada ...
+2019-03-28 18:54:01.981 INFO  ContenidoServiceTest.testBusquedaEstructurada:99 - Testing Busqueda Estructurada ...
+2019-03-28 18:54:42.465 INFO  ContenidoServiceTest.testBusquedaEstructurada:99 - Testing Busqueda Estructurada ...
+2019-03-28 19:03:39.511 INFO  ContenidoServiceTest.testBusquedaEstructurada:99 - Testing Busqueda Estructurada ...
