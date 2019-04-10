@@ -18,14 +18,14 @@ public class UsuarioServiceTest {
 	public void testSignUp() {
 		try {
 		Usuario u = new Usuario();
-		u.setEmail("hh@h.com");
-		u.setContrasena("abcd");
-		u.setNombre(null);
-		u.setApellidos(null);
-		u.setGenero(null);
+		u.setEmail("david.mendezmartinez@yahoo.es");
+		u.setContrasena("123456");
+		u.setNombre("David");
+		u.setApellidos("Mendez");
+		u.setGenero("M");
 		//u.setFechaNacimiento(null);
-		u.setFechaNacimiento(new SimpleDateFormat( "yyyyMMdd" ).parse( "19990403" ));
-		u.setTelefono(null);
+		u.setFechaNacimiento(new SimpleDateFormat( "yyyyMMdd" ).parse( "19970528" ));
+		u.setTelefono("626408214");
 		
 		servicio.signUp(u);
 		System.out.println(u);
@@ -71,7 +71,7 @@ public class UsuarioServiceTest {
 	
 	public void testRemoveAccount() {
 		try {
-		String email = "HH@H.COM";
+		String email = "d.mendez_97@hotmail.com";
 		//servicio.exists(email); implementarlo en el service
 		servicio.delete(email);
 		System.out.println("Usuario eliminado con email "+email);
@@ -122,11 +122,11 @@ public class UsuarioServiceTest {
 	public static void main(String args[]) {
 		
 			UsuarioServiceTest test = new UsuarioServiceTest();
-			//test.testSignUp();
+			test.testSignUp();
 			//test.testSignIn();
 			//test.testFindByEmail();
 			//test.testEditProfile();
-			test.testRemoveAccount();
+			//test.testRemoveAccount();
 			//test.testEliminarFavoritos();
 			//test.testAñadirFavoritos();
 	}

@@ -109,11 +109,14 @@ public class ContenidoServiceTest {
 		pais.setIdPais(2);
 		paises.add(pais);
 
-		String titulo = "vo";
+		String titulo = "fic";
+		//Artista a = new Artista();
 		ProductoCriteria pc = new ProductoCriteria();
 		//pc.setCategoria(categorias);
 		//pc.setPais(paises);
-		//pc.setTitulo(titulo);
+		pc.setTitulo(titulo);
+		//a.setNombreArtista(titulo);
+		//pc.setA(a);
 		
 		try {
 			Results<Contenido> contenidos = null;
@@ -138,13 +141,35 @@ public class ContenidoServiceTest {
 		}
 		logger.info("Test testBusquedaEstructurada finished.\n");
 	}
+	
+	public void testDetalle() {
+		logger.info("Testing Vista Detalle ...");
+		try {
+		Contenido contenido = servicio.findById(1, "es");
+		System.out.println(contenido);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+		}
+		
+	}
 
 	public static void main(String[] args) {
 		ContenidoServiceTest test = new ContenidoServiceTest();
 		//test.testMiLista();
+		
+		/*Properties systemProperties = System.getProperties();
+		String key = null;
+		for (Enumeration keys = systemProperties.keys(); keys.hasMoreElements(); ) {
+			key  = (String) keys.nextElement();
+			System.out.println(key+"="+System.getProperty(key));
+			
+		}
+		*/
 		//test.testFavoritos();
 		//test.testPrecioDescontado();
 		test.testBusquedaEstructurada();
+		//test.testDetalle();
+		
 	}
 
 }

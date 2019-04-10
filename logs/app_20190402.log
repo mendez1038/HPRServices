@@ -1,0 +1,189 @@
+2019-04-02 10:59:46.667 INFO  ContenidoServiceTest.testBusquedaEstructurada:100 - Testing Busqueda Estructurada ...
+2019-04-02 10:59:47.857 DEBUG ContenidoDAOImpl.findByCriteria:190 - Producto = com.david.training.model.ProductoCriteria@63611043[categoria=[],pais=[],a=com.david.training.model.Artista@6c2ed0cd[idArtista=<null>,nombreArtista=tra,fechaNacimiento=<null>],idContenido=<null>,titulo=tra,restriccionEdad=<null>,portada=<null>,fechaLanzamiento=<null>,descripcionBreve=<null>,precio=<null>,precioDescontado=<null>,duracion=<null>,idDescuento=<null>,tipoContenido=<null>,porcentaje=<null>,fechaPedido=<null>] Idioma = es
+2019-04-02 10:59:47.951 WARN  ContenidoDAOImpl.findByCriteria:342 - Unknown column 'P.NOMBRE_ARTISTA' in 'where clause'
+java.sql.SQLSyntaxErrorException: Unknown column 'P.NOMBRE_ARTISTA' in 'where clause'
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:120) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:97) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:974) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeQuery(ClientPreparedStatement.java:1024) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mchange.v2.c3p0.impl.NewProxyPreparedStatement.executeQuery(NewProxyPreparedStatement.java:353) ~[c3p0-0.9.5.2.jar:0.9.5.2]
+	at com.david.training.dao.impl.ContenidoDAOImpl.findByCriteria(ContenidoDAOImpl.java:323) [bin/:?]
+	at com.david.training.service.impl.ContenidoServiceImpl.busquedaEstructurada(ContenidoServiceImpl.java:126) [bin/:?]
+	at com.david.training.service.ContenidoServiceTest.testBusquedaEstructurada(ContenidoServiceTest.java:129) [bin/:?]
+	at com.david.training.service.ContenidoServiceTest.main(ContenidoServiceTest.java:151) [bin/:?]
+2019-04-02 10:59:47.967 ERROR ContenidoServiceTest.testBusquedaEstructurada:141 - null
+com.david.training.exceptions.DataException: null
+	at com.david.training.dao.impl.ContenidoDAOImpl.findByCriteria(ContenidoDAOImpl.java:343) ~[bin/:?]
+	at com.david.training.service.impl.ContenidoServiceImpl.busquedaEstructurada(ContenidoServiceImpl.java:126) ~[bin/:?]
+	at com.david.training.service.ContenidoServiceTest.testBusquedaEstructurada(ContenidoServiceTest.java:129) [bin/:?]
+	at com.david.training.service.ContenidoServiceTest.main(ContenidoServiceTest.java:151) [bin/:?]
+Caused by: java.sql.SQLSyntaxErrorException: Unknown column 'P.NOMBRE_ARTISTA' in 'where clause'
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:120) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:97) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:974) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeQuery(ClientPreparedStatement.java:1024) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mchange.v2.c3p0.impl.NewProxyPreparedStatement.executeQuery(NewProxyPreparedStatement.java:353) ~[c3p0-0.9.5.2.jar:0.9.5.2]
+	at com.david.training.dao.impl.ContenidoDAOImpl.findByCriteria(ContenidoDAOImpl.java:323) ~[bin/:?]
+	... 3 more
+2019-04-02 10:59:47.968 INFO  ContenidoServiceTest.testBusquedaEstructurada:143 - Test testBusquedaEstructurada finished.
+
+2019-04-02 11:04:52.657 INFO  ContenidoServiceTest.testBusquedaEstructurada:100 - Testing Busqueda Estructurada ...
+2019-04-02 11:04:53.608 DEBUG ContenidoDAOImpl.findByCriteria:190 - Producto = com.david.training.model.ProductoCriteria@455b6df1[categoria=[],pais=[],a=com.david.training.model.Artista@14bee915[idArtista=<null>,nombreArtista=tra,fechaNacimiento=<null>],idContenido=<null>,titulo=tra,restriccionEdad=<null>,portada=<null>,fechaLanzamiento=<null>,descripcionBreve=<null>,precio=<null>,precioDescontado=<null>,duracion=<null>,idDescuento=<null>,tipoContenido=<null>,porcentaje=<null>,fechaPedido=<null>] Idioma = es
+2019-04-02 11:04:53.650 WARN  ContenidoDAOImpl.findByCriteria:342 - Unknown column 'P.NOMBRE_ARTISTA' in 'where clause'
+java.sql.SQLSyntaxErrorException: Unknown column 'P.NOMBRE_ARTISTA' in 'where clause'
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:120) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:97) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:974) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeQuery(ClientPreparedStatement.java:1024) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mchange.v2.c3p0.impl.NewProxyPreparedStatement.executeQuery(NewProxyPreparedStatement.java:353) ~[c3p0-0.9.5.2.jar:0.9.5.2]
+	at com.david.training.dao.impl.ContenidoDAOImpl.findByCriteria(ContenidoDAOImpl.java:323) [bin/:?]
+	at com.david.training.service.impl.ContenidoServiceImpl.busquedaEstructurada(ContenidoServiceImpl.java:126) [bin/:?]
+	at com.david.training.service.ContenidoServiceTest.testBusquedaEstructurada(ContenidoServiceTest.java:129) [bin/:?]
+	at com.david.training.service.ContenidoServiceTest.main(ContenidoServiceTest.java:151) [bin/:?]
+2019-04-02 11:04:53.656 ERROR ContenidoServiceTest.testBusquedaEstructurada:141 - null
+com.david.training.exceptions.DataException: null
+	at com.david.training.dao.impl.ContenidoDAOImpl.findByCriteria(ContenidoDAOImpl.java:343) ~[bin/:?]
+	at com.david.training.service.impl.ContenidoServiceImpl.busquedaEstructurada(ContenidoServiceImpl.java:126) ~[bin/:?]
+	at com.david.training.service.ContenidoServiceTest.testBusquedaEstructurada(ContenidoServiceTest.java:129) [bin/:?]
+	at com.david.training.service.ContenidoServiceTest.main(ContenidoServiceTest.java:151) [bin/:?]
+Caused by: java.sql.SQLSyntaxErrorException: Unknown column 'P.NOMBRE_ARTISTA' in 'where clause'
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:120) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:97) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:974) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeQuery(ClientPreparedStatement.java:1024) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mchange.v2.c3p0.impl.NewProxyPreparedStatement.executeQuery(NewProxyPreparedStatement.java:353) ~[c3p0-0.9.5.2.jar:0.9.5.2]
+	at com.david.training.dao.impl.ContenidoDAOImpl.findByCriteria(ContenidoDAOImpl.java:323) ~[bin/:?]
+	... 3 more
+2019-04-02 11:04:53.657 INFO  ContenidoServiceTest.testBusquedaEstructurada:143 - Test testBusquedaEstructurada finished.
+
+2019-04-02 11:09:32.433 INFO  ContenidoServiceTest.testBusquedaEstructurada:100 - Testing Busqueda Estructurada ...
+2019-04-02 11:09:33.355 DEBUG ContenidoDAOImpl.findByCriteria:190 - Producto = com.david.training.model.ProductoCriteria@455b6df1[categoria=[],pais=[],a=com.david.training.model.Artista@14bee915[idArtista=<null>,nombreArtista=tra,fechaNacimiento=<null>],idContenido=<null>,titulo=tra,restriccionEdad=<null>,portada=<null>,fechaLanzamiento=<null>,descripcionBreve=<null>,precio=<null>,precioDescontado=<null>,duracion=<null>,idDescuento=<null>,tipoContenido=<null>,porcentaje=<null>,fechaPedido=<null>] Idioma = es
+2019-04-02 11:09:33.397 WARN  ContenidoDAOImpl.findByCriteria:342 - Unknown column 'tra' in 'where clause'
+java.sql.SQLSyntaxErrorException: Unknown column 'tra' in 'where clause'
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:120) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:97) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:974) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeQuery(ClientPreparedStatement.java:1024) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mchange.v2.c3p0.impl.NewProxyPreparedStatement.executeQuery(NewProxyPreparedStatement.java:353) ~[c3p0-0.9.5.2.jar:0.9.5.2]
+	at com.david.training.dao.impl.ContenidoDAOImpl.findByCriteria(ContenidoDAOImpl.java:323) [bin/:?]
+	at com.david.training.service.impl.ContenidoServiceImpl.busquedaEstructurada(ContenidoServiceImpl.java:126) [bin/:?]
+	at com.david.training.service.ContenidoServiceTest.testBusquedaEstructurada(ContenidoServiceTest.java:129) [bin/:?]
+	at com.david.training.service.ContenidoServiceTest.main(ContenidoServiceTest.java:151) [bin/:?]
+2019-04-02 11:09:33.404 ERROR ContenidoServiceTest.testBusquedaEstructurada:141 - null
+com.david.training.exceptions.DataException: null
+	at com.david.training.dao.impl.ContenidoDAOImpl.findByCriteria(ContenidoDAOImpl.java:343) ~[bin/:?]
+	at com.david.training.service.impl.ContenidoServiceImpl.busquedaEstructurada(ContenidoServiceImpl.java:126) ~[bin/:?]
+	at com.david.training.service.ContenidoServiceTest.testBusquedaEstructurada(ContenidoServiceTest.java:129) [bin/:?]
+	at com.david.training.service.ContenidoServiceTest.main(ContenidoServiceTest.java:151) [bin/:?]
+Caused by: java.sql.SQLSyntaxErrorException: Unknown column 'tra' in 'where clause'
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:120) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:97) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:974) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeQuery(ClientPreparedStatement.java:1024) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mchange.v2.c3p0.impl.NewProxyPreparedStatement.executeQuery(NewProxyPreparedStatement.java:353) ~[c3p0-0.9.5.2.jar:0.9.5.2]
+	at com.david.training.dao.impl.ContenidoDAOImpl.findByCriteria(ContenidoDAOImpl.java:323) ~[bin/:?]
+	... 3 more
+2019-04-02 11:09:33.405 INFO  ContenidoServiceTest.testBusquedaEstructurada:143 - Test testBusquedaEstructurada finished.
+
+2019-04-02 11:17:27.846 INFO  ContenidoServiceTest.testBusquedaEstructurada:100 - Testing Busqueda Estructurada ...
+2019-04-02 11:17:28.791 DEBUG ContenidoDAOImpl.findByCriteria:190 - Producto = com.david.training.model.ProductoCriteria@455b6df1[categoria=[],pais=[],a=com.david.training.model.Artista@14bee915[idArtista=<null>,nombreArtista=tra,fechaNacimiento=<null>],idContenido=<null>,titulo=tra,restriccionEdad=<null>,portada=<null>,fechaLanzamiento=<null>,descripcionBreve=<null>,precio=<null>,precioDescontado=<null>,duracion=<null>,idDescuento=<null>,tipoContenido=<null>,porcentaje=<null>,fechaPedido=<null>] Idioma = es
+2019-04-02 11:17:28.823 WARN  ContenidoDAOImpl.findByCriteria:343 - No value specified for parameter 3
+java.sql.SQLException: No value specified for parameter 3
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:129) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:97) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeQuery(ClientPreparedStatement.java:1041) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mchange.v2.c3p0.impl.NewProxyPreparedStatement.executeQuery(NewProxyPreparedStatement.java:353) ~[c3p0-0.9.5.2.jar:0.9.5.2]
+	at com.david.training.dao.impl.ContenidoDAOImpl.findByCriteria(ContenidoDAOImpl.java:324) [bin/:?]
+	at com.david.training.service.impl.ContenidoServiceImpl.busquedaEstructurada(ContenidoServiceImpl.java:126) [bin/:?]
+	at com.david.training.service.ContenidoServiceTest.testBusquedaEstructurada(ContenidoServiceTest.java:129) [bin/:?]
+	at com.david.training.service.ContenidoServiceTest.main(ContenidoServiceTest.java:151) [bin/:?]
+2019-04-02 11:17:28.830 ERROR ContenidoServiceTest.testBusquedaEstructurada:141 - null
+com.david.training.exceptions.DataException: null
+	at com.david.training.dao.impl.ContenidoDAOImpl.findByCriteria(ContenidoDAOImpl.java:344) ~[bin/:?]
+	at com.david.training.service.impl.ContenidoServiceImpl.busquedaEstructurada(ContenidoServiceImpl.java:126) ~[bin/:?]
+	at com.david.training.service.ContenidoServiceTest.testBusquedaEstructurada(ContenidoServiceTest.java:129) [bin/:?]
+	at com.david.training.service.ContenidoServiceTest.main(ContenidoServiceTest.java:151) [bin/:?]
+Caused by: java.sql.SQLException: No value specified for parameter 3
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:129) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:97) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeQuery(ClientPreparedStatement.java:1041) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mchange.v2.c3p0.impl.NewProxyPreparedStatement.executeQuery(NewProxyPreparedStatement.java:353) ~[c3p0-0.9.5.2.jar:0.9.5.2]
+	at com.david.training.dao.impl.ContenidoDAOImpl.findByCriteria(ContenidoDAOImpl.java:324) ~[bin/:?]
+	... 3 more
+2019-04-02 11:17:28.831 INFO  ContenidoServiceTest.testBusquedaEstructurada:143 - Test testBusquedaEstructurada finished.
+
+2019-04-02 11:53:28.025 INFO  ContenidoServiceTest.testBusquedaEstructurada:100 - Testing Busqueda Estructurada ...
+2019-04-02 11:53:28.956 DEBUG ContenidoDAOImpl.findByCriteria:190 - Producto = com.david.training.model.ProductoCriteria@455b6df1[categoria=[],pais=[],a=com.david.training.model.Artista@14bee915[idArtista=<null>,nombreArtista=tra,fechaNacimiento=<null>],idContenido=<null>,titulo=tra,restriccionEdad=<null>,portada=<null>,fechaLanzamiento=<null>,descripcionBreve=<null>,precio=<null>,precioDescontado=<null>,duracion=<null>,idDescuento=<null>,tipoContenido=<null>,porcentaje=<null>,fechaPedido=<null>] Idioma = es
+2019-04-02 11:53:28.989 WARN  ContenidoDAOImpl.findByCriteria:343 - Unknown column 'tra' in 'where clause'
+java.sql.SQLSyntaxErrorException: Unknown column 'tra' in 'where clause'
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:120) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:97) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:974) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeQuery(ClientPreparedStatement.java:1024) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mchange.v2.c3p0.impl.NewProxyPreparedStatement.executeQuery(NewProxyPreparedStatement.java:353) ~[c3p0-0.9.5.2.jar:0.9.5.2]
+	at com.david.training.dao.impl.ContenidoDAOImpl.findByCriteria(ContenidoDAOImpl.java:324) [bin/:?]
+	at com.david.training.service.impl.ContenidoServiceImpl.busquedaEstructurada(ContenidoServiceImpl.java:126) [bin/:?]
+	at com.david.training.service.ContenidoServiceTest.testBusquedaEstructurada(ContenidoServiceTest.java:129) [bin/:?]
+	at com.david.training.service.ContenidoServiceTest.main(ContenidoServiceTest.java:151) [bin/:?]
+2019-04-02 11:53:28.995 ERROR ContenidoServiceTest.testBusquedaEstructurada:141 - null
+com.david.training.exceptions.DataException: null
+	at com.david.training.dao.impl.ContenidoDAOImpl.findByCriteria(ContenidoDAOImpl.java:344) ~[bin/:?]
+	at com.david.training.service.impl.ContenidoServiceImpl.busquedaEstructurada(ContenidoServiceImpl.java:126) ~[bin/:?]
+	at com.david.training.service.ContenidoServiceTest.testBusquedaEstructurada(ContenidoServiceTest.java:129) [bin/:?]
+	at com.david.training.service.ContenidoServiceTest.main(ContenidoServiceTest.java:151) [bin/:?]
+Caused by: java.sql.SQLSyntaxErrorException: Unknown column 'tra' in 'where clause'
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:120) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:97) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:974) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeQuery(ClientPreparedStatement.java:1024) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mchange.v2.c3p0.impl.NewProxyPreparedStatement.executeQuery(NewProxyPreparedStatement.java:353) ~[c3p0-0.9.5.2.jar:0.9.5.2]
+	at com.david.training.dao.impl.ContenidoDAOImpl.findByCriteria(ContenidoDAOImpl.java:324) ~[bin/:?]
+	... 3 more
+2019-04-02 11:53:28.996 INFO  ContenidoServiceTest.testBusquedaEstructurada:143 - Test testBusquedaEstructurada finished.
+
+2019-04-02 12:00:23.574 INFO  ContenidoServiceTest.testBusquedaEstructurada:100 - Testing Busqueda Estructurada ...
+2019-04-02 12:00:24.483 DEBUG ContenidoDAOImpl.findByCriteria:190 - Producto = com.david.training.model.ProductoCriteria@12d2ce03[categoria=[],pais=[],a=com.david.training.model.Artista@1984b1f[idArtista=<null>,nombreArtista=tra,fechaNacimiento=<null>],idContenido=<null>,titulo=tra,restriccionEdad=<null>,portada=<null>,fechaLanzamiento=<null>,descripcionBreve=<null>,precio=<null>,precioDescontado=<null>,duracion=<null>,idDescuento=<null>,tipoContenido=<null>,porcentaje=<null>,fechaPedido=<null>] Idioma = es
+2019-04-02 12:00:24.517 WARN  ContenidoDAOImpl.findByCriteria:343 - Unknown column 'tra' in 'where clause'
+java.sql.SQLSyntaxErrorException: Unknown column 'tra' in 'where clause'
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:120) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:97) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:974) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeQuery(ClientPreparedStatement.java:1024) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mchange.v2.c3p0.impl.NewProxyPreparedStatement.executeQuery(NewProxyPreparedStatement.java:353) ~[c3p0-0.9.5.2.jar:0.9.5.2]
+	at com.david.training.dao.impl.ContenidoDAOImpl.findByCriteria(ContenidoDAOImpl.java:324) [bin/:?]
+	at com.david.training.service.impl.ContenidoServiceImpl.busquedaEstructurada(ContenidoServiceImpl.java:126) [bin/:?]
+	at com.david.training.service.ContenidoServiceTest.testBusquedaEstructurada(ContenidoServiceTest.java:129) [bin/:?]
+	at com.david.training.service.ContenidoServiceTest.main(ContenidoServiceTest.java:151) [bin/:?]
+2019-04-02 12:00:24.523 ERROR ContenidoServiceTest.testBusquedaEstructurada:141 - null
+com.david.training.exceptions.DataException: null
+	at com.david.training.dao.impl.ContenidoDAOImpl.findByCriteria(ContenidoDAOImpl.java:344) ~[bin/:?]
+	at com.david.training.service.impl.ContenidoServiceImpl.busquedaEstructurada(ContenidoServiceImpl.java:126) ~[bin/:?]
+	at com.david.training.service.ContenidoServiceTest.testBusquedaEstructurada(ContenidoServiceTest.java:129) [bin/:?]
+	at com.david.training.service.ContenidoServiceTest.main(ContenidoServiceTest.java:151) [bin/:?]
+Caused by: java.sql.SQLSyntaxErrorException: Unknown column 'tra' in 'where clause'
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:120) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:97) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:974) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeQuery(ClientPreparedStatement.java:1024) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mchange.v2.c3p0.impl.NewProxyPreparedStatement.executeQuery(NewProxyPreparedStatement.java:353) ~[c3p0-0.9.5.2.jar:0.9.5.2]
+	at com.david.training.dao.impl.ContenidoDAOImpl.findByCriteria(ContenidoDAOImpl.java:324) ~[bin/:?]
+	... 3 more
+2019-04-02 12:00:24.524 INFO  ContenidoServiceTest.testBusquedaEstructurada:143 - Test testBusquedaEstructurada finished.
+
+2019-04-02 12:06:21.578 INFO  ContenidoServiceTest.testBusquedaEstructurada:100 - Testing Busqueda Estructurada ...
+2019-04-02 12:06:22.517 DEBUG ContenidoDAOImpl.findByCriteria:190 - Producto = com.david.training.model.ProductoCriteria@455b6df1[categoria=[],pais=[],a=com.david.training.model.Artista@14bee915[idArtista=<null>,nombreArtista=<null>,fechaNacimiento=<null>],idContenido=<null>,titulo=tra,restriccionEdad=<null>,portada=<null>,fechaLanzamiento=<null>,descripcionBreve=<null>,precio=<null>,precioDescontado=<null>,duracion=<null>,idDescuento=<null>,tipoContenido=<null>,porcentaje=<null>,fechaPedido=<null>] Idioma = es
+2019-04-02 12:06:22.589 INFO  ContenidoServiceTest.testBusquedaEstructurada:130 - Found 0 results.
+2019-04-02 12:06:22.589 INFO  ContenidoServiceTest.testBusquedaEstructurada:143 - Test testBusquedaEstructurada finished.
+

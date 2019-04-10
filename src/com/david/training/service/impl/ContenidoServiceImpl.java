@@ -11,6 +11,7 @@ import com.david.training.dao.impl.ContenidoDAOImpl;
 import com.david.training.dao.util.ConnectionManager;
 import com.david.training.dao.util.JDBCUtils;
 import com.david.training.exceptions.DataException;
+import com.david.training.exceptions.InstanceNotFoundException;
 import com.david.training.model.Contenido;
 import com.david.training.model.ProductoCriteria;
 import com.david.training.service.ContenidoService;
@@ -136,5 +137,24 @@ public class ContenidoServiceImpl implements ContenidoService{
 			System.out.println("Get c: "+(t1-t0)+", dao: "+(t2-t1)+" Close c: "+(t3-t2));			
 		}
 
+	}
+
+	@Override
+	public Contenido findById(Integer id, String idioma) 
+			throws InstanceNotFoundException, DataException {
+		boolean commit = false;
+		Connection c = null;
+		try {
+			c = ConnectionManager.getConnection();
+			c.setAutoCommit(false);
+			
+			Contenido contenido = dao.findById(c, id, idioma);
+			return contenido;
+		} catch(SQLException e) {
+			logger.warn(e.getMessage(),e);
+			throw new DataException(e);		
+		} finally {
+			JDBCUtils.closeConnection(c, commit);
+		}
 	}
 }

@@ -1,6 +1,7 @@
 package com.david.training.service;
 
 import com.david.training.exceptions.DataException;
+import com.david.training.exceptions.InstanceNotFoundException;
 import com.david.training.model.Contenido;
 import com.david.training.model.ProductoCriteria;
 
@@ -22,6 +23,11 @@ public interface ContenidoService {
 	//Calculo do precio descontado
 	public Double sacarPrecioDescontado (Integer id)
 			throws DataException;
+	
+	public Contenido findById(Integer id, String idioma)
+			throws InstanceNotFoundException, DataException;
+	
+	
 	
 
 }

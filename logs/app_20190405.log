@@ -1,0 +1,42 @@
+2019-04-05 13:52:43.602 INFO  ContenidoServiceTest.testDetalle:149 - Testing Vista Detalle ...
+2019-04-05 13:52:44.798 DEBUG ContenidoDAOImpl.findById:77 - Id = 1 idioma = {)
+2019-04-05 13:52:44.868 WARN  ContenidoDAOImpl.findById:105 - Column Index out of range, 12 > 11. 
+java.sql.SQLException: Column Index out of range, 12 > 11. 
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:129) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:97) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:89) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:63) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.result.ResultSetImpl.checkColumnBounds(ResultSetImpl.java:494) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.result.ResultSetImpl.getInt(ResultSetImpl.java:895) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mchange.v2.c3p0.impl.NewProxyResultSet.getInt(NewProxyResultSet.java:425) ~[c3p0-0.9.5.2.jar:0.9.5.2]
+	at com.david.training.dao.impl.ContenidoDAOImpl.loadNext(ContenidoDAOImpl.java:169) ~[bin/:?]
+	at com.david.training.dao.impl.ContenidoDAOImpl.findById(ContenidoDAOImpl.java:97) [bin/:?]
+	at com.david.training.service.impl.ContenidoServiceImpl.findById(ContenidoServiceImpl.java:151) [bin/:?]
+	at com.david.training.service.ContenidoServiceTest.testDetalle(ContenidoServiceTest.java:151) [bin/:?]
+	at com.david.training.service.ContenidoServiceTest.main(ContenidoServiceTest.java:174) [bin/:?]
+2019-04-05 13:52:44.879 ERROR ContenidoServiceTest.testDetalle:154 - null
+com.david.training.exceptions.DataException: null
+	at com.david.training.dao.impl.ContenidoDAOImpl.findById(ContenidoDAOImpl.java:106) ~[bin/:?]
+	at com.david.training.service.impl.ContenidoServiceImpl.findById(ContenidoServiceImpl.java:151) ~[bin/:?]
+	at com.david.training.service.ContenidoServiceTest.testDetalle(ContenidoServiceTest.java:151) [bin/:?]
+	at com.david.training.service.ContenidoServiceTest.main(ContenidoServiceTest.java:174) [bin/:?]
+Caused by: java.sql.SQLException: Column Index out of range, 12 > 11. 
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:129) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:97) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:89) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:63) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.result.ResultSetImpl.checkColumnBounds(ResultSetImpl.java:494) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.result.ResultSetImpl.getInt(ResultSetImpl.java:895) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mchange.v2.c3p0.impl.NewProxyResultSet.getInt(NewProxyResultSet.java:425) ~[c3p0-0.9.5.2.jar:0.9.5.2]
+	at com.david.training.dao.impl.ContenidoDAOImpl.loadNext(ContenidoDAOImpl.java:169) ~[bin/:?]
+	at com.david.training.dao.impl.ContenidoDAOImpl.findById(ContenidoDAOImpl.java:97) ~[bin/:?]
+	... 3 more
+2019-04-05 13:55:18.444 INFO  ContenidoServiceTest.testDetalle:149 - Testing Vista Detalle ...
+2019-04-05 13:55:19.541 DEBUG ContenidoDAOImpl.findById:77 - Id = 1 idioma = {)
+2019-04-05 14:03:36.551 INFO  ContenidoServiceTest.testBusquedaEstructurada:102 - Testing Busqueda Estructurada ...
+2019-04-05 14:03:37.722 DEBUG ContenidoDAOImpl.findByCriteria:227 - Producto = com.david.training.model.ProductoCriteria@455b6df1[categoria=[],pais=[],a=<null>,idContenido=<null>,titulo=fic,restriccionEdad=<null>,portada=<null>,fechaLanzamiento=<null>,descripcionBreve=<null>,precio=<null>,precioDescontado=<null>,duracion=<null>,idDescuento=<null>,tipoContenido=<null>,porcentaje=<null>,fechaPedido=<null>] Idioma = es
+2019-04-05 14:03:37.829 INFO  ContenidoServiceTest.testBusquedaEstructurada:132 - Found 1 results.
+2019-04-05 14:03:37.829 INFO  ContenidoServiceTest.testBusquedaEstructurada:134 - Page [1 - 1] : 
+2019-04-05 14:03:37.831 INFO  ContenidoServiceTest.testBusquedaEstructurada:136 - Result 1: com.david.training.model.Contenido@3daf7722[idContenido=2,titulo=PULP FICTION,restriccionEdad=16+,portada=URL,fechaLanzamiento=2018-12-10,descripcionBreve=,precio=3.0,precioDescontado=1.5,duracion=90,idDescuento=2,tipoContenido=PEL,porcentaje=50,fechaPedido=<null>]
+2019-04-05 14:03:37.831 INFO  ContenidoServiceTest.testBusquedaEstructurada:145 - Test testBusquedaEstructurada finished.
+

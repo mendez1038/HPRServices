@@ -78,7 +78,7 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 				PreparedStatement preparedStatement = null;
 				ResultSet resultSet = null;
 				StringBuilder sql = null;
-				Contenido c = null;
+				
 				try{
 					sql = new StringBuilder("SELECT C.ID_CONTENIDO, CI.TITULO, C.RESTRICCION_EDAD, C.PORTADA, C.FECHA_LANZAMIENTO, CI.DESCRIPCION_BREVE, C.PRECIO, C.PRECIO_DESCONTADO, C.DURACION, C.ID_DESCUENTO, C.ID_TIPO_CONTENIDO "
 							+"FROM CONTENIDO C INNER JOIN CONTENIDO_IDIOMA CI ON C.ID_CONTENIDO = CI.ID_CONTENIDO "
@@ -90,8 +90,11 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 					preparedStatement.setInt(i++, id );
 					preparedStatement.setString(i++, idioma);
 					resultSet = preparedStatement.executeQuery(); 
+					
+					Contenido c = null;
+					
 					if (resultSet.next()) {
-						c = loadNext(resultSet);
+						c = loadNext2(resultSet);
 					} else {
 						throw new InstanceNotFoundException("Products with id " + id + 
 								"not found", Contenido.class.getName());
@@ -183,6 +186,40 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 		
 		return c;
 	}
+	
+	private Contenido loadNext2(ResultSet resultSet) throws SQLException, DataException {
+		Contenido c = new Contenido();
+		int i = 1;
+		Integer idContenido = resultSet.getInt(i++);
+		String titulo = resultSet.getString(i++);
+		String restriccionEdad = resultSet.getString(i++);
+		String portada = resultSet.getString(i++);
+		Date fechaLanzamiento = resultSet.getDate(i++);
+		String descripcionBreve = resultSet.getString(i++);
+		Double precio = resultSet.getDouble(i++);
+		Double precioDescontado = resultSet.getDouble(i++);
+		Integer duracion = resultSet.getInt(i++);
+		Integer idDescuento = resultSet.getInt(i++);
+		String tipoContenido = resultSet.getString(i++);
+		
+		
+		
+		c = new Contenido();
+
+		c.setIdContenido(idContenido);
+		c.setTitulo(titulo);
+		c.setRestriccionEdad(restriccionEdad);
+		c.setPortada(portada);
+		c.setFechaLanzamiento(fechaLanzamiento);
+		c.setDescripcionBreve(descripcionBreve);
+		c.setPrecio(precio);
+		c.setPrecioDescontado(precioDescontado);
+		c.setDuracion(duracion);
+		c.setIdDescuento(idDescuento);
+		c.setTipoContenido(tipoContenido);
+		
+		return c;
+	}
 
 	@Override
 	public Results<Contenido> findByCriteria(Connection connection, ProductoCriteria pc, String idioma, int startIndex, int count) 
@@ -211,7 +248,7 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 			}
 			
 			if(pc.getA()!=null) {
-				queryString.append(" inner join contenido_rol_artista cra on c.id_contenido=cra.id_contenido inner join artista a on cra.id_artista=p.id_artista ");
+				queryString.append(" inner join contenido_rol_artista cra on c.id_contenido=cra.id_contenido inner join artista a on cra.id_artista=a.id_artista ");
 			}
 			
 			if (pc.getIdContenido()!=null) {
@@ -273,6 +310,11 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 			if(idioma!=null) {
 				addClause(queryString, first, "CI.ID_IDIOMA = ? ");
 				first = false;}
+			
+			if (pc.getA()!=null) {
+				addClause(queryString, first,addArtista(pc.getA()).toString());	
+				first = false;
+			}
 
 			if (!pc.getCategoria().isEmpty()) {
 				addClause(queryString, first,addCategoria(pc.getCategoria()).toString());	
@@ -283,11 +325,7 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 				addClause(queryString, first,addPais(pc.getPais()).toString());	
 				first = false;
 			}
-			
-			if (pc.getA()!=null) {
-				addClause(queryString, first,addArtista(pc.getA()).toString());	
-				first = false;
-			}
+				
 			queryString.append("ORDER BY C.FECHA_LANZAMIENTO DESC ");
 
 			preparedStatement = connection.prepareStatement(queryString.toString(),
@@ -556,11 +594,10 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 		return lista;
 	}
 	private StringBuilder addArtista(Artista a) {
-		//Creamos la query en base al número de idioma que haya marcado el usuario
 		boolean inner = true;
 		StringBuilder lista = new StringBuilder();
 		 if(a != null) {
-			lista.append(inner ? " (P.NOMBRE_ARTISTA LIKE "+ a.getNombreArtista() : " OR " + a.getNombreArtista());
+			lista.append(inner ? " (A.NOMBRE_ARTISTA LIKE "+ a.getNombreArtista() : " OR " + a.getNombreArtista());
 			inner=false;	
 		}
 		lista.append(" ) ");
@@ -570,6 +607,5 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 	private void addUpdate(StringBuilder queryString, boolean first, String clause) {
 		queryString.append(first? " SET ": " , ").append(clause);
 	}
-
 	
 }
