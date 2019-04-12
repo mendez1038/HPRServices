@@ -61,7 +61,8 @@ public class ContenidoServiceImpl implements ContenidoService{
 			throw new DataException(e);
 		} finally {
 			JDBCUtils.closeConnection(c, commit);
-		}}
+		}
+		}
 
 
 
@@ -153,6 +154,61 @@ public class ContenidoServiceImpl implements ContenidoService{
 		} catch(SQLException e) {
 			logger.warn(e.getMessage(),e);
 			throw new DataException(e);		
+		} finally {
+			JDBCUtils.closeConnection(c, commit);
+		}
+	}
+
+	@Override
+	public Results<Contenido> findAllByRebajas(String idioma, int startIndex, int count) throws DataException {
+		boolean commit = false;
+		Connection c = null;
+		try {
+			c = ConnectionManager.getConnection();
+			c.setAutoCommit(false);
+			Results<Contenido> all = dao.findAllByRebajas(c, idioma, startIndex, count);
+			commit = true; 
+			return all;
+		}  catch (SQLException e) {
+			logger.warn(e.getMessage(),e);
+			throw new DataException(e);
+		} finally {
+			JDBCUtils.closeConnection(c, commit);
+		}
+	}
+
+	@Override
+	public Results<Contenido> findAllByDate(String idioma, int startIndex, int count) throws DataException {
+		boolean commit = false;
+		Connection c = null;
+		try {
+			c = ConnectionManager.getConnection();
+			c.setAutoCommit(false);
+			Results<Contenido> all = dao.findAllByDate(c,idioma, startIndex, count);
+			commit = true; 
+			return all;
+		}  catch (SQLException e) {
+			logger.warn(e.getMessage(),e);
+			throw new DataException(e);
+		} finally {
+			JDBCUtils.closeConnection(c, commit);
+		}
+	}
+
+	@Override
+	public Results<Contenido> findAllByVentas(String idioma, int startIndex, int count) throws DataException {
+		
+		boolean commit = false;
+		Connection c = null;
+		try {
+			c = ConnectionManager.getConnection();
+			c.setAutoCommit(false);
+			Results<Contenido> all = dao.findAllByVentas(c, idioma, startIndex, count);
+			commit = true; 
+			return all;
+		}  catch (SQLException e) {
+			logger.warn(e.getMessage(),e);
+			throw new DataException(e);
 		} finally {
 			JDBCUtils.closeConnection(c, commit);
 		}

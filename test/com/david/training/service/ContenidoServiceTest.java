@@ -152,6 +152,84 @@ public class ContenidoServiceTest {
 		}
 		
 	}
+	
+	public void testFindAllByRebajas() {
+		logger.info("Testing findAllByRebajas ...");
+		int pageSize = 2; 	
+		try {
+
+			Results<Contenido> all = null; 
+			int startIndex = 1; 
+			int total = 1;
+			String idioma = "en";
+			do {
+			all = servicio.findAllByRebajas(idioma, startIndex, pageSize);
+			logger.info("Found "+all.getTotal()+" results.");
+			if (all.getPage().size()>0) {
+				logger.info("Page ["+startIndex+" - "+(startIndex+all.getPage().size()-1)+"] : ");				
+				for (Contenido c: all.getPage()) {
+					logger.info("Result "+total+": "+ToStringUtil.toString(c));
+					total++;
+				}
+				startIndex = startIndex + pageSize;
+			}
+			} while (all.getPage().size()==pageSize);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void testFindAllByDate() {
+		logger.info("Testing findAllByDate ...");
+		int pageSize = 2; 	
+		try {
+
+			Results<Contenido> all = null; 
+			int startIndex = 1; 
+			int total = 1;
+			String idioma = "en";
+			do {
+			all = servicio.findAllByDate(idioma, startIndex, pageSize);
+			logger.info("Found "+all.getTotal()+" results.");
+			if (all.getPage().size()>0) {
+				logger.info("Page ["+startIndex+" - "+(startIndex+all.getPage().size()-1)+"] : ");				
+				for (Contenido c: all.getPage()) {
+					logger.info("Result "+total+": "+ToStringUtil.toString(c));
+					total++;
+				}
+				startIndex = startIndex + pageSize;
+			}
+			} while (all.getPage().size()==pageSize);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void testFindAllByVentas() {
+		logger.info("Testing findAllByVentas ...");
+		int pageSize = 2; 	
+		try {
+
+			Results<Contenido> all = null; 
+			int startIndex = 1; 
+			int total = 1;
+			String idioma = "en";
+			do {
+			all = servicio.findAllByVentas(idioma, startIndex, pageSize);
+			logger.info("Found "+all.getTotal()+" results.");
+			if (all.getPage().size()>0) {
+				logger.info("Page ["+startIndex+" - "+(startIndex+all.getPage().size()-1)+"] : ");				
+				for (Contenido c: all.getPage()) {
+					logger.info("Result "+total+": "+ToStringUtil.toString(c));
+					total++;
+				}
+				startIndex = startIndex + pageSize;
+			}
+			} while (all.getPage().size()==pageSize);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 	public static void main(String[] args) {
 		ContenidoServiceTest test = new ContenidoServiceTest();
@@ -167,9 +245,10 @@ public class ContenidoServiceTest {
 		*/
 		//test.testFavoritos();
 		//test.testPrecioDescontado();
-		test.testBusquedaEstructurada();
+		//test.testBusquedaEstructurada();
 		//test.testDetalle();
-		
+		//test.testFindAllByRebajas();
+		test.testFindAllByVentas();
 	}
 
 }

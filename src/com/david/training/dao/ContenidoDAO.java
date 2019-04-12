@@ -36,5 +36,14 @@ public interface ContenidoDAO {
 	public Contenido findPorId(Connection c, Integer id) 
 			throws InstanceNotFoundException, DataException;
 	
+	public Results<Contenido> findAllByRebajas(Connection connection, String idioma, int startIndex, int count)
+			throws InstanceNotFoundException, DataException;
+		
+	public Results<Contenido> findAllByDate(Connection connection, String idioma, int startIndex, int count)
+			throws InstanceNotFoundException, DataException;
+	
+	public Results<Contenido> findAllByVentas(Connection connection, String idioma, int startIndex, int count)
+			throws InstanceNotFoundException, DataException;
+	
 }
 

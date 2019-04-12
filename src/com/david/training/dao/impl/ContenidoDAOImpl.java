@@ -607,5 +607,142 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 	private void addUpdate(StringBuilder queryString, boolean first, String clause) {
 		queryString.append(first? " SET ": " , ").append(clause);
 	}
+
+	@Override
+	public Results<Contenido> findAllByRebajas(Connection connection, String idioma, int startIndex, int count)
+			throws InstanceNotFoundException, DataException {
+		logger.debug("Idioma = {}", idioma);
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		StringBuilder sql = null;
+		try{
+			sql = new StringBuilder("SELECT C.ID_CONTENIDO, CI.TITULO, C.RESTRICCION_EDAD, C.PORTADA, C.FECHA_LANZAMIENTO, "
+					+ "CI.DESCRIPCION_BREVE, C.PRECIO, C.PRECIO_DESCONTADO, C.DURACION, C.ID_DESCUENTO, C.ID_TIPO_CONTENIDO "
+					+ "FROM CONTENIDO C INNER JOIN CONTENIDO_IDIOMA CI ON C.ID_CONTENIDO = CI.ID_CONTENIDO "
+					+ "WHERE CI.ID_IDIOMA = ? "
+					+ "ORDER BY C.PRECIO_DESCONTADO DESC ");
+
+			preparedStatement = connection.prepareStatement(sql.toString(), ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+
+			int i = 1;
+			preparedStatement.setString(i++, idioma);
+			resultSet = preparedStatement.executeQuery(); 
+
+			List<Contenido> contenidos = new ArrayList<Contenido>();
+			Contenido c = null;
+			int currentCount = 0;
+			
+			 if ((startIndex >= 1) && resultSet.absolute(startIndex)) { 
+			 do {
+				c = loadNext2(resultSet);
+				contenidos.add(c);
+				currentCount++;
+			 } while ((currentCount < count) && resultSet.next());
+			 }
+			 
+			 int total = JDBCUtils.getTotalRows(resultSet);
+			 
+			 Results<Contenido> results = new Results<Contenido>(contenidos, startIndex, total);  
+			 return results;
+		} catch (SQLException ex) {
+			logger.warn(ex.getMessage(), ex);
+			throw new DataException(ex);
+		} finally {            
+			JDBCUtils.closeResultSet(resultSet);
+			JDBCUtils.closeStatement(preparedStatement);
+		} 
+	}
+
+	@Override
+	public Results<Contenido> findAllByDate(Connection connection, String idioma, int startIndex, int count)
+			throws InstanceNotFoundException, DataException {
+		logger.debug("Idioma = {}", idioma);
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		StringBuilder sql = null;
+		try{
+			sql = new StringBuilder("SELECT C.ID_CONTENIDO, CI.TITULO, C.RESTRICCION_EDAD, C.PORTADA, C.FECHA_LANZAMIENTO, "
+					+ "CI.DESCRIPCION_BREVE, C.PRECIO, C.PRECIO_DESCONTADO, C.DURACION, C.ID_DESCUENTO, C.ID_TIPO_CONTENIDO "
+					+ "FROM CONTENIDO C INNER JOIN CONTENIDO_IDIOMA CI ON C.ID_CONTENIDO = CI.ID_CONTENIDO "
+					+ "WHERE CI.ID_IDIOMA = ? "
+					+ "ORDER BY C.FECHA_LANZAMIENTO DESC ");
+
+			preparedStatement = connection.prepareStatement(sql.toString(), ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+
+			int i = 1;
+			preparedStatement.setString(i++, idioma);
+			resultSet = preparedStatement.executeQuery(); 
+
+			List<Contenido> contenidos = new ArrayList<Contenido>();
+			Contenido c = null;
+			int currentCount = 0;
+			
+			 if ((startIndex >= 1) && resultSet.absolute(startIndex)) { 
+			 do {
+				c = loadNext2(resultSet);
+				contenidos.add(c);
+				currentCount++;
+			 } while ((currentCount < count) && resultSet.next());
+			 }
+			 
+			 int total = JDBCUtils.getTotalRows(resultSet);
+			 
+			 Results<Contenido> results = new Results<Contenido>(contenidos, startIndex, total);  
+			 return results;
+		} catch (SQLException ex) {
+			logger.warn(ex.getMessage(), ex);
+			throw new DataException(ex);
+		} finally {            
+			JDBCUtils.closeResultSet(resultSet);
+			JDBCUtils.closeStatement(preparedStatement);
+		} 
+	}
+
+	@Override
+	public Results<Contenido> findAllByVentas(Connection connection, String idioma, int startIndex, int count)
+			throws InstanceNotFoundException, DataException {
+		logger.debug("Idioma = {}", idioma);
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		StringBuilder sql = null;
+		try{
+			sql = new StringBuilder("SELECT C.ID_CONTENIDO, CI.TITULO, C.RESTRICCION_EDAD, C.PORTADA, C.FECHA_LANZAMIENTO, "
+					+ "CI.DESCRIPCION_BREVE, C.PRECIO, C.PRECIO_DESCONTADO, C.DURACION, C.ID_DESCUENTO, C.ID_TIPO_CONTENIDO , COUNT(CI.TITULO) "
+					+ "FROM CONTENIDO C INNER JOIN CONTENIDO_IDIOMA CI ON C.ID_CONTENIDO = CI.ID_CONTENIDO "
+					+ "INNER JOIN LINEAPEDIDO LP ON C.ID_CONTENIDO = LP.ID_CONTENIDO "
+					+ "WHERE CI.ID_IDIOMA = ? "
+					+ "GROUP BY CI.TITULO "
+					+ "ORDER BY COUNT(CI.TITULO) DESC ");
+
+			preparedStatement = connection.prepareStatement(sql.toString(), ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+
+			int i = 1;
+			preparedStatement.setString(i++, idioma);
+			resultSet = preparedStatement.executeQuery(); 
+
+			List<Contenido> contenidos = new ArrayList<Contenido>();
+			Contenido c = null;
+			int currentCount = 0;
+			
+			 if ((startIndex >= 1) && resultSet.absolute(startIndex)) { 
+			 do {
+				c = loadNext2(resultSet);
+				contenidos.add(c);
+				currentCount++;
+			 } while ((currentCount < count) && resultSet.next());
+			 }
+			 
+			 int total = JDBCUtils.getTotalRows(resultSet);
+			 
+			 Results<Contenido> results = new Results<Contenido>(contenidos, startIndex, total);  
+			 return results;
+		} catch (SQLException ex) {
+			logger.warn(ex.getMessage(), ex);
+			throw new DataException(ex);
+		} finally {            
+			JDBCUtils.closeResultSet(resultSet);
+			JDBCUtils.closeStatement(preparedStatement);
+		} 
+	}
 	
 }
