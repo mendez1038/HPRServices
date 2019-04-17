@@ -24,7 +24,7 @@ public interface ContenidoService {
 	public Double sacarPrecioDescontado (Integer id)
 			throws DataException;
 	
-	public Contenido findById(Integer id, String idioma)
+	public Contenido findPorId(Integer id, String idioma)
 			throws InstanceNotFoundException, DataException;
 	
 	public Results<Contenido> findAllByRebajas (String idioma, int startIndex, int count)

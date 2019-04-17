@@ -6,8 +6,6 @@ public class Results<T> {
 	
 	private List<T> page = null;
 	private int startIndex = 0;
-	
-
 	private int total = 0;
 	
 	public Results(List<T> page, int startIndex, int total) {

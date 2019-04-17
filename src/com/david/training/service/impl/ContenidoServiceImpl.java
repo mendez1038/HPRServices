@@ -141,7 +141,7 @@ public class ContenidoServiceImpl implements ContenidoService{
 	}
 
 	@Override
-	public Contenido findById(Integer id, String idioma) 
+	public Contenido findPorId(Integer id, String idioma) 
 			throws InstanceNotFoundException, DataException {
 		boolean commit = false;
 		Connection c = null;
@@ -149,7 +149,7 @@ public class ContenidoServiceImpl implements ContenidoService{
 			c = ConnectionManager.getConnection();
 			c.setAutoCommit(false);
 			
-			Contenido contenido = dao.findById(c, id, idioma);
+			Contenido contenido = dao.findPorId(c, id);
 			return contenido;
 		} catch(SQLException e) {
 			logger.warn(e.getMessage(),e);
