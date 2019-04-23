@@ -15,7 +15,6 @@ import com.david.training.exceptions.DataException;
 import com.david.training.exceptions.DuplicateInstanceException;
 import com.david.training.exceptions.InstanceNotFoundException;
 import com.david.training.exceptions.MailException;
-import com.david.training.model.Favorito;
 import com.david.training.model.Usuario;
 import com.david.training.service.MailService;
 import com.david.training.service.UsuarioService;
@@ -156,50 +155,6 @@ public class UsuarioServiceImpl implements UsuarioService{
 		finally {
 			JDBCUtils.closeConnection(c);
 		}
-	}
-
-	@Override
-	public Favorito añadirFavorito(Favorito f) 
-			throws DataException {
-		boolean commit = false;
-		Connection c = null;
-		try {
-		c = ConnectionManager.getConnection();
-		c.setAutoCommit(false);
-		if (dao.existsFavorito(f.getEmail(), f.getIdContenido(), c)) {
-			f = dao.updateFavoritos(f, c);
-		} else {
-		f = dao.createFavoritos(c, f);
-		}
-		commit = true;
-		return f;
-		} catch (SQLException e) {
-			logger.warn(e.getMessage(),e);
-			throw new DataException(e);
-		} finally {
-			JDBCUtils.closeConnection(c, commit);
-			}
-	}
-
-	@Override
-	public void eliminarFavorito(Favorito f) throws DataException {
-		boolean commit = false;
-		Connection c = null;
-		try {
-
-		c = ConnectionManager.getConnection();
-		c.setAutoCommit(false);
-		dao.updateFavoritos(f, c);
-		commit = true;
-		
-		} catch (SQLException e) {
-			logger.warn(e.getMessage(),e);
-			throw new DataException(e);
-		} finally {
-			JDBCUtils.closeConnection(c, commit);
-			}
-		
-		
 	}
 
 }

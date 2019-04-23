@@ -145,7 +145,7 @@ public class ContenidoServiceTest {
 	public void testDetalle() {
 		logger.info("Testing Vista Detalle ...");
 		try {
-		Contenido contenido = servicio.findById(1, "es");
+		Contenido contenido = servicio.findPorId(1, "es");
 		System.out.println(contenido);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
