@@ -120,7 +120,7 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 						
 	}
 
-
+	//NO FUNCIONA
 	public Contenido create (Connection connection, Contenido c)
 			throws DuplicateInstanceException, DataException {
 		logger.debug("Contenido = {}", c);
@@ -212,7 +212,7 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 					"SELECT C.ID_CONTENIDO, CI.TITULO, C.RESTRICCION_EDAD, C.PORTADA, "
 					+ "C.FECHA_LANZAMIENTO, CI.DESCRIPCION_BREVE, C.PRECIO,"
 					+ "C.PRECIO_DESCONTADO, C.DURACION, C.ID_DESCUENTO, C.ID_TIPO_CONTENIDO, "
-					+ "D.PORCENTAJE, CI.ID_IDIOMA "	  
+					+ "D.PORCENTAJE "	  
 					+ "FROM CONTENIDO C "
 					+ "INNER JOIN CONTENIDO_IDIOMA CI ON C.ID_CONTENIDO = CI.ID_CONTENIDO "
 					+ "INNER JOIN DESCUENTO D ON D.ID_DESCUENTO = C.ID_DESCUENTO ");
@@ -641,8 +641,9 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 		StringBuilder sql = null;
 		try{
 			sql = new StringBuilder("SELECT C.ID_CONTENIDO, CI.TITULO, C.RESTRICCION_EDAD, C.PORTADA, C.FECHA_LANZAMIENTO, "
-					+ "CI.DESCRIPCION_BREVE, C.PRECIO, C.PRECIO_DESCONTADO, C.DURACION, C.ID_DESCUENTO, C.ID_TIPO_CONTENIDO "
+					+ "CI.DESCRIPCION_BREVE, C.PRECIO, C.PRECIO_DESCONTADO, C.DURACION, C.ID_DESCUENTO, C.ID_TIPO_CONTENIDO, D.PORCENTAJE "
 					+ "FROM CONTENIDO C INNER JOIN CONTENIDO_IDIOMA CI ON C.ID_CONTENIDO = CI.ID_CONTENIDO "
+					+ "INNER JOIN DESCUENTO D ON D.ID_DESCUENTO = C.ID_DESCUENTO "
 					+ "WHERE CI.ID_IDIOMA = ? "
 					+ "ORDER BY C.FECHA_LANZAMIENTO DESC ");
 
