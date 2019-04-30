@@ -1,0 +1,102 @@
+2019-04-12 11:02:54.596 INFO  ContenidoServiceTest.testFindAllByRebajas:157 - Testing findAllByRebajas ...
+2019-04-12 11:02:55.779 DEBUG ContenidoDAOImpl.findAllByRebajas:614 - Idioma = en
+2019-04-12 11:02:55.818 WARN  ContenidoDAOImpl.findAllByRebajas:647 - Parameter index out of range (1 > number of parameters, which is 0).
+java.sql.SQLException: Parameter index out of range (1 > number of parameters, which is 0).
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:129) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:97) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:89) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:63) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.checkBounds(ClientPreparedStatement.java:1406) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.getCoreParameterIndex(ClientPreparedStatement.java:1419) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.setString(ClientPreparedStatement.java:1786) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mchange.v2.c3p0.impl.NewProxyPreparedStatement.setString(NewProxyPreparedStatement.java:540) ~[c3p0-0.9.5.2.jar:0.9.5.2]
+	at com.david.training.dao.impl.ContenidoDAOImpl.findAllByRebajas(ContenidoDAOImpl.java:627) [bin/:?]
+	at com.david.training.service.impl.ContenidoServiceImpl.findAllByRebajas(ContenidoServiceImpl.java:169) [bin/:?]
+	at com.david.training.service.ContenidoServiceTest.testFindAllByRebajas(ContenidoServiceTest.java:166) [bin/:?]
+	at com.david.training.service.ContenidoServiceTest.main(ContenidoServiceTest.java:198) [bin/:?]
+2019-04-12 11:07:20.152 INFO  ContenidoServiceTest.testFindAllByRebajas:157 - Testing findAllByRebajas ...
+2019-04-12 11:07:21.220 DEBUG ContenidoDAOImpl.findAllByRebajas:614 - Idioma = en
+2019-04-12 11:07:21.265 WARN  ContenidoDAOImpl.findAllByRebajas:648 - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'FROM CONTENIDO C INNER JOIN CONTENIDO_IDIOMA CI ON C.ID_CONTENIDO = CI.ID_CONTEN' at line 1
+java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'FROM CONTENIDO C INNER JOIN CONTENIDO_IDIOMA CI ON C.ID_CONTENIDO = CI.ID_CONTEN' at line 1
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:120) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:97) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:974) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeQuery(ClientPreparedStatement.java:1024) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mchange.v2.c3p0.impl.NewProxyPreparedStatement.executeQuery(NewProxyPreparedStatement.java:353) ~[c3p0-0.9.5.2.jar:0.9.5.2]
+	at com.david.training.dao.impl.ContenidoDAOImpl.findAllByRebajas(ContenidoDAOImpl.java:629) [bin/:?]
+	at com.david.training.service.impl.ContenidoServiceImpl.findAllByRebajas(ContenidoServiceImpl.java:169) [bin/:?]
+	at com.david.training.service.ContenidoServiceTest.testFindAllByRebajas(ContenidoServiceTest.java:166) [bin/:?]
+	at com.david.training.service.ContenidoServiceTest.main(ContenidoServiceTest.java:198) [bin/:?]
+2019-04-12 11:08:11.155 INFO  ContenidoServiceTest.testFindAllByRebajas:157 - Testing findAllByRebajas ...
+2019-04-12 11:08:12.278 DEBUG ContenidoDAOImpl.findAllByRebajas:614 - Idioma = en
+2019-04-12 11:08:12.411 WARN  ContenidoDAOImpl.findAllByRebajas:648 - Unknown column 'CI.IDIOMA' in 'where clause'
+java.sql.SQLSyntaxErrorException: Unknown column 'CI.IDIOMA' in 'where clause'
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:120) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:97) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:974) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeQuery(ClientPreparedStatement.java:1024) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mchange.v2.c3p0.impl.NewProxyPreparedStatement.executeQuery(NewProxyPreparedStatement.java:353) ~[c3p0-0.9.5.2.jar:0.9.5.2]
+	at com.david.training.dao.impl.ContenidoDAOImpl.findAllByRebajas(ContenidoDAOImpl.java:629) [bin/:?]
+	at com.david.training.service.impl.ContenidoServiceImpl.findAllByRebajas(ContenidoServiceImpl.java:169) [bin/:?]
+	at com.david.training.service.ContenidoServiceTest.testFindAllByRebajas(ContenidoServiceTest.java:166) [bin/:?]
+	at com.david.training.service.ContenidoServiceTest.main(ContenidoServiceTest.java:198) [bin/:?]
+2019-04-12 11:08:57.630 INFO  ContenidoServiceTest.testFindAllByRebajas:157 - Testing findAllByRebajas ...
+2019-04-12 11:08:58.728 DEBUG ContenidoDAOImpl.findAllByRebajas:614 - Idioma = en
+2019-04-12 11:08:58.863 INFO  ContenidoServiceTest.testFindAllByRebajas:167 - Found 13 results.
+2019-04-12 11:08:58.863 INFO  ContenidoServiceTest.testFindAllByRebajas:169 - Page [1 - 2] : 
+2019-04-12 11:08:58.877 INFO  ContenidoServiceTest.testFindAllByRebajas:171 - Result 1: com.david.training.model.Contenido@492691d7[idContenido=2,titulo=PULP FICTION,restriccionEdad=16+,portada=URL,fechaLanzamiento=2018-12-10,descripcionBreve=,precio=3.0,precioDescontado=1.5,duracion=90,idDescuento=2,tipoContenido=PEL,porcentaje=<null>,fechaPedido=<null>]
+2019-04-12 11:08:58.878 INFO  ContenidoServiceTest.testFindAllByRebajas:171 - Result 2: com.david.training.model.Contenido@67545b57[idContenido=8,titulo=DJANGO UNCHAINED,restriccionEdad=TP,portada=URL,fechaLanzamiento=2018-12-10,descripcionBreve=,precio=3.0,precioDescontado=0.75,duracion=90,idDescuento=8,tipoContenido=PEL,porcentaje=<null>,fechaPedido=<null>]
+2019-04-12 11:08:58.879 DEBUG ContenidoDAOImpl.findAllByRebajas:614 - Idioma = en
+2019-04-12 11:08:58.882 INFO  ContenidoServiceTest.testFindAllByRebajas:167 - Found 13 results.
+2019-04-12 11:08:58.883 INFO  ContenidoServiceTest.testFindAllByRebajas:169 - Page [3 - 4] : 
+2019-04-12 11:08:58.883 INFO  ContenidoServiceTest.testFindAllByRebajas:171 - Result 3: com.david.training.model.Contenido@4716be8b[idContenido=102,titulo=DRAGON BALL,restriccionEdad=TP,portada=URL,fechaLanzamiento=2018-12-10,descripcionBreve=,precio=5.0,precioDescontado=0.75,duracion=90,idDescuento=1,tipoContenido=SER,porcentaje=<null>,fechaPedido=<null>]
+2019-04-12 11:08:58.884 INFO  ContenidoServiceTest.testFindAllByRebajas:171 - Result 4: com.david.training.model.Contenido@1fc32e4f[idContenido=3,titulo=JACKIE BROWN,restriccionEdad=16+,portada=URL,fechaLanzamiento=2018-12-10,descripcionBreve=,precio=3.0,precioDescontado=0.3,duracion=90,idDescuento=3,tipoContenido=PEL,porcentaje=<null>,fechaPedido=<null>]
+2019-04-12 11:08:58.884 DEBUG ContenidoDAOImpl.findAllByRebajas:614 - Idioma = en
+2019-04-12 11:08:58.888 INFO  ContenidoServiceTest.testFindAllByRebajas:167 - Found 13 results.
+2019-04-12 11:08:58.888 INFO  ContenidoServiceTest.testFindAllByRebajas:169 - Page [5 - 6] : 
+2019-04-12 11:08:58.889 INFO  ContenidoServiceTest.testFindAllByRebajas:171 - Result 5: com.david.training.model.Contenido@ca30bc1[idContenido=1,titulo=RESERVOIR DOGS,restriccionEdad=16+,portada=URL,fechaLanzamiento=2018-12-10,descripcionBreve=,precio=3.0,precioDescontado=0.0,duracion=90,idDescuento=1,tipoContenido=PEL,porcentaje=<null>,fechaPedido=<null>]
+2019-04-12 11:08:58.889 INFO  ContenidoServiceTest.testFindAllByRebajas:171 - Result 6: com.david.training.model.Contenido@1046d517[idContenido=4,titulo=KILL BILL VOL 1,restriccionEdad=16+,portada=URL,fechaLanzamiento=2018-12-10,descripcionBreve=,precio=3.0,precioDescontado=0.0,duracion=90,idDescuento=4,tipoContenido=PEL,porcentaje=<null>,fechaPedido=<null>]
+2019-04-12 11:08:58.890 DEBUG ContenidoDAOImpl.findAllByRebajas:614 - Idioma = en
+2019-04-12 11:08:58.893 INFO  ContenidoServiceTest.testFindAllByRebajas:167 - Found 13 results.
+2019-04-12 11:08:58.894 INFO  ContenidoServiceTest.testFindAllByRebajas:169 - Page [7 - 8] : 
+2019-04-12 11:08:58.894 INFO  ContenidoServiceTest.testFindAllByRebajas:171 - Result 7: com.david.training.model.Contenido@7a362b6b[idContenido=5,titulo=KILL BILL VOL 2,restriccionEdad=18+,portada=URL,fechaLanzamiento=2018-12-11,descripcionBreve=,precio=3.0,precioDescontado=0.0,duracion=90,idDescuento=5,tipoContenido=PEL,porcentaje=<null>,fechaPedido=<null>]
+2019-04-12 11:08:58.894 INFO  ContenidoServiceTest.testFindAllByRebajas:171 - Result 8: com.david.training.model.Contenido@60df60da[idContenido=6,titulo=DEATH PROOF,restriccionEdad=12+,portada=URL,fechaLanzamiento=2018-12-10,descripcionBreve=,precio=3.0,precioDescontado=0.0,duracion=90,idDescuento=6,tipoContenido=PEL,porcentaje=<null>,fechaPedido=<null>]
+2019-04-12 11:08:58.895 DEBUG ContenidoDAOImpl.findAllByRebajas:614 - Idioma = en
+2019-04-12 11:08:58.899 INFO  ContenidoServiceTest.testFindAllByRebajas:167 - Found 13 results.
+2019-04-12 11:08:58.899 INFO  ContenidoServiceTest.testFindAllByRebajas:169 - Page [9 - 10] : 
+2019-04-12 11:08:58.899 INFO  ContenidoServiceTest.testFindAllByRebajas:171 - Result 9: com.david.training.model.Contenido@1800a575[idContenido=7,titulo=INGLOURIOUS BASTERDS,restriccionEdad=7+,portada=URL,fechaLanzamiento=2018-12-10,descripcionBreve= Is a 2009 war film written and directed by Quentin Tarantino and starring Brad Pitt, Christoph Waltz, Michael Fassbender, Eli Roth, Diane Kruger, Til Schweiger, and Mélanie Laurent.,precio=3.0,precioDescontado=0.0,duracion=90,idDescuento=7,tipoContenido=PEL,porcentaje=<null>,fechaPedido=<null>]
+2019-04-12 11:08:58.900 INFO  ContenidoServiceTest.testFindAllByRebajas:171 - Result 10: com.david.training.model.Contenido@1458ed9c[idContenido=9,titulo=THE HATEFUL EIGHT,restriccionEdad=16+,portada=URL,fechaLanzamiento=2018-12-10,descripcionBreve=,precio=3.0,precioDescontado=0.0,duracion=90,idDescuento=2,tipoContenido=PEL,porcentaje=<null>,fechaPedido=<null>]
+2019-04-12 11:08:58.901 DEBUG ContenidoDAOImpl.findAllByRebajas:614 - Idioma = en
+2019-04-12 11:08:58.904 INFO  ContenidoServiceTest.testFindAllByRebajas:167 - Found 13 results.
+2019-04-12 11:08:58.905 INFO  ContenidoServiceTest.testFindAllByRebajas:169 - Page [11 - 12] : 
+2019-04-12 11:08:58.905 INFO  ContenidoServiceTest.testFindAllByRebajas:171 - Result 11: com.david.training.model.Contenido@2fd953a6[idContenido=101,titulo=STRANGER THINGS,restriccionEdad=12+,portada=URL,fechaLanzamiento=2018-12-10,descripcionBreve=,precio=5.0,precioDescontado=0.0,duracion=90,idDescuento=4,tipoContenido=SER,porcentaje=<null>,fechaPedido=<null>]
+2019-04-12 11:08:58.905 INFO  ContenidoServiceTest.testFindAllByRebajas:171 - Result 12: com.david.training.model.Contenido@a4add54[idContenido=103,titulo=RICK&MORTY,restriccionEdad=18+,portada=URL,fechaLanzamiento=2018-12-10,descripcionBreve=,precio=5.0,precioDescontado=0.0,duracion=90,idDescuento=1,tipoContenido=SER,porcentaje=<null>,fechaPedido=<null>]
+2019-04-12 11:08:58.906 DEBUG ContenidoDAOImpl.findAllByRebajas:614 - Idioma = en
+2019-04-12 11:08:58.909 INFO  ContenidoServiceTest.testFindAllByRebajas:167 - Found 13 results.
+2019-04-12 11:08:58.910 INFO  ContenidoServiceTest.testFindAllByRebajas:169 - Page [13 - 13] : 
+2019-04-12 11:08:58.910 INFO  ContenidoServiceTest.testFindAllByRebajas:171 - Result 13: com.david.training.model.Contenido@6ccdb29f[idContenido=201,titulo=VOX: FREEFALLING,restriccionEdad=18+,portada=URL,fechaLanzamiento=2018-12-10,descripcionBreve=,precio=1.0,precioDescontado=0.0,duracion=90,idDescuento=5,tipoContenido=DOC,porcentaje=<null>,fechaPedido=<null>]
+2019-04-12 11:29:35.780 INFO  ContenidoServiceTest.testFindAllByVentas:209 - Testing findAllByVentas ...
+2019-04-12 11:29:36.886 DEBUG ContenidoDAOImpl.findAllByVentas:704 - Idioma = en
+2019-04-12 11:29:36.953 INFO  ContenidoServiceTest.testFindAllByVentas:219 - Found 8 results.
+2019-04-12 11:29:36.953 INFO  ContenidoServiceTest.testFindAllByVentas:221 - Page [1 - 2] : 
+2019-04-12 11:29:36.966 INFO  ContenidoServiceTest.testFindAllByVentas:223 - Result 1: com.david.training.model.Contenido@3d9c13b5[idContenido=201,titulo=VOX: FREEFALLING,restriccionEdad=18+,portada=URL,fechaLanzamiento=2018-12-10,descripcionBreve=,precio=1.0,precioDescontado=0.0,duracion=90,idDescuento=5,tipoContenido=DOC,porcentaje=<null>,fechaPedido=<null>]
+2019-04-12 11:29:36.967 INFO  ContenidoServiceTest.testFindAllByVentas:223 - Result 2: com.david.training.model.Contenido@7582ff54[idContenido=1,titulo=RESERVOIR DOGS,restriccionEdad=16+,portada=URL,fechaLanzamiento=2018-12-10,descripcionBreve=,precio=3.0,precioDescontado=0.0,duracion=90,idDescuento=1,tipoContenido=PEL,porcentaje=<null>,fechaPedido=<null>]
+2019-04-12 11:29:36.968 DEBUG ContenidoDAOImpl.findAllByVentas:704 - Idioma = en
+2019-04-12 11:29:36.971 INFO  ContenidoServiceTest.testFindAllByVentas:219 - Found 8 results.
+2019-04-12 11:29:36.971 INFO  ContenidoServiceTest.testFindAllByVentas:221 - Page [3 - 4] : 
+2019-04-12 11:29:36.972 INFO  ContenidoServiceTest.testFindAllByVentas:223 - Result 3: com.david.training.model.Contenido@146dfe6[idContenido=101,titulo=STRANGER THINGS,restriccionEdad=12+,portada=URL,fechaLanzamiento=2018-12-10,descripcionBreve=,precio=5.0,precioDescontado=0.0,duracion=90,idDescuento=4,tipoContenido=SER,porcentaje=<null>,fechaPedido=<null>]
+2019-04-12 11:29:36.972 INFO  ContenidoServiceTest.testFindAllByVentas:223 - Result 4: com.david.training.model.Contenido@4716be8b[idContenido=8,titulo=DJANGO UNCHAINED,restriccionEdad=TP,portada=URL,fechaLanzamiento=2018-12-10,descripcionBreve=,precio=3.0,precioDescontado=0.75,duracion=90,idDescuento=8,tipoContenido=PEL,porcentaje=<null>,fechaPedido=<null>]
+2019-04-12 11:29:36.973 DEBUG ContenidoDAOImpl.findAllByVentas:704 - Idioma = en
+2019-04-12 11:29:36.977 INFO  ContenidoServiceTest.testFindAllByVentas:219 - Found 8 results.
+2019-04-12 11:29:36.977 INFO  ContenidoServiceTest.testFindAllByVentas:221 - Page [5 - 6] : 
+2019-04-12 11:29:36.978 INFO  ContenidoServiceTest.testFindAllByVentas:223 - Result 5: com.david.training.model.Contenido@291a7e3c[idContenido=103,titulo=RICK&MORTY,restriccionEdad=18+,portada=URL,fechaLanzamiento=2018-12-10,descripcionBreve=,precio=5.0,precioDescontado=0.0,duracion=90,idDescuento=1,tipoContenido=SER,porcentaje=<null>,fechaPedido=<null>]
+2019-04-12 11:29:36.978 INFO  ContenidoServiceTest.testFindAllByVentas:223 - Result 6: com.david.training.model.Contenido@ca30bc1[idContenido=2,titulo=PULP FICTION,restriccionEdad=16+,portada=URL,fechaLanzamiento=2018-12-10,descripcionBreve=,precio=3.0,precioDescontado=1.5,duracion=90,idDescuento=2,tipoContenido=PEL,porcentaje=<null>,fechaPedido=<null>]
+2019-04-12 11:29:36.979 DEBUG ContenidoDAOImpl.findAllByVentas:704 - Idioma = en
+2019-04-12 11:29:36.982 INFO  ContenidoServiceTest.testFindAllByVentas:219 - Found 8 results.
+2019-04-12 11:29:36.983 INFO  ContenidoServiceTest.testFindAllByVentas:221 - Page [7 - 8] : 
+2019-04-12 11:29:36.983 INFO  ContenidoServiceTest.testFindAllByVentas:223 - Result 7: com.david.training.model.Contenido@2bb3058[idContenido=3,titulo=JACKIE BROWN,restriccionEdad=16+,portada=URL,fechaLanzamiento=2018-12-10,descripcionBreve=,precio=3.0,precioDescontado=0.3,duracion=90,idDescuento=3,tipoContenido=PEL,porcentaje=<null>,fechaPedido=<null>]
+2019-04-12 11:29:36.983 INFO  ContenidoServiceTest.testFindAllByVentas:223 - Result 8: com.david.training.model.Contenido@7a362b6b[idContenido=4,titulo=KILL BILL VOL 1,restriccionEdad=16+,portada=URL,fechaLanzamiento=2018-12-10,descripcionBreve=,precio=3.0,precioDescontado=0.0,duracion=90,idDescuento=4,tipoContenido=PEL,porcentaje=<null>,fechaPedido=<null>]
+2019-04-12 11:29:36.984 DEBUG ContenidoDAOImpl.findAllByVentas:704 - Idioma = en
+2019-04-12 11:29:36.986 INFO  ContenidoServiceTest.testFindAllByVentas:219 - Found 8 results.

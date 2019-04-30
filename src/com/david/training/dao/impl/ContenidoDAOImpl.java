@@ -12,12 +12,14 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.david.training.dao.ArtistaRolDAO;
 import com.david.training.dao.ContenidoDAO;
 import com.david.training.dao.util.JDBCUtils;
 import com.david.training.exceptions.DataException;
 import com.david.training.exceptions.DuplicateInstanceException;
 import com.david.training.exceptions.InstanceNotFoundException;
 import com.david.training.model.Artista;
+import com.david.training.model.ArtistaRol;
 import com.david.training.model.Categoria;
 import com.david.training.model.Contenido;
 import com.david.training.model.Pais;
@@ -27,10 +29,12 @@ import com.david.training.service.Results;
 
 public class ContenidoDAOImpl implements ContenidoDAO{
 
-	public static Logger logger = LogManager.getLogger(ContenidoDAOImpl.class);
+	//private ArtistaRolDAO artistaRolDAO = null;
 	public ContenidoDAOImpl() {
-
+		//artistaRolDAO = new ArtistaRolDAOImpl();
 	}
+	
+	public static Logger logger = LogManager.getLogger(ContenidoDAOImpl.class);
 
 	public Contenido findPorId(Connection connection, Integer id)
 			throws InstanceNotFoundException, DataException {
@@ -45,9 +49,9 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 					+ "CI.DESCRIPCION_BREVE, C.PRECIO, C.PRECIO_DESCONTADO, "
 					+ "C.DURACION, C.ID_DESCUENTO, C.ID_TIPO_CONTENIDO, "
 					+ "D.PORCENTAJE "
-					+"FROM CONTENIDO C INNER JOIN DESCUENTO D ON C.ID_DESCUENTO = D.ID_DESCUENTO "
+					+ "FROM CONTENIDO C INNER JOIN DESCUENTO D ON C.ID_DESCUENTO = D.ID_DESCUENTO "
 					+ "INNER JOIN CONTENIDO_IDIOMA CI ON C.ID_CONTENIDO = CI.ID_CONTENIDO "
-					+"WHERE C.ID_CONTENIDO = ? ");
+					+ "WHERE C.ID_CONTENIDO = ? ");
 
 			preparedStatement = connection.prepareStatement(sql.toString(), ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 
@@ -56,7 +60,7 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 			resultSet = preparedStatement.executeQuery(); 
 
 			if (resultSet.next()) {
-				c = loadNext(resultSet);
+				c = loadNext(connection, resultSet);
 			} else {
 				throw new InstanceNotFoundException("Products with id " + id + 
 						"not found", Contenido.class.getName());
@@ -74,15 +78,20 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 
 	public Contenido findById(Connection connection, Integer id, String idioma)
 			throws InstanceNotFoundException, DataException {
-				logger.debug("Id = {} idioma = {)", id, idioma);
+				logger.debug("Id = {} idioma = {}", id, idioma);
 				PreparedStatement preparedStatement = null;
 				ResultSet resultSet = null;
 				StringBuilder sql = null;
 				
 				try{
-					sql = new StringBuilder("SELECT C.ID_CONTENIDO, CI.TITULO, C.RESTRICCION_EDAD, C.PORTADA, C.FECHA_LANZAMIENTO, CI.DESCRIPCION_BREVE, C.PRECIO, C.PRECIO_DESCONTADO, C.DURACION, C.ID_DESCUENTO, C.ID_TIPO_CONTENIDO "
-							+"FROM CONTENIDO C INNER JOIN CONTENIDO_IDIOMA CI ON C.ID_CONTENIDO = CI.ID_CONTENIDO "
-							+"WHERE C.ID_CONTENIDO = ? AND CI.ID_IDIOMA = ? ");
+					sql = new StringBuilder("SELECT C.ID_CONTENIDO, CI.TITULO, "
+							+ "C.RESTRICCION_EDAD, C.PORTADA, C.FECHA_LANZAMIENTO, "
+							+ "CI.DESCRIPCION_BREVE, C.PRECIO, C.PRECIO_DESCONTADO, "
+							+ "C.DURACION, C.ID_DESCUENTO, C.ID_TIPO_CONTENIDO, "
+							+ "D.PORCENTAJE "
+							+ "FROM CONTENIDO C INNER JOIN CONTENIDO_IDIOMA CI ON C.ID_CONTENIDO = CI.ID_CONTENIDO "
+							+ "INNER JOIN DESCUENTO D ON C.ID_DESCUENTO = D.ID_DESCUENTO "
+							+ "WHERE C.ID_CONTENIDO = ? AND CI.ID_IDIOMA = ? ");
 					
 					preparedStatement = connection.prepareStatement(sql.toString(), ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 		
@@ -94,7 +103,7 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 					Contenido c = null;
 					
 					if (resultSet.next()) {
-						c = loadNext2(resultSet);
+						c = loadNext(connection, resultSet);
 					} else {
 						throw new InstanceNotFoundException("Products with id " + id + 
 								"not found", Contenido.class.getName());
@@ -152,7 +161,8 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 		}	
 	}
 
-	private Contenido loadNext(ResultSet resultSet) throws SQLException, DataException {
+	private Contenido loadNext(Connection connection, ResultSet resultSet) 
+			throws SQLException, DataException {
 		Contenido c = new Contenido();
 		int i = 1;
 		Integer idContenido = resultSet.getInt(i++);
@@ -184,40 +194,9 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 		c.setTipoContenido(tipoContenido);
 		c.setPorcentaje(porcentaje);
 		
-		return c;
-	}
-	
-	private Contenido loadNext2(ResultSet resultSet) throws SQLException, DataException {
-		Contenido c = new Contenido();
-		int i = 1;
-		Integer idContenido = resultSet.getInt(i++);
-		String titulo = resultSet.getString(i++);
-		String restriccionEdad = resultSet.getString(i++);
-		String portada = resultSet.getString(i++);
-		Date fechaLanzamiento = resultSet.getDate(i++);
-		String descripcionBreve = resultSet.getString(i++);
-		Double precio = resultSet.getDouble(i++);
-		Double precioDescontado = resultSet.getDouble(i++);
-		Integer duracion = resultSet.getInt(i++);
-		Integer idDescuento = resultSet.getInt(i++);
-		String tipoContenido = resultSet.getString(i++);
 		
-		
-		
-		c = new Contenido();
-
-		c.setIdContenido(idContenido);
-		c.setTitulo(titulo);
-		c.setRestriccionEdad(restriccionEdad);
-		c.setPortada(portada);
-		c.setFechaLanzamiento(fechaLanzamiento);
-		c.setDescripcionBreve(descripcionBreve);
-		c.setPrecio(precio);
-		c.setPrecioDescontado(precioDescontado);
-		c.setDuracion(duracion);
-		c.setIdDescuento(idDescuento);
-		c.setTipoContenido(tipoContenido);
-		
+//		List<ArtistaRol> artistasRoles = artistaRolDAO.findByContenido(idContenido, connection);
+//		c.setArtistasRoles(artistasRoles);
 		return c;
 	}
 
@@ -300,7 +279,7 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 				first = false;}
 
 			if(pc.getTipoContenido()!=null) {
-				addClause(queryString, first, " C.TIPO_CONTENIDO = ? ");
+				addClause(queryString, first, " C.ID_TIPO_CONTENIDO = ? ");
 				first = false;}
 			
 			if(pc.getPorcentaje()!=null) {
@@ -327,7 +306,7 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 			}
 				
 			queryString.append("ORDER BY C.FECHA_LANZAMIENTO DESC ");
-
+			
 			preparedStatement = connection.prepareStatement(queryString.toString(),
 					ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 
@@ -366,7 +345,7 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 			
 			 if ((startIndex >= 1) && resultSet.absolute(startIndex)) { 
 			 do {
-				e = loadNext(resultSet);
+				e = loadNext(connection, resultSet);
 				contenidos.add(e);
 				currentCount++;
 			 } while ((currentCount < count) && resultSet.next());
@@ -496,7 +475,7 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 			
 			 if ((startIndex >= 1) && resultSet.absolute(startIndex)) { 
 			 do {
-				c = loadNext(resultSet);
+				c = loadNext(connection, resultSet);
 				contenidos.add(c);
 				currentCount++;
 			 } while ((currentCount < count) && resultSet.next());
@@ -534,7 +513,7 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 					+ "ORDER BY C.ID_CONTENIDO DESC ");
 
 			preparedStatement = connection.prepareStatement(sql.toString(), ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-
+	
 			int i = 1;
 			preparedStatement.setString(i++, email);
 			preparedStatement.setString(i++, idioma);
@@ -546,7 +525,7 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 			
 			 if ((startIndex >= 1) && resultSet.absolute(startIndex)) { 
 			 do {
-				c = loadNext(resultSet);
+				c = loadNext(connection, resultSet);
 				contenidos.add(c);
 				currentCount++;
 			 } while ((currentCount < count) && resultSet.next());
@@ -574,7 +553,7 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 		boolean inner = true;
 		StringBuilder lista = new StringBuilder();
 		for (Categoria c : categorias) {
-			lista.append(inner ? " (CA.ID_CATEGORIA LIKE "+c.getIdCategoria() : " OR " + c.getIdCategoria());
+			lista.append(inner ? " (CA.ID_CATEGORIA = "+c.getIdCategoria() : " OR " + c.getIdCategoria());
 			inner=false;	
 		}
 		lista.append(" ) ");
@@ -587,7 +566,7 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 		boolean inner = true;
 		StringBuilder lista = new StringBuilder();
 		for (Pais p : paises) {
-			lista.append(inner ? " (P.ID_PAIS LIKE "+ p.getIdPais() : " OR " + p.getIdPais());
+			lista.append(inner ? " (P.ID_PAIS = "+ p.getIdPais() : " OR " + p.getIdPais());
 			inner=false;	
 		}
 		lista.append(" ) ");
@@ -597,7 +576,7 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 		boolean inner = true;
 		StringBuilder lista = new StringBuilder();
 		 if(a != null) {
-			lista.append(inner ? " (A.NOMBRE_ARTISTA LIKE "+ a.getNombreArtista() : " OR " + a.getNombreArtista());
+			lista.append(inner ? "  (UPPER(A.NOMBRE_ARTISTA) LIKE  '%"+ a.getNombreArtista()+"%'" : " OR '%" + a.getNombreArtista()+"%' ");
 			inner=false;	
 		}
 		lista.append(" ) ");
@@ -634,7 +613,7 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 			
 			 if ((startIndex >= 1) && resultSet.absolute(startIndex)) { 
 			 do {
-				c = loadNext2(resultSet);
+				c = loadNext(connection, resultSet);
 				contenidos.add(c);
 				currentCount++;
 			 } while ((currentCount < count) && resultSet.next());
@@ -679,7 +658,7 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 			
 			 if ((startIndex >= 1) && resultSet.absolute(startIndex)) { 
 			 do {
-				c = loadNext2(resultSet);
+				c = loadNext(connection, resultSet);
 				contenidos.add(c);
 				currentCount++;
 			 } while ((currentCount < count) && resultSet.next());
@@ -726,7 +705,7 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 			
 			 if ((startIndex >= 1) && resultSet.absolute(startIndex)) { 
 			 do {
-				c = loadNext2(resultSet);
+				c = loadNext(connection, resultSet);
 				contenidos.add(c);
 				currentCount++;
 			 } while ((currentCount < count) && resultSet.next());

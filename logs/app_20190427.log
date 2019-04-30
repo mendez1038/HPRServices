@@ -1,0 +1,7 @@
+2019-04-27 01:35:18.166 INFO  ContenidoServiceTest.testBusquedaEstructurada:103 - Testing Busqueda Estructurada ...
+2019-04-27 01:35:19.353 DEBUG ContenidoDAOImpl.findByCriteria:236 - Producto = com.david.training.model.ProductoCriteria@63611043[categoria=[],pais=[],a=com.david.training.model.Artista@6c2ed0cd[idArtista=<null>,nombreArtista=leo,fechaNacimiento=<null>],idContenido=<null>,titulo=<null>,restriccionEdad=<null>,portada=<null>,fechaLanzamiento=<null>,descripcionBreve=<null>,precio=<null>,precioDescontado=<null>,duracion=<null>,idDescuento=<null>,tipoContenido=<null>,porcentaje=<null>,fechaPedido=<null>,artistasRoles=[]] Idioma = es
+2019-04-27 01:35:19.482 INFO  ContenidoServiceTest.testBusquedaEstructurada:146 - Found 1 results.
+2019-04-27 01:35:19.483 INFO  ContenidoServiceTest.testBusquedaEstructurada:148 - Page [1 - 1] : 
+2019-04-27 01:35:19.484 INFO  ContenidoServiceTest.testBusquedaEstructurada:150 - Result 1: com.david.training.model.Contenido@7331196b[idContenido=8,titulo=DJANGO DESENCADENADO,restriccionEdad=TP,portada=https://i.pinimg.com/originals/51/63/d3/5163d374585fe320784ee202e826e3b9.jpg,fechaLanzamiento=2018-12-10,descripcionBreve=,precio=3.0,precioDescontado=0.15,duracion=90,idDescuento=8,tipoContenido=PEL,porcentaje=5,fechaPedido=<null>,artistasRoles=[]]
+2019-04-27 01:35:19.484 INFO  ContenidoServiceTest.testBusquedaEstructurada:159 - Test testBusquedaEstructurada finished.
+

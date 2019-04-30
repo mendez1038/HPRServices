@@ -7,6 +7,7 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.david.training.model.Artista;
 import com.david.training.model.Categoria;
 import com.david.training.model.Contenido;
 import com.david.training.model.Pais;
@@ -83,12 +84,15 @@ public class ContenidoServiceTest {
 
 	public void testPrecioDescontado() {
 		try {
-			Contenido c = new Contenido();
-			Double precioDescontado = servicio.sacarPrecioDescontado(102);
-			c.setPrecioDescontado(precioDescontado);;
-			c.setIdContenido(102);
-			servicio.precioDescontado(c);
-			System.out.println(c.getPrecioDescontado());
+			for (int i = 1; i < 11; i++) {
+				Contenido c = new Contenido();
+				Double precioDescontado = servicio.sacarPrecioDescontado(i);
+				c.setPrecioDescontado(precioDescontado);;
+				c.setIdContenido(i);
+				servicio.precioDescontado(c);
+				System.out.println(c);
+			}
+			
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -97,26 +101,41 @@ public class ContenidoServiceTest {
 
 	public void testBusquedaEstructurada() {
 		logger.info("Testing Busqueda Estructurada ...");
-		int pageSize = 3;
+		int pageSize = 5;
 		
 		List<Categoria> categorias = new ArrayList<Categoria>();
 		Categoria uno = new Categoria();
-		uno.setIdCategoria(13);
+		Categoria dos = new Categoria();
+		uno.setIdCategoria(1);
+		dos.setIdCategoria(2);
 		categorias.add(uno);
-
+		//categorias.add(dos);
 		List<Pais> paises = new ArrayList<Pais>();
 		Pais pais = new Pais();
+		Pais pais2 = new Pais();
+		pais2.setIdPais(3);
 		pais.setIdPais(2);
-		paises.add(pais);
-
-		String titulo = "fic";
-		//Artista a = new Artista();
+		//paises.add(pais);
+		paises.add(pais2);
+		String titulo = "b";
+		String rEdad = "16+";
+		String tipo = "PEL";
+		int por = 15;
+		Artista a = new Artista();
+		String nombre = "leo";
+		a.setNombreArtista(nombre);
 		ProductoCriteria pc = new ProductoCriteria();
 		//pc.setCategoria(categorias);
-		//pc.setPais(paises);
+		
 		pc.setTitulo(titulo);
-		//a.setNombreArtista(titulo);
-		//pc.setA(a);
+		
+		pc.setRestriccionEdad(rEdad);
+		
+//		pc.setTipoContenido(tipo);
+//		pc.setPorcentaje(por);
+		//pc.setPais(paises);
+		
+//		pc.setA(a);
 		
 		try {
 			Results<Contenido> contenidos = null;
@@ -125,6 +144,7 @@ public class ContenidoServiceTest {
 			String idioma ="es";
 			
 			do {
+				
 			contenidos = servicio.busquedaEstructurada(pc, idioma, startIndex, pageSize);
 			logger.info("Found "+contenidos.getTotal()+" results.");
 			if (contenidos.getPage().size()>0) {
@@ -140,12 +160,15 @@ public class ContenidoServiceTest {
 			logger.error(e.getMessage(), e);
 		}
 		logger.info("Test testBusquedaEstructurada finished.\n");
+		logger.info("Titulo: "+ titulo);
+		logger.info("Edad: "+ rEdad);
 	}
 	
 	public void testDetalle() {
 		logger.info("Testing Vista Detalle ...");
+		String idioma = "en";
 		try {
-		Contenido contenido = servicio.findPorId(1, "es");
+		Contenido contenido = servicio.findById(8, idioma);
 		System.out.println(contenido);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
@@ -245,10 +268,10 @@ public class ContenidoServiceTest {
 		*/
 		//test.testFavoritos();
 		//test.testPrecioDescontado();
-		//test.testBusquedaEstructurada();
+		test.testBusquedaEstructurada();
 		//test.testDetalle();
 		//test.testFindAllByRebajas();
-		test.testFindAllByVentas();
+		//test.testFindAllByVentas();
 	}
 
 }

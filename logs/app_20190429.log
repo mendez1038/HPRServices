@@ -1,0 +1,36 @@
+2019-04-29 12:10:00.150 INFO  ContenidoServiceTest.testDetalle:163 - Testing Vista Detalle ...
+2019-04-29 12:21:13.374 INFO  ContenidoServiceTest.testDetalle:163 - Testing Vista Detalle ...
+2019-04-29 12:21:14.298 DEBUG ContenidoDAOImpl.findById:81 - Id = 1 idioma = {)
+2019-04-29 12:21:14.349 WARN  ContenidoDAOImpl.findById:114 - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '.PORCENTAJE FROM CONTENIDO C INNER JOIN CONTENIDO_IDIOMA CI ON C.ID_CONTENIDO = ' at line 1
+java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '.PORCENTAJE FROM CONTENIDO C INNER JOIN CONTENIDO_IDIOMA CI ON C.ID_CONTENIDO = ' at line 1
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:120) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:97) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:974) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeQuery(ClientPreparedStatement.java:1024) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mchange.v2.c3p0.impl.NewProxyPreparedStatement.executeQuery(NewProxyPreparedStatement.java:353) ~[c3p0-0.9.5.2.jar:0.9.5.2]
+	at com.david.training.dao.impl.ContenidoDAOImpl.findById(ContenidoDAOImpl.java:101) [bin/:?]
+	at com.david.training.service.impl.ContenidoServiceImpl.findById(ContenidoServiceImpl.java:149) [bin/:?]
+	at com.david.training.service.ContenidoServiceTest.testDetalle(ContenidoServiceTest.java:166) [bin/:?]
+	at com.david.training.service.ContenidoServiceTest.main(ContenidoServiceTest.java:267) [bin/:?]
+2019-04-29 12:21:14.357 ERROR ContenidoServiceTest.testDetalle:169 - null
+com.david.training.exceptions.DataException: null
+	at com.david.training.dao.impl.ContenidoDAOImpl.findById(ContenidoDAOImpl.java:115) ~[bin/:?]
+	at com.david.training.service.impl.ContenidoServiceImpl.findById(ContenidoServiceImpl.java:149) ~[bin/:?]
+	at com.david.training.service.ContenidoServiceTest.testDetalle(ContenidoServiceTest.java:166) [bin/:?]
+	at com.david.training.service.ContenidoServiceTest.main(ContenidoServiceTest.java:267) [bin/:?]
+Caused by: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '.PORCENTAJE FROM CONTENIDO C INNER JOIN CONTENIDO_IDIOMA CI ON C.ID_CONTENIDO = ' at line 1
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:120) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:97) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:974) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeQuery(ClientPreparedStatement.java:1024) ~[mysql-connector-java-8.0.13.jar:8.0.13]
+	at com.mchange.v2.c3p0.impl.NewProxyPreparedStatement.executeQuery(NewProxyPreparedStatement.java:353) ~[c3p0-0.9.5.2.jar:0.9.5.2]
+	at com.david.training.dao.impl.ContenidoDAOImpl.findById(ContenidoDAOImpl.java:101) ~[bin/:?]
+	... 3 more
+2019-04-29 12:23:40.036 INFO  ContenidoServiceTest.testDetalle:163 - Testing Vista Detalle ...
+2019-04-29 12:23:41.621 DEBUG ContenidoDAOImpl.findById:81 - Id = 1 idioma = es
+2019-04-29 12:23:57.867 INFO  ContenidoServiceTest.testDetalle:163 - Testing Vista Detalle ...
+2019-04-29 12:23:58.784 DEBUG ContenidoDAOImpl.findById:81 - Id = 8 idioma = es
+2019-04-29 12:24:08.921 INFO  ContenidoServiceTest.testDetalle:163 - Testing Vista Detalle ...
+2019-04-29 12:24:10.211 DEBUG ContenidoDAOImpl.findById:81 - Id = 8 idioma = en

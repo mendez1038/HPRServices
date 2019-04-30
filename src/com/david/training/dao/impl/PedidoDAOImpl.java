@@ -58,7 +58,7 @@ public class PedidoDAOImpl implements PedidoDAO{
 			resultSet = preparedStatement.executeQuery();
 
 			if (resultSet.next()) {
-				p = loadNext(resultSet);				
+				p = loadNext(c, resultSet);				
 			}else {
 				throw new InstanceNotFoundException("Pedido with id " + id + 
 						"not found", Pedido.class.getName());
@@ -76,7 +76,7 @@ public class PedidoDAOImpl implements PedidoDAO{
 
 	}
 
-	private Pedido loadNext( ResultSet resultSet) 
+	private Pedido loadNext(Connection c, ResultSet resultSet) 
 			throws DataException, SQLException {
 
 		int i = 1;
@@ -93,6 +93,8 @@ public class PedidoDAOImpl implements PedidoDAO{
 		p.setPrecioTotal(precioTotal);
 		p.setEmail(email);
 
+		List<LineaPedido> lineasPedido = lineaPedidoDAO.findByPedido(c, idPedido);
+		p.setLineas(lineasPedido);
 		return p;
 	}
 
@@ -123,7 +125,7 @@ public class PedidoDAOImpl implements PedidoDAO{
 
 			if ((startIndex >= 1) && resultSet.absolute(startIndex)) { 
 				do {
-					p = loadNext(resultSet);
+					p = loadNext(c, resultSet);
 					pedidos.add(p);
 					currentCount++;
 				} while ((currentCount < count) && resultSet.next());

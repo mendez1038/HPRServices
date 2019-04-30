@@ -68,15 +68,12 @@ public class ContenidoServiceImpl implements ContenidoService{
 
 	public Double sacarPrecioDescontado(Integer id) throws DataException {
 		boolean commit = false;
-
 		Connection connection = null;
 		try {
 
-			Contenido c = new Contenido();
 			connection = ConnectionManager.getConnection();
-
-
 			connection.setAutoCommit(false);
+			Contenido c = new Contenido();
 			c = dao.findPorId(connection, id);
 			Double precioDescontado = c.getPorcentaje()*c.getPrecio()/100;
 
@@ -141,7 +138,7 @@ public class ContenidoServiceImpl implements ContenidoService{
 	}
 
 	@Override
-	public Contenido findPorId(Integer id, String idioma) 
+	public Contenido findById(Integer id, String idioma) 
 			throws InstanceNotFoundException, DataException {
 		boolean commit = false;
 		Connection c = null;
@@ -149,7 +146,7 @@ public class ContenidoServiceImpl implements ContenidoService{
 			c = ConnectionManager.getConnection();
 			c.setAutoCommit(false);
 			
-			Contenido contenido = dao.findPorId(c, id);
+			Contenido contenido = dao.findById(c, id, idioma);
 			return contenido;
 		} catch(SQLException e) {
 			logger.warn(e.getMessage(),e);

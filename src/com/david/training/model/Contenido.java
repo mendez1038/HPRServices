@@ -1,6 +1,8 @@
  package com.david.training.model;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Contenido extends AbstractValueObject  implements Comparable<Contenido>{
 	
@@ -19,11 +21,11 @@ public class Contenido extends AbstractValueObject  implements Comparable<Conten
 	private String tipoContenido = null;
 	private Integer porcentaje = null;
 	private Date fechaPedido = null;
-	
+	private List<ArtistaRol> artistasRoles = null; 
 	
 	
 	public Contenido() {
-		
+		this.artistasRoles = new ArrayList<ArtistaRol>();
 		
 	}
 	
@@ -32,7 +34,7 @@ public class Contenido extends AbstractValueObject  implements Comparable<Conten
 			Date fechaLanzamiento, String descripcionBreve,
 			Double precio, Double precioDescontado, Integer duracion, 
 			Integer idDescuento, String tipoContenido, Integer porcentaje) {
-		
+		this();
 		setIdContenido(idContenido);
 		setTitulo(titulo);
 		setRestriccionEdad(restriccionEdad);
@@ -150,6 +152,14 @@ public class Contenido extends AbstractValueObject  implements Comparable<Conten
 		this.porcentaje = porcentaje;
 	}
 	
+	public List<ArtistaRol> getArtistasRoles() {
+		return artistasRoles;
+	}
+
+	public void setArtistasRoles(List<ArtistaRol> artistasRoles) {
+		this.artistasRoles = artistasRoles;
+	}
+
 	@Override
 	public int compareTo(Contenido c) {
 		

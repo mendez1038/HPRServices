@@ -1,0 +1,13 @@
+2019-04-25 14:13:09.340 DEBUG UsuarioDAOImpl.create:130 - Usuario = Email: hh@h.com, Contraseña: hidden , Nombre: Joel, Apellidos: Embiid, Genero: M, Fecha de nacimiento: Wed May 28 00:00:00 CEST 1997 y Telefono: 626408214
+2019-04-25 14:14:08.754 DEBUG UsuarioDAOImpl.delete:252 - Email = hh@h.com
+2019-04-25 14:14:40.812 DEBUG UsuarioDAOImpl.create:130 - Usuario = Email: hh@h.com, Contraseña: hidden , Nombre: Joel, Apellidos: Embiid, Genero: M, Fecha de nacimiento: Wed May 28 00:00:00 CEST 1997 y Telefono: null
+2019-04-25 14:15:12.673 DEBUG UsuarioDAOImpl.delete:252 - Email = hh@h.com
+2019-04-25 14:15:46.924 DEBUG UsuarioDAOImpl.create:130 - Usuario = Email: hh@h.com, Contraseña: hidden , Nombre: Joel, Apellidos: Embiid, Genero: null, Fecha de nacimiento: Wed May 28 00:00:00 CEST 1997 y Telefono: null
+2019-04-25 14:16:16.540 DEBUG UsuarioDAOImpl.delete:252 - Email = hh@h.com
+2019-04-25 14:16:33.186 DEBUG UsuarioDAOImpl.delete:252 - Email = hh@h.com
+2019-04-25 14:16:56.095 DEBUG UsuarioDAOImpl.create:130 - Usuario = Email: hh@h.com, Contraseña: hidden , Nombre: Joel, Apellidos: null, Genero: null, Fecha de nacimiento: Wed May 28 00:00:00 CEST 1997 y Telefono: null
+2019-04-25 14:17:25.880 DEBUG UsuarioDAOImpl.delete:252 - Email = hh@h.com
+2019-04-25 14:17:49.486 DEBUG UsuarioDAOImpl.create:130 - Usuario = Email: hh@h.com, Contraseña: hidden , Nombre: null, Apellidos: null, Genero: null, Fecha de nacimiento: Wed May 28 00:00:00 CEST 1997 y Telefono: null
+2019-04-25 14:18:15.360 DEBUG UsuarioDAOImpl.delete:252 - Email = hh@h.com
+2019-04-25 14:18:40.310 DEBUG UsuarioDAOImpl.create:130 - Usuario = Email: hh@h.com, Contraseña: hidden , Nombre: null, Apellidos: null, Genero: null, Fecha de nacimiento: null y Telefono: null
+2019-04-25 14:20:48.344 DEBUG UsuarioDAOImpl.create:130 - Usuario = Email: hh@h.com, Contraseña: hidden , Nombre: null, Apellidos: null, Genero: null, Fecha de nacimiento: null y Telefono: null
