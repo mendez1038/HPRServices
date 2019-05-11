@@ -1,5 +1,7 @@
 package com.david.training.service;
 
+import java.util.List;
+
 import com.david.training.exceptions.DataException;
 import com.david.training.exceptions.InstanceNotFoundException;
 import com.david.training.model.Contenido;
@@ -27,12 +29,12 @@ public interface ContenidoService {
 	public Contenido findById(Integer id, String idioma)
 			throws InstanceNotFoundException, DataException;
 	
-	public Results<Contenido> findAllByRebajas (String idioma, int startIndex, int count)
+	public List<Contenido> findAllByRebajas (String idioma)
 			throws DataException;
 	
 	public Results<Contenido> findAllByDate (String idioma, int startIndex, int count)
 			throws DataException;
 
-	public Results<Contenido> findAllByVentas (String idioma, int startIndex, int count)
+	public List<Contenido> findAllByVentas (String idioma)
 			throws DataException;
 }

@@ -2,6 +2,7 @@ package com.david.training.dao;
 
 
 import java.sql.Connection;
+import java.util.List;
 
 import com.david.training.exceptions.DataException;
 import com.david.training.exceptions.DuplicateInstanceException;
@@ -36,13 +37,13 @@ public interface ContenidoDAO {
 	public Contenido findPorId(Connection c, Integer id) 
 			throws InstanceNotFoundException, DataException;
 	
-	public Results<Contenido> findAllByRebajas(Connection connection, String idioma, int startIndex, int count)
+	public List<Contenido> findAllByRebajas(Connection connection, String idioma)
 			throws InstanceNotFoundException, DataException;
 		
 	public Results<Contenido> findAllByDate(Connection connection, String idioma, int startIndex, int count)
 			throws InstanceNotFoundException, DataException;
 	
-	public Results<Contenido> findAllByVentas(Connection connection, String idioma, int startIndex, int count)
+	public List<Contenido> findAllByVentas(Connection connection, String idioma)
 			throws InstanceNotFoundException, DataException;
 	
 }

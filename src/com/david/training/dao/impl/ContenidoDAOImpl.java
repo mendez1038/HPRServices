@@ -588,7 +588,7 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 	}
 
 	@Override
-	public Results<Contenido> findAllByRebajas(Connection connection, String idioma, int startIndex, int count)
+	public List<Contenido> findAllByRebajas(Connection connection, String idioma)
 			throws InstanceNotFoundException, DataException {
 		logger.debug("Idioma = {}", idioma);
 		PreparedStatement preparedStatement = null;
@@ -596,8 +596,10 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 		StringBuilder sql = null;
 		try{
 			sql = new StringBuilder("SELECT C.ID_CONTENIDO, CI.TITULO, C.RESTRICCION_EDAD, C.PORTADA, C.FECHA_LANZAMIENTO, "
-					+ "CI.DESCRIPCION_BREVE, C.PRECIO, C.PRECIO_DESCONTADO, C.DURACION, C.ID_DESCUENTO, C.ID_TIPO_CONTENIDO "
+					+ "CI.DESCRIPCION_BREVE, C.PRECIO, C.PRECIO_DESCONTADO, C.DURACION, C.ID_DESCUENTO, C.ID_TIPO_CONTENIDO, "
+					+ "D.PORCENTAJE "
 					+ "FROM CONTENIDO C INNER JOIN CONTENIDO_IDIOMA CI ON C.ID_CONTENIDO = CI.ID_CONTENIDO "
+					+ "INNER JOIN DESCUENTO D ON D.ID_DESCUENTO = C.ID_DESCUENTO "
 					+ "WHERE CI.ID_IDIOMA = ? "
 					+ "ORDER BY C.PRECIO_DESCONTADO DESC ");
 
@@ -609,20 +611,13 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 
 			List<Contenido> contenidos = new ArrayList<Contenido>();
 			Contenido c = null;
-			int currentCount = 0;
 			
-			 if ((startIndex >= 1) && resultSet.absolute(startIndex)) { 
-			 do {
+			
+			
 				c = loadNext(connection, resultSet);
 				contenidos.add(c);
-				currentCount++;
-			 } while ((currentCount < count) && resultSet.next());
-			 }
-			 
-			 int total = JDBCUtils.getTotalRows(resultSet);
-			 
-			 Results<Contenido> results = new Results<Contenido>(contenidos, startIndex, total);  
-			 return results;
+				
+				return contenidos;
 		} catch (SQLException ex) {
 			logger.warn(ex.getMessage(), ex);
 			throw new DataException(ex);
@@ -679,7 +674,7 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 	}
 
 	@Override
-	public Results<Contenido> findAllByVentas(Connection connection, String idioma, int startIndex, int count)
+	public List<Contenido> findAllByVentas(Connection connection, String idioma)
 			throws InstanceNotFoundException, DataException {
 		logger.debug("Idioma = {}", idioma);
 		PreparedStatement preparedStatement = null;
@@ -687,9 +682,10 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 		StringBuilder sql = null;
 		try{
 			sql = new StringBuilder("SELECT C.ID_CONTENIDO, CI.TITULO, C.RESTRICCION_EDAD, C.PORTADA, C.FECHA_LANZAMIENTO, "
-					+ "CI.DESCRIPCION_BREVE, C.PRECIO, C.PRECIO_DESCONTADO, C.DURACION, C.ID_DESCUENTO, C.ID_TIPO_CONTENIDO , COUNT(CI.TITULO) "
+					+ "CI.DESCRIPCION_BREVE, C.PRECIO, C.PRECIO_DESCONTADO, C.DURACION, C.ID_DESCUENTO, C.ID_TIPO_CONTENIDO , D.PORCENTAJE, COUNT(CI.TITULO) "
 					+ "FROM CONTENIDO C INNER JOIN CONTENIDO_IDIOMA CI ON C.ID_CONTENIDO = CI.ID_CONTENIDO "
 					+ "INNER JOIN LINEAPEDIDO LP ON C.ID_CONTENIDO = LP.ID_CONTENIDO "
+					+ "INNER JOIN DESCUENTO D ON D.ID_DESCUENTO = C.ID_DESCUENTO "
 					+ "WHERE CI.ID_IDIOMA = ? "
 					+ "GROUP BY CI.TITULO "
 					+ "ORDER BY COUNT(CI.TITULO) DESC ");
@@ -702,20 +698,10 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 
 			List<Contenido> contenidos = new ArrayList<Contenido>();
 			Contenido c = null;
-			int currentCount = 0;
 			
-			 if ((startIndex >= 1) && resultSet.absolute(startIndex)) { 
-			 do {
 				c = loadNext(connection, resultSet);
 				contenidos.add(c);
-				currentCount++;
-			 } while ((currentCount < count) && resultSet.next());
-			 }
-			 
-			 int total = JDBCUtils.getTotalRows(resultSet);
-			 
-			 Results<Contenido> results = new Results<Contenido>(contenidos, startIndex, total);  
-			 return results;
+				return contenidos;
 		} catch (SQLException ex) {
 			logger.warn(ex.getMessage(), ex);
 			throw new DataException(ex);

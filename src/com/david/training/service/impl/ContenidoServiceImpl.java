@@ -2,6 +2,7 @@ package com.david.training.service.impl;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -157,13 +158,13 @@ public class ContenidoServiceImpl implements ContenidoService{
 	}
 
 	@Override
-	public Results<Contenido> findAllByRebajas(String idioma, int startIndex, int count) throws DataException {
+	public List<Contenido> findAllByRebajas(String idioma) throws DataException {
 		boolean commit = false;
 		Connection c = null;
 		try {
 			c = ConnectionManager.getConnection();
 			c.setAutoCommit(false);
-			Results<Contenido> all = dao.findAllByRebajas(c, idioma, startIndex, count);
+			List<Contenido> all = dao.findAllByRebajas(c, idioma);
 			commit = true; 
 			return all;
 		}  catch (SQLException e) {
@@ -193,14 +194,14 @@ public class ContenidoServiceImpl implements ContenidoService{
 	}
 
 	@Override
-	public Results<Contenido> findAllByVentas(String idioma, int startIndex, int count) throws DataException {
+	public List<Contenido> findAllByVentas(String idioma) throws DataException {
 		
 		boolean commit = false;
 		Connection c = null;
 		try {
 			c = ConnectionManager.getConnection();
 			c.setAutoCommit(false);
-			Results<Contenido> all = dao.findAllByVentas(c, idioma, startIndex, count);
+			List<Contenido> all = dao.findAllByVentas(c, idioma);
 			commit = true; 
 			return all;
 		}  catch (SQLException e) {
