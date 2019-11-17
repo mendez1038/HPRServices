@@ -12,14 +12,12 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.david.training.dao.ArtistaRolDAO;
 import com.david.training.dao.ContenidoDAO;
 import com.david.training.dao.util.JDBCUtils;
 import com.david.training.exceptions.DataException;
 import com.david.training.exceptions.DuplicateInstanceException;
 import com.david.training.exceptions.InstanceNotFoundException;
 import com.david.training.model.Artista;
-import com.david.training.model.ArtistaRol;
 import com.david.training.model.Categoria;
 import com.david.training.model.Contenido;
 import com.david.training.model.Pais;
@@ -588,7 +586,7 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 	}
 
 	@Override
-	public List<Contenido> findAllByRebajas(Connection connection, String idioma)
+	public Results<Contenido> findAllByRebajas(Connection connection, String idioma, int startIndex, int count)
 			throws InstanceNotFoundException, DataException {
 		logger.debug("Idioma = {}", idioma);
 		PreparedStatement preparedStatement = null;
@@ -602,22 +600,25 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 					+ "INNER JOIN DESCUENTO D ON D.ID_DESCUENTO = C.ID_DESCUENTO "
 					+ "WHERE CI.ID_IDIOMA = ? "
 					+ "ORDER BY C.PRECIO_DESCONTADO DESC ");
-
 			preparedStatement = connection.prepareStatement(sql.toString(), ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-
 			int i = 1;
 			preparedStatement.setString(i++, idioma);
 			resultSet = preparedStatement.executeQuery(); 
-
 			List<Contenido> contenidos = new ArrayList<Contenido>();
-			Contenido c = null;
-			
-			
-			
+			Contenido c = null;		
+			int currentCount = 0;
+			 if ((startIndex >= 1) && resultSet.absolute(startIndex)) { 
+			 do {
 				c = loadNext(connection, resultSet);
 				contenidos.add(c);
-				
-				return contenidos;
+				currentCount++;
+			 } while ((currentCount < count) && resultSet.next());
+			 }
+			 
+			 int total = JDBCUtils.getTotalRows(resultSet);
+			 
+			 Results<Contenido> results = new Results<Contenido>(contenidos, startIndex, total);
+			return results;
 		} catch (SQLException ex) {
 			logger.warn(ex.getMessage(), ex);
 			throw new DataException(ex);
@@ -643,7 +644,6 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 					+ "ORDER BY C.FECHA_LANZAMIENTO DESC ");
 
 			preparedStatement = connection.prepareStatement(sql.toString(), ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-
 			int i = 1;
 			preparedStatement.setString(i++, idioma);
 			resultSet = preparedStatement.executeQuery(); 
@@ -651,7 +651,6 @@ public class ContenidoDAOImpl implements ContenidoDAO{
 			List<Contenido> contenidos = new ArrayList<Contenido>();
 			Contenido c = null;
 			int currentCount = 0;
-			
 			 if ((startIndex >= 1) && resultSet.absolute(startIndex)) { 
 			 do {
 				c = loadNext(connection, resultSet);

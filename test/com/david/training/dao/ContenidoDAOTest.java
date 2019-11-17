@@ -24,7 +24,8 @@ public class ContenidoDAOTest {
 	throws Exception {
 		Connection connection = ConnectionManager.getConnection();
 		String idioma = "es";
-		Contenido c= dao.findById(connection,7,idioma);
+		Integer idContenido = 105;
+		Contenido c= dao.findById(connection,idContenido,idioma);
 			System.out.println(c);
 		
 	}
@@ -96,12 +97,12 @@ public class ContenidoDAOTest {
 	public static void main(String args[]) {
 		try {
 			ContenidoDAOTest test = new ContenidoDAOTest();
-			//test.testFindById();
+			test.testFindById();
 			//test.testFindByTitulo();
 			//test.testCreate();
 			//test.testDelete();
 			//test.testFindFavoritos();
-			test.testFindLista();
+			//test.testFindLista();
 		} catch (Exception c) {
 			c.printStackTrace();
 		}

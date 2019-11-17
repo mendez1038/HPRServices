@@ -1,0 +1,8 @@
+2019-11-08 22:53:12.613 DEBUG ContenidoDAOImpl.findById:81 - Id = 105 idioma = es
+2019-11-08 22:53:12.613 DEBUG ContenidoDAOImpl.findById:81 - Id = 105 idioma = es
+2019-11-08 22:54:44.250 DEBUG ContenidoDAOImpl.findById:81 - Id = 105 idioma = es
+2019-11-08 22:54:44.250 DEBUG ContenidoDAOImpl.findById:81 - Id = 105 idioma = es
+2019-11-08 22:57:13.899 INFO  ContenidoServiceTest.testDetalle:166 - Testing Vista Detalle ...
+2019-11-08 22:57:13.899 INFO  ContenidoServiceTest.testDetalle:166 - Testing Vista Detalle ...
+2019-11-08 22:57:14.794 DEBUG ContenidoDAOImpl.findById:81 - Id = 105 idioma = en
+2019-11-08 22:57:14.794 DEBUG ContenidoDAOImpl.findById:81 - Id = 105 idioma = en

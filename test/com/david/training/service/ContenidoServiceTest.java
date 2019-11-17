@@ -165,8 +165,9 @@ public class ContenidoServiceTest {
 	public void testDetalle() {
 		logger.info("Testing Vista Detalle ...");
 		String idioma = "en";
+		Integer idContenido = 105;
 		try {
-		Contenido contenido = servicio.findById(8, idioma);
+		Contenido contenido = servicio.findById(idContenido, idioma);
 		System.out.println(contenido);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
@@ -176,22 +177,25 @@ public class ContenidoServiceTest {
 	
 	public void testFindAllByRebajas() {
 		logger.info("Testing findAllByRebajas ...");
-		int pageSize = 2; 	
+		int pageSize = 4; 	
 		try {
 
-			List<Contenido> all = null; 
+			Results<Contenido> all = null; 
 			int startIndex = 1; 
 			int total = 1;
 			String idioma = "en";
-			
-			all = servicio.findAllByRebajas(idioma);
-			logger.info("Found  results.");
-			
-				for (Contenido c: all) {
+		do {
+			all = servicio.findAllByRebajas(idioma, startIndex, pageSize);
+			logger.info("Found "+all.getTotal()+" results.");
+			if (all.getPage().size()>0) {
+				logger.info("Page ["+startIndex+" - "+(startIndex+all.getPage().size()-1)+"] : ");				
+				for (Contenido c: all.getPage()) {
 					logger.info("Result "+total+": "+ToStringUtil.toString(c));
 					total++;
 				}
-			
+				startIndex = startIndex + pageSize;
+			}
+			} while (all.getPage().size()==pageSize);
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -260,9 +264,9 @@ public class ContenidoServiceTest {
 		*/
 		//test.testFavoritos();
 		//test.testPrecioDescontado();
-		test.testBusquedaEstructurada();
+		//test.testBusquedaEstructurada();
 		//test.testDetalle();
-		//test.testFindAllByRebajas();
+		test.testFindAllByRebajas();
 		//test.testFindAllByVentas();
 	}
 

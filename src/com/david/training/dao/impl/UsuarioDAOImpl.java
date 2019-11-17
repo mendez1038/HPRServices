@@ -17,9 +17,6 @@ import com.david.training.model.Usuario;
 import com.david.training.util.PasswordEncryptionUtil;
 
 
-
-
-
 public class UsuarioDAOImpl implements UsuarioDAO{
 
 	public static Logger logger = LogManager.getLogger(UsuarioDAOImpl.class);

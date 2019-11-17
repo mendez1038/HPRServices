@@ -7,7 +7,8 @@ public class Artista extends AbstractValueObject{
 	private Integer idArtista = null;
 	private String nombreArtista = null;
 	private Date fechaNacimiento = null;
-	
+	private String pais = null;
+	private String rol = null;
 	
 	public Artista() {
 		
@@ -55,6 +56,14 @@ public class Artista extends AbstractValueObject{
 
 	public void setFechaNacimiento(Date fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
+	}
+
+	public String getPais() {
+		return pais;
+	}
+
+	public void setPais(String pais) {
+		this.pais = pais;
 	}
 
 

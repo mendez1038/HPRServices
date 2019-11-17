@@ -61,6 +61,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 
 		c = ConnectionManager.getConnection();
 		c.setAutoCommit(false);
+		
 		dao.update(u, c);
 		commit = true;
 		

@@ -158,13 +158,13 @@ public class ContenidoServiceImpl implements ContenidoService{
 	}
 
 	@Override
-	public List<Contenido> findAllByRebajas(String idioma) throws DataException {
+	public Results<Contenido> findAllByRebajas(String idioma, int startIndex, int count) throws DataException {
 		boolean commit = false;
 		Connection c = null;
 		try {
 			c = ConnectionManager.getConnection();
 			c.setAutoCommit(false);
-			List<Contenido> all = dao.findAllByRebajas(c, idioma);
+			Results<Contenido> all = dao.findAllByRebajas(c, idioma, startIndex, count);
 			commit = true; 
 			return all;
 		}  catch (SQLException e) {
