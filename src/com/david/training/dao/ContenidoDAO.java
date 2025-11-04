@@ -2,11 +2,13 @@ package com.david.training.dao;
 
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
 import com.david.training.exceptions.DataException;
 import com.david.training.exceptions.DuplicateInstanceException;
 import com.david.training.exceptions.InstanceNotFoundException;
 import com.david.training.model.Contenido;
+import com.david.training.model.ContenidoCriteria;
 import com.david.training.model.ProductoCriteria;
 import com.david.training.service.Results;
 
@@ -44,6 +46,10 @@ public interface ContenidoDAO {
 	
 	public Results<Contenido> findAllByVentas(Connection connection, String idioma, int startIndex, int count)
 			throws InstanceNotFoundException, DataException;
+	
+	Results<Contenido> findByCriteria2(Connection c, String idioma, ContenidoCriteria cr, int startIndex, int count)
+			  throws DataException, SQLException;
+
 	
 }
 

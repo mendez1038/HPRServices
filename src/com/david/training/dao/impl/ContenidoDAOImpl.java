@@ -22,6 +22,7 @@ import com.david.training.model.Artista;
 import com.david.training.model.ArtistaRol;
 import com.david.training.model.Categoria;
 import com.david.training.model.Contenido;
+import com.david.training.model.ContenidoCriteria;
 import com.david.training.model.Pais;
 import com.david.training.model.ProductoCriteria;
 import com.david.training.service.Results;
@@ -799,5 +800,119 @@ public class ContenidoDAOImpl implements ContenidoDAO {
 			JDBCUtils.closeStatement(preparedStatement);
 		}
 	}
+
+	@Override
+	public Results<Contenido> findByCriteria2(Connection c, String idioma, ContenidoCriteria cr, int startIndex, int count)
+	        throws DataException {
+
+	    StringBuilder sql = new StringBuilder(
+	        "SELECT c.ID_CONTENIDO, ci.TITULO, c.PORTADA, c.FECHA_LANZAMIENTO, " +
+	        "       ci.DESCRIPCION_BREVE, c.PRECIO, c.PRECIO_DESCONTADO, c.ID_TIPO_CONTENIDO " +
+	        "FROM CONTENIDO c " +
+	        "JOIN CONTENIDO_IDIOMA ci ON ci.ID_CONTENIDO = c.ID_CONTENIDO " +
+	        "WHERE ci.ID_IDIOMA = ? "
+	    );
+
+	    List<Object> params = new ArrayList<>();
+	    params.add(idioma);
+
+	    // --- Filtros dinámicos ---
+	    if (cr.getTitulo() != null && !cr.getTitulo().isEmpty()) {
+	        sql.append(" AND UPPER(ci.TITULO) LIKE UPPER(?) ");
+	        params.add("%" + cr.getTitulo() + "%");
+	    }
+
+	    if (cr.getArtista() != null && !cr.getArtista().isEmpty()) {
+	        sql.append(" AND UPPER(ci.ARTISTA) LIKE UPPER(?) ");
+	        params.add("%" + cr.getArtista() + "%");
+	    }
+
+	    if (cr.getRestriccionEdad() != null && !cr.getRestriccionEdad().isEmpty()) {
+	        sql.append(" AND c.RESTRICCION_EDAD = ? ");
+	        params.add(cr.getRestriccionEdad());
+	    }
+
+	    if (cr.getIdTipoContenido() != null) {
+	        sql.append(" AND c.ID_TIPO_CONTENIDO = ? ");
+	        params.add(cr.getIdTipoContenido());
+	    }
+
+	    // --- Orden ---
+	    String sortBy = cr.getSortBy();
+	    if (!"TITULO".equalsIgnoreCase(sortBy)) {
+	        sortBy = "FECHA_LANZAMIENTO";
+	    }
+	    sql.append(" ORDER BY ").append(sortBy).append(cr.isDesc() ? " DESC" : " ASC");
+
+	    try (PreparedStatement ps = c.prepareStatement(
+	            sql.toString(),
+	            ResultSet.TYPE_SCROLL_INSENSITIVE,
+	            ResultSet.CONCUR_READ_ONLY)) {
+
+	        setParams(ps, params);
+
+	        try (ResultSet rs = ps.executeQuery()) {
+
+	            List<Contenido> page = new ArrayList<>();
+
+	            if (startIndex >= 1 && rs.absolute(startIndex)) {
+	                int current = 0;
+	                do {
+	                    page.add(mapContenido(rs));
+	                    current++;
+	                } while (current < count && rs.next());
+	            }
+
+	            int total = JDBCUtils.getTotalRows(rs);
+	            return new Results<>(page, startIndex, total);
+	        }
+
+	    } catch (SQLException e) {
+	        throw new DataException(e);
+	    }
+	}
+
+
+	
+	
+
+	private void setParams(PreparedStatement ps, List<Object> params) throws SQLException {
+	    for (int i = 0; i < params.size(); i++) {
+	        Object value = params.get(i);
+	        int index = i + 1; // JDBC usa índices desde 1
+	        ps.setObject(index, value);
+	    }
+	}
+
+
+
+	
+	private Contenido mapContenido(ResultSet rs) throws SQLException {
+	    Contenido c = new Contenido();
+
+	    c.setIdContenido(rs.getInt("ID_CONTENIDO"));
+	    if (rs.wasNull()) c.setIdContenido(null);
+	    c.setTitulo(rs.getString("TITULO"));
+	    c.setPortada(rs.getString("PORTADA"));
+	    java.sql.Date fechaSql = rs.getDate("FECHA_LANZAMIENTO");
+	    if (fechaSql != null) {
+	        c.setFechaLanzamiento(new java.util.Date(fechaSql.getTime()));
+	    }
+	    c.setDescripcionBreve(rs.getString("DESCRIPCION_BREVE"));
+	    double precio = rs.getDouble("PRECIO");
+	    c.setPrecio(rs.wasNull() ? null : precio);
+	    double precioDesc = rs.getDouble("PRECIO_DESCONTADO");
+	    c.setPrecioDescontado(rs.wasNull() ? null : precioDesc);
+	    c.setTipoContenido(rs.getString("ID_TIPO_CONTENIDO")); 
+
+
+	    return c;
+	}
+
+
+
+
+
+
 
 }

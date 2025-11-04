@@ -12,7 +12,9 @@ import com.david.training.dao.util.ConnectionManager;
 import com.david.training.dao.util.JDBCUtils;
 import com.david.training.exceptions.DataException;
 import com.david.training.exceptions.InstanceNotFoundException;
+import com.david.training.exceptions.ServiceException;
 import com.david.training.model.Contenido;
+import com.david.training.model.ContenidoCriteria;
 import com.david.training.model.ProductoCriteria;
 import com.david.training.service.ContenidoService;
 import com.david.training.service.Results;
@@ -215,4 +217,28 @@ public class ContenidoServiceImpl implements ContenidoService{
 			JDBCUtils.closeConnection(c, commit);
 		}
 	}
+
+	  @Override
+	    public Results<Contenido> findByCriteria(ContenidoCriteria criteria,String idioma, int page, int pageSize)
+	            throws ServiceException, DataException {
+
+	        Connection c = null;
+
+	        try {
+	            c = ConnectionManager.getConnection();
+
+	            // paginación 1-based para tu DAO
+	            int startIndex = (page - 1) * pageSize + 1;
+
+	            Results<Contenido> results = dao.findByCriteria2(c, idioma, criteria, startIndex, pageSize);
+
+
+	            return results;
+
+	        } catch (SQLException | DataException e) {
+	            throw new ServiceException(e);
+	        } finally {
+	            JDBCUtils.closeConnection(c);
+	        }
+	    }
 }

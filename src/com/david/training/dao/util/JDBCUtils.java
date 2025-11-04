@@ -126,5 +126,16 @@ public final class JDBCUtils {
             throw new DataException(e);
         }
 	}
+	
+	public static void rollback(Connection c) {
+        if (c != null) {
+            try {
+                c.rollback();
+            } catch (SQLException e) {
+                // Aquí normalmente se loguea, no se relanza
+                System.err.println("Error al hacer rollback: " + e.getMessage());
+            }
+        }
+    }
 
 }

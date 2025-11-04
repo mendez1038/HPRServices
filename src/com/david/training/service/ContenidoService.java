@@ -2,7 +2,9 @@ package com.david.training.service;
 
 import com.david.training.exceptions.DataException;
 import com.david.training.exceptions.InstanceNotFoundException;
+import com.david.training.exceptions.ServiceException;
 import com.david.training.model.Contenido;
+import com.david.training.model.ContenidoCriteria;
 import com.david.training.model.ProductoCriteria;
 
 public interface ContenidoService {
@@ -35,4 +37,7 @@ public interface ContenidoService {
 
 	public Results<Contenido> findAllByVentas (String idioma, int startIndex, int count)
 			throws DataException;
+	
+	Results<Contenido> findByCriteria(ContenidoCriteria criteria,String idioma, int page, int pageSize)
+            throws ServiceException, DataException;
 }
