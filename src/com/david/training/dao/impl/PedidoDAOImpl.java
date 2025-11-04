@@ -1,12 +1,12 @@
 package com.david.training.dao.impl;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -109,9 +109,8 @@ public class PedidoDAOImpl implements PedidoDAO{
 			queryString = new StringBuilder(
 					"SELECT P.ID_PEDIDO, P.FECHA_PEDIDO, P.PRECIO_TOTAL, P.EMAIL " + 
 					"FROM PEDIDO P " +
-					"INNER JOIN USUARIO U "+
-					"ON P.EMAIL = U.EMAIL AND P.EMAIL = ? "
-					+ "ORDER BY P.FECHA_PEDIDO DESC");
+					"WHERE P.EMAIL = ? " +
+					"ORDER BY P.FECHA_PEDIDO DESC, P.ID_PEDIDO DESC");
 
 			preparedStatement = c.prepareStatement(queryString.toString(),
 					ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
@@ -120,21 +119,17 @@ public class PedidoDAOImpl implements PedidoDAO{
 			resultSet = preparedStatement.executeQuery();
 
 			List<Pedido> pedidos = new ArrayList<Pedido>();  
-			Pedido p = null;
 			int currentCount = 0;
 
 			if ((startIndex >= 1) && resultSet.absolute(startIndex)) { 
 				do {
-					p = loadNext(c, resultSet);
-					pedidos.add(p);
-					currentCount++;
+					pedidos.add(mapPedido(resultSet));
+	                currentCount++;
 				} while ((currentCount < count) && resultSet.next());
 			}
 
 			int total = JDBCUtils.getTotalRows(resultSet);
-
-			Results<Pedido> results = new Results<Pedido>(pedidos, startIndex, total);  
-			return results;
+			return new Results<Pedido>(pedidos, startIndex, total);  
 
 		} catch (SQLException e) {
 			logger.warn(e.getMessage(),e);
@@ -160,10 +155,11 @@ public class PedidoDAOImpl implements PedidoDAO{
 
 			preparedStatement = c.prepareStatement(queryString.toString(),Statement.RETURN_GENERATED_KEYS);
 
-			int i = 1;     
+			int i = 1;
 			preparedStatement.setDate(i++, new java.sql.Date(p.getFechaPedido().getTime()));
-			preparedStatement.setDouble(i++,p.getPrecioTotal());
+			preparedStatement.setDouble(i++, p.getPrecioTotal());
 			preparedStatement.setString(i++, p.getEmail());
+
 
 			int insertedRows = preparedStatement.executeUpdate();
 
@@ -196,35 +192,76 @@ public class PedidoDAOImpl implements PedidoDAO{
 	}
 
 	
-	public void delete(Connection c, Integer idPedido) 
-			throws InstanceNotFoundException, DataException {
-		logger.debug("Id pedido = {}", idPedido);
-		PreparedStatement preparedStatement = null;
-		StringBuilder queryString = null;
-		try {
-			queryString = new StringBuilder(
-					  "DELETE FROM PEDIDO " 
-					+ "WHERE ID_PEDIDO = ? ");
-			
-			preparedStatement = c.prepareStatement(queryString.toString());
+	public void delete(Connection c, Integer idPedido)
+	        throws InstanceNotFoundException, DataException {
+	    // 1) Borra líneas
+	    try (PreparedStatement ps1 = c.prepareStatement(
+	            "DELETE FROM LINEAPEDIDO WHERE ID_PEDIDO = ?")) {
+	        ps1.setInt(1, idPedido);
+	        ps1.executeUpdate();
+	    } catch (SQLException e) { throw new DataException(e); }
 
-			int i = 1;
-			preparedStatement.setLong(i++, idPedido);
-
-			int removedRows = preparedStatement.executeUpdate();
-
-			if (removedRows == 0) {
-				throw new InstanceNotFoundException(idPedido,"No se elimino el pedido correctamente");
-			} 
-			
-
-		} catch (SQLException e) {
-			logger.warn(e.getMessage(),e);
-			throw new DataException(e);
-		} finally {
-			JDBCUtils.closeStatement(preparedStatement);
-		}
-			
+	    // 2) Borra pedido
+	    try (PreparedStatement ps2 = c.prepareStatement(
+	            "DELETE FROM PEDIDO WHERE ID_PEDIDO = ?")) {
+	        ps2.setInt(1, idPedido);
+	        int removed = ps2.executeUpdate();
+	        if (removed == 0) {
+	            throw new InstanceNotFoundException(idPedido, Pedido.class.getName());
+	        }
+	    } catch (SQLException e) { throw new DataException(e); }
 	}
 
+
+	@Override
+	public Pedido findByIdAndEmail(Connection c, Integer id, String email)
+	        throws InstanceNotFoundException, DataException {
+	    String sql = "SELECT ID_PEDIDO, FECHA_PEDIDO, PRECIO_TOTAL, EMAIL " +
+	                 "FROM PEDIDO WHERE ID_PEDIDO = ? AND EMAIL = ?";
+	    try (PreparedStatement ps = c.prepareStatement(sql)) {
+	        ps.setInt(1, id);
+	        ps.setString(2, email);
+	        try (ResultSet rs = ps.executeQuery()) {
+	            if (!rs.next()) {
+	                throw new InstanceNotFoundException(
+	                    "Pedido not found or not owned by user", Pedido.class.getName());
+	            }
+	            Pedido p = mapPedido(rs); // ver punto 2
+	            p.setLineas(lineaPedidoDAO.findByPedido(c, p.getIdPedido()));
+	            return p;
+	        }
+	    } catch (SQLException e) { throw new DataException(e); }
+	}
+	
+	// Para listados (NO carga líneas)
+	private Pedido mapPedido(ResultSet rs) throws SQLException {
+	    Pedido p = new Pedido();
+	    p.setIdPedido(rs.getInt("ID_PEDIDO"));
+	    p.setFechaPedido(rs.getDate("FECHA_PEDIDO"));
+	    p.setPrecioTotal(rs.getDouble("PRECIO_TOTAL"));
+	    p.setEmail(rs.getString("EMAIL"));
+	    return p;
+	}
+
+	@Override
+	public boolean comprado(Connection c, String email, Integer idContenido) throws DataException {
+	    final String sql =
+	        "SELECT 1 " +
+	        "FROM PEDIDO p " +
+	        "JOIN LINEAPEDIDO lp ON lp.ID_PEDIDO = p.ID_PEDIDO " +
+	        "WHERE p.EMAIL = ? AND lp.ID_CONTENIDO = ? " +
+	        "LIMIT 1";
+	    try (PreparedStatement ps = c.prepareStatement(sql)) {
+	        ps.setString(1, email);
+	        ps.setInt(2, idContenido);
+	        try (ResultSet rs = ps.executeQuery()) {
+	            return rs.next();
+	        }
+	    } catch (SQLException e) {
+	        throw new DataException(e);
+	    }
+	}
+
+
+	
 }

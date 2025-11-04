@@ -18,10 +18,16 @@ public interface PedidoDAO {
 	public Results<Pedido> findByUsuario(Connection c,String email, int startIndex, int count)
 			throws DataException;
 	
+	public Pedido findByIdAndEmail(Connection c, Integer id, String email)
+		    throws InstanceNotFoundException, DataException;
+	
 	public Pedido create(Connection c,Pedido p)
 			throws DuplicateInstanceException, DataException;
 	
 	public void delete(Connection c, Integer idPedido)
 			throws InstanceNotFoundException, DataException;
+	
+	public boolean comprado(Connection c, String email, Integer idContendio)
+			throws DataException;
 
 }

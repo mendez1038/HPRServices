@@ -140,7 +140,11 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 			preparedStatement.setString(i++, u.getNombre());
 			preparedStatement.setString(i++, u.getApellidos());
 			preparedStatement.setString(i++, u.getGenero());
+			if (u.getFechaNacimiento() != null) {
 			preparedStatement.setDate(i++,  new java.sql.Date(u.getFechaNacimiento().getTime()));
+			} else {
+			    preparedStatement.setNull(i++, java.sql.Types.DATE);
+			}
 			preparedStatement.setString(i++, u.getTelefono());
 			
 			
@@ -310,7 +314,36 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 	
 	private void addUpdate(StringBuilder queryString, boolean first, String clause) {
 		queryString.append(first? " SET ": " , ").append(clause);
-	}	
+	}
+
+	@Override
+	public void updatePasswordHash(Connection c, String email, String nuevoHash) 
+	        throws DataException {
+	    
+	    PreparedStatement ps = null;
+	    String sql = "UPDATE USUARIO SET CONTRASENA = ? WHERE EMAIL = ?";
+	    
+	    try {
+	        ps = c.prepareStatement(sql);
+	        int i = 1;
+	        ps.setString(i++, nuevoHash);
+	        ps.setString(i++, email);
+	        
+	        int updated = ps.executeUpdate();
+	        if (updated == 0) {
+	            throw new DataException("No se actualizó la contraseña (usuario no encontrado): " + email);
+	        }
+
+	        logger.debug("Contraseña actualizada correctamente para usuario {}", email);
+
+	    } catch (SQLException e) {
+	        logger.error("Error al actualizar hash de contraseña para {}: {}", email, e.getMessage(), e);
+	        throw new DataException(e);
+	    } finally {
+	        JDBCUtils.closeStatement(ps);
+	    }
+	}
+
 
 
 }

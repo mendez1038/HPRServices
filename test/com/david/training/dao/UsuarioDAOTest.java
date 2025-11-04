@@ -4,7 +4,6 @@ package com.david.training.dao;
 
 import java.sql.Connection;
 import java.text.SimpleDateFormat;
-import com.david.training.dao.UsuarioDAO;
 import com.david.training.dao.impl.UsuarioDAOImpl;
 import com.david.training.dao.util.ConnectionManager;
 import com.david.training.model.Usuario;

@@ -3,11 +3,9 @@ package com.david.training.dao;
 import java.sql.Connection;
 import java.util.List;
 
-import com.david.training.dao.PaisDAO;
 import com.david.training.dao.impl.PaisDAOImpl;
 import com.david.training.dao.util.ConnectionManager;
 import com.david.training.model.Pais;
-import com.david.training.service.Results;
 
 
 public class PaisDAOTest {
@@ -32,6 +30,9 @@ public class PaisDAOTest {
 		Connection c = ConnectionManager.getConnection();
 		String idioma = "en";
 		List<Pais> paises = dao.findAll(idioma, c);
+		for (Pais pais : paises) {
+			System.out.println(pais);
+		}
 		
 	}
 	
@@ -40,7 +41,7 @@ public class PaisDAOTest {
 			PaisDAOTest test = new PaisDAOTest();
 			
 			test.testFindAll();
-			//test.testFindById();
+			test.testFindById();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

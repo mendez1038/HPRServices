@@ -8,6 +8,14 @@ public class Favorito extends AbstractValueObject{
 	private Integer idContenido =null;
 	private Boolean favorito=null;
 	
+	public Favorito() {}
+
+    public Favorito(String email, Integer idContenido, Boolean favorito) {
+        this.email = email;
+        this.idContenido = idContenido;
+        this.favorito = favorito;
+    }
+	
 	
 	public String getEmail() {
 		return email;
@@ -32,7 +40,8 @@ public class Favorito extends AbstractValueObject{
 		if (o == null) {
 			return false;}
 		Favorito f = (Favorito) o;
-		if(this.getEmail()!=null && this.getIdContenido()!= null) {
+		
+		if(f.getEmail()!=null && f.getIdContenido()!= null) {
 		
 		return true;
 		}

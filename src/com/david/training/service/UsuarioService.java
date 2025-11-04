@@ -15,8 +15,9 @@ public interface UsuarioService {
 	public void update(Usuario u)
 			throws InstanceNotFoundException, DataException;
 
-	public boolean delete(String email)
-			throws InstanceNotFoundException, DataException;
+    public void eliminarCuenta(String email, String passwordPlano) 
+    		throws InstanceNotFoundException, DataException;
+
 	
 	public Usuario signIn(String email, String contrasena)
 			throws DataException;

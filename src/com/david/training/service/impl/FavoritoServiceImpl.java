@@ -23,7 +23,7 @@ public class FavoritoServiceImpl implements FavoritoService{
 	}
 	
 	@Override
-	public Favorito añadirFavorito(Favorito f) 
+	public Favorito anadirFavorito(Favorito f) 
 			throws DataException {
 		boolean commit = false;
 		Connection c = null;
@@ -65,5 +65,46 @@ public class FavoritoServiceImpl implements FavoritoService{
 		
 		
 	}
+
+	@Override
+	public Boolean exists(String email, Integer idContenido) throws DataException {
+		boolean commit = false;
+		Connection c = null;
+		boolean esFavorito = false;
+		
+		try {
+			c = ConnectionManager.getConnection();
+			c.setAutoCommit(false);
+			esFavorito = dao.existsFavorito(email, idContenido, c);
+			commit = true;
+			return esFavorito;
+		}catch (SQLException e) {
+			logger.warn(e.getMessage(),e);
+			throw new DataException(e);
+		} finally {
+			JDBCUtils.closeConnection(c, commit);
+			}
+	}
+	
+	@Override
+	public Boolean esFavorito(String email, Integer idContenido) throws DataException{
+		boolean commit = false;
+		Connection c = null;
+		boolean esFavorito = false;
+		
+		try {
+			c = ConnectionManager.getConnection();
+			c.setAutoCommit(false);
+			esFavorito = dao.esFavorito(email, idContenido, c);
+			commit = true;
+			return esFavorito;
+		}catch (SQLException e) {
+			logger.warn(e.getMessage(),e);
+			throw new DataException(e);
+		} finally {
+			JDBCUtils.closeConnection(c, commit);
+			}
+	}
+	
 
 }

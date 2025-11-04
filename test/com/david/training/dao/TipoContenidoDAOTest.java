@@ -3,7 +3,6 @@ package com.david.training.dao;
 import java.sql.Connection;
 import java.util.List;
 
-import com.david.training.dao.TipoContenidoDAO;
 import com.david.training.dao.impl.TipoContenidoDAOImpl;
 import com.david.training.dao.util.ConnectionManager;
 import com.david.training.model.TipoContenido;

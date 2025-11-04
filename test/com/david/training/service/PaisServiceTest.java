@@ -20,7 +20,6 @@ public class PaisServiceTest {
 
 	public void testFindAll() {
 		logger.info("Testing findAll ...");
-		int pageSize = 5; 	
 		try {
 			List<Pais> results = null;
 			String idioma ="es";

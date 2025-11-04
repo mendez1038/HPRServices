@@ -5,6 +5,8 @@ package com.david.training.exceptions;
  * que se usa en los diferentes tipos de clientes (web, app, desktop, etc.)
  */
 public class DataException extends BusinessException {
+	
+	 private static final long serialVersionUID = 1L;
        
 
 	public DataException() {

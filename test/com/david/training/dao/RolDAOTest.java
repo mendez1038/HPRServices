@@ -3,7 +3,6 @@ package com.david.training.dao;
 import java.sql.Connection;
 import java.util.List;
 
-import com.david.training.dao.RolDAO;
 import com.david.training.dao.impl.RolDAOImpl;
 import com.david.training.dao.util.ConnectionManager;
 import com.david.training.model.Rol;

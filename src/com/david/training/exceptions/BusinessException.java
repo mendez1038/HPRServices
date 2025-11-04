@@ -9,6 +9,8 @@ import com.david.exceptions.MyCompanyException;
  * que se usa en los diferentes tipos de clientes (web, app, desktop, etc.))
  */
 public class BusinessException extends MyCompanyException {
+	
+	 private static final long serialVersionUID = 1L;
        
 
 	public BusinessException() {

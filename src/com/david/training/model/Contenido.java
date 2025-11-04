@@ -1,12 +1,10 @@
- package com.david.training.model;
+package com.david.training.model;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class Contenido extends AbstractValueObject  implements Comparable<Contenido>{
-	
-
+public class Contenido extends AbstractValueObject implements Comparable<Contenido> {
 
 	private Integer idContenido = null;
 	private String titulo = null;
@@ -21,19 +19,17 @@ public class Contenido extends AbstractValueObject  implements Comparable<Conten
 	private String tipoContenido = null;
 	private Integer porcentaje = null;
 	private Date fechaPedido = null;
-	private List<ArtistaRol> artistasRoles = null; 
-	
-	
+	private List<ArtistaRol> artistasRoles = null;
+	private Boolean favorito = false; 
+
 	public Contenido() {
 		this.artistasRoles = new ArrayList<ArtistaRol>();
-		
+
 	}
-	
-	public Contenido( Integer idContenido, String titulo, 
-			String restriccionEdad, String portada, 
-			Date fechaLanzamiento, String descripcionBreve,
-			Double precio, Double precioDescontado, Integer duracion, 
-			Integer idDescuento, String tipoContenido, Integer porcentaje) {
+
+	public Contenido(Integer idContenido, String titulo, String restriccionEdad, String portada, Date fechaLanzamiento,
+			String descripcionBreve, Double precio, Double precioDescontado, Integer duracion, Integer idDescuento,
+			String tipoContenido, Integer porcentaje) {
 		this();
 		setIdContenido(idContenido);
 		setTitulo(titulo);
@@ -127,7 +123,7 @@ public class Contenido extends AbstractValueObject  implements Comparable<Conten
 	public void setTipoContenido(String tipoContenido) {
 		this.tipoContenido = tipoContenido;
 	}
-	
+
 	public Date getFechaPedido() {
 		return fechaPedido;
 	}
@@ -135,7 +131,7 @@ public class Contenido extends AbstractValueObject  implements Comparable<Conten
 	public void setFechaPedido(Date fechaPedido) {
 		this.fechaPedido = fechaPedido;
 	}
-	
+
 	public Double getPrecioDescontado() {
 		return precioDescontado;
 	}
@@ -151,7 +147,7 @@ public class Contenido extends AbstractValueObject  implements Comparable<Conten
 	public void setPorcentaje(Integer porcentaje) {
 		this.porcentaje = porcentaje;
 	}
-	
+
 	public List<ArtistaRol> getArtistasRoles() {
 		return artistasRoles;
 	}
@@ -162,30 +158,26 @@ public class Contenido extends AbstractValueObject  implements Comparable<Conten
 
 	@Override
 	public int compareTo(Contenido c) {
-		
-		
+
 		return this.getFechaLanzamiento().compareTo(c.getFechaLanzamiento());
 	}
 
-	
-	
-	
-//	//@Override
-//	public String toString() {
-//		return "ID:"+idContenido+" Titulo:"+titulo+" Restriccion de edad:"+restriccionEdad+" "
-//				+ "Link de la portada:"+portada+" Fecha de lanzamiento:"+fechaLanzamiento+" "
-//				+ "Descripcion:"+descripcionBreve+" Precio:"+precio+", Precio descontado: "+precioDescontado+", con una duracion de "+duracion+" "
-//				+ "minutos, Descuento:"+idDescuento+" Tipo contenido:"+tipoContenido;
-//		
-//	}
+	@Override
+	public String toString() {
+		return "ID:" + idContenido + " Titulo:" + titulo + " Restriccion de edad:" + restriccionEdad + " "
+				+ "Link de la portada:" + portada + " Fecha de lanzamiento:" + fechaLanzamiento + " " + "Descripcion:"
+				+ descripcionBreve + " Precio:" + precio + ", Precio descontado: " + precioDescontado
+				+ ", con una duracion de " + duracion + " " + "minutos, Descuento:" + idDescuento + " Tipo contenido:"
+				+ tipoContenido;
 
-	
-	
+	}
 
-	/*	for (Usuario: usuarios) {
-	*	}
-	*	for (int i =0; i<usuarios.size(); i++) {
-	*	}
-	*/	
+	public Boolean getFavorito() {
+		return favorito;
+	}
+
+	public void setFavorito(Boolean favorito) {
+		this.favorito = favorito;
+	}
 
 }

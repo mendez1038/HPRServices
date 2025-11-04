@@ -3,11 +3,9 @@ package com.david.training.dao;
 import java.sql.Connection;
 import java.util.List;
 
-import com.david.training.dao.CategoriaDAO;
 import com.david.training.dao.impl.CategoriaDAOImpl;
 import com.david.training.dao.util.ConnectionManager;
 import com.david.training.model.Categoria;
-import com.david.training.service.Results;
 
 
 public class CategoriaDAOTest {
@@ -41,10 +39,11 @@ public class CategoriaDAOTest {
 			throws Exception{
 		Connection c = ConnectionManager.getConnection();
 		String idioma = "es";
-		List<Categoria> categorias = null;
-
-		categorias = dao.findAll(idioma, c);
-
+		List<Categoria> categorias = dao.findAll(idioma, c);
+		
+		for (Categoria categoria : categorias) {
+			System.out.println(categoria);
+		}
 	
 	}
 	
@@ -53,9 +52,9 @@ public class CategoriaDAOTest {
 	public static void main(String args[]) {
 		try {
 			CategoriaDAOTest test = new CategoriaDAOTest();
-			//test.testFindById();
+			test.testFindById();
 			test.testFindByContenido();
-			//test.testFindAll();
+			test.testFindAll();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

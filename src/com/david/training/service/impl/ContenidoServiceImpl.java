@@ -2,7 +2,6 @@ package com.david.training.service.impl;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -30,12 +29,17 @@ public class ContenidoServiceImpl implements ContenidoService{
 	@Override
 	public Results<Contenido> miLista(String email, String idioma, int startIndex, int count) 
 			throws DataException {
+		logger.debug("miLista() -> email={}, idioma={}, startIndex={}, count={}", email, idioma, startIndex, count);
 		boolean commit = false;
 		Connection c = null;
 		try {
+			if (email == null || idioma == null) {
+			    throw new DataException("Email e idioma son obligatorios");
+			}
+			if (count <= 0) count = 10; // valor por defecto
 			c = ConnectionManager.getConnection();
 			c.setAutoCommit(false);
-			Results<Contenido> lista = dao.findLista(c, email, idioma, startIndex, count);
+			Results<Contenido> lista = dao.findBiblioteca(c, email, idioma, startIndex, count);
 			commit = true; 
 			return lista;
 		}  catch (SQLException e) {
@@ -194,14 +198,14 @@ public class ContenidoServiceImpl implements ContenidoService{
 	}
 
 	@Override
-	public List<Contenido> findAllByVentas(String idioma) throws DataException {
+	public Results<Contenido> findAllByVentas(String idioma, int startIndex, int count) throws DataException {
 		
 		boolean commit = false;
 		Connection c = null;
 		try {
 			c = ConnectionManager.getConnection();
 			c.setAutoCommit(false);
-			List<Contenido> all = dao.findAllByVentas(c, idioma);
+			Results<Contenido> all = dao.findAllByVentas(c, idioma, startIndex, count);
 			commit = true; 
 			return all;
 		}  catch (SQLException e) {

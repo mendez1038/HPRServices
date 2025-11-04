@@ -17,7 +17,7 @@ public class PedidoServiceTest {
 	private static Logger logger = LogManager.getLogger(ContenidoServiceTest.class.getName());
 
 	public PedidoServiceTest() {
-		servicio = new PedidoServiceImpl();
+		servicio = new PedidoServiceImpl(null, null);
 	}
 
 	public void testHistorial() {
@@ -52,7 +52,7 @@ public class PedidoServiceTest {
 			
 			List<LineaPedido> ampliacion = new ArrayList<LineaPedido>(); 
 			Integer id = 1;
-			ampliacion = servicio.historialAmpliado(id);
+			ampliacion = servicio.lineasDePedido(id, null);
 			for(LineaPedido lp : ampliacion) {
 				System.out.println(lp);
 			}

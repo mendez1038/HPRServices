@@ -2,9 +2,6 @@ package com.david.training.dao;
 
 import java.sql.Connection;
 import java.util.Date;
-import java.util.List;
-
-import com.david.training.dao.PedidoDAO;
 import com.david.training.dao.impl.PedidoDAOImpl;
 import com.david.training.dao.util.ConnectionManager;
 import com.david.training.model.Pedido;
@@ -31,6 +28,7 @@ public class PedidoDAOTest {
 			System.out.println("Buscando pedidos del usuario solicitado ...");
 			Connection c = ConnectionManager.getConnection();
 			Results<Pedido> pedidos = dao.findByUsuario(c,"AA@A.COM", 0, 0);
+			pedidos.getPage();
 				
 		}
 	public void testCreate()

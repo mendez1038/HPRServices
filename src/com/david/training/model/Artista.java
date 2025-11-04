@@ -66,13 +66,21 @@ public class Artista extends AbstractValueObject{
 		this.pais = pais;
 	}
 
+	public String getRol() {
+		return rol;
+	}
 
-//
-//	@Override
-//	public String toString() {
-//		return "ID:"+idArtista+" con nombre "+nombreArtista+" y nacido el "+fechaNacimiento;
-//		
-//	}
+	public void setRol(String rol) {
+		this.rol = rol;
+	}
+
+
+
+	@Override
+	public String toString() {
+		return "ID:"+idArtista+" con nombre "+nombreArtista+" y nacido el "+fechaNacimiento;
+		
+	}
 
 
 }

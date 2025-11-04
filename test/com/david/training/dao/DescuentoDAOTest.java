@@ -4,7 +4,6 @@ package com.david.training.dao;
 import java.sql.Connection;
 import java.util.List;
 
-import com.david.training.dao.DescuentoDAO;
 import com.david.training.dao.impl.DescuentoDAOImpl;
 import com.david.training.dao.util.ConnectionManager;
 import com.david.training.model.Descuento;

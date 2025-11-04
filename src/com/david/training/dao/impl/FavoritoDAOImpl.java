@@ -77,7 +77,6 @@ public class FavoritoDAOImpl implements FavoritoDAO{
 			preparedStatement = c.prepareStatement(queryString.toString());
 
 			int i = 1;  
-			preparedStatement.setBoolean(i++, f.getFavorito());
 			preparedStatement.setString(i++, f.getEmail());
 			preparedStatement.setInt(i++, f.getIdContenido());
 			
@@ -118,7 +117,6 @@ public class FavoritoDAOImpl implements FavoritoDAO{
 			preparedStatement = c.prepareStatement(queryString.toString());
 
 			int i = 1;  
-			preparedStatement.setBoolean(i++, f.getFavorito());
 			preparedStatement.setString(i++, f.getEmail());
 			preparedStatement.setInt(i++, f.getIdContenido());
 			
@@ -157,7 +155,7 @@ public class FavoritoDAOImpl implements FavoritoDAO{
 
 			queryString = new StringBuilder("SELECT EMAIL, ID_CONTENIDO, FAVORITO " + 
 					"FROM USUARIO_CONTENIDO "
-					+ "WHERE EMAIL = ? AND ID_CONTENIDO = ?");
+					+ "WHERE EMAIL = ? AND ID_CONTENIDO = ? ");
 
 			preparedStatement = c.prepareStatement(queryString.toString());
 
@@ -182,5 +180,62 @@ public class FavoritoDAOImpl implements FavoritoDAO{
 
 		return exist;
 	}
+	
+	@Override
+	public Boolean esFavorito(String email, Integer idContenido, Connection c) 
+			throws DataException {
+		logger.debug("Email = {} IdContenido = {}", email, idContenido);
+		boolean exist = false;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		StringBuilder queryString = null;
+		try {
+
+			queryString = new StringBuilder("SELECT EMAIL, ID_CONTENIDO, FAVORITO " + 
+					"FROM USUARIO_CONTENIDO "
+					+ "WHERE EMAIL = ? AND ID_CONTENIDO = ? AND FAVORITO = 1 ");
+
+			preparedStatement = c.prepareStatement(queryString.toString());
+
+			int i = 1;
+			preparedStatement.setString(i++, email);
+			preparedStatement.setInt(i++, idContenido);
+
+			
+			resultSet = preparedStatement.executeQuery();
+
+			if (resultSet.next()) {
+				exist = true;
+			}
+
+		} catch (SQLException e) {
+			logger.warn(e.getMessage(), e);
+			throw new DataException(e);
+		} finally {
+			JDBCUtils.closeResultSet(resultSet);
+			JDBCUtils.closeStatement(preparedStatement);
+		}
+
+		return exist;
+	}
+
+
+	@Override
+	public int deleteByEmail(Connection c, String email) throws DataException {
+	    PreparedStatement ps = null;
+	    String sql = "DELETE FROM USUARIO_CONTENIDO WHERE EMAIL = ?";
+	    try {
+	        ps = c.prepareStatement(sql);
+	        ps.setString(1, email);
+	        int rows = ps.executeUpdate();
+	        return rows; // número de filas eliminadas (puede ser 0 si no tenía favoritos)
+	    } catch (SQLException e) {
+	        logger.warn("Error al eliminar favoritos por email {}: {}", email, e.getMessage());
+	        throw new DataException(e);
+	    } finally {
+	        JDBCUtils.closeStatement(ps);
+	    }
+	}
+
 
 }

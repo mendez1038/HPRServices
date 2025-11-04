@@ -3,11 +3,9 @@ package com.david.training.dao;
 import java.sql.Connection;
 import java.util.List;
 
-import com.david.training.dao.LineaPedidoDAO;
 import com.david.training.dao.impl.LineaPedidoDAOImpl;
 import com.david.training.dao.util.ConnectionManager;
 import com.david.training.model.LineaPedido;
-import com.david.training.model.LineaPedidoId;
 
 public class LineaPedidoDAOTest {
 	
@@ -21,10 +19,7 @@ public class LineaPedidoDAOTest {
 		throws Exception{
 		Connection c = ConnectionManager.getConnection();
 		System.out.println("Buscando la linea de pedido solicitada");
-		LineaPedidoId id = new LineaPedidoId();
-		id.setIdPedido(3);
-		id.setIdContenido(101);
-		LineaPedido lp = dao.findById(c, id);
+		LineaPedido lp = dao.findById(c, 3, 101);
 		System.out.println(lp);
 			
 			
@@ -32,7 +27,7 @@ public class LineaPedidoDAOTest {
 	
 	public void testFindByPedido() 
 		throws Exception{
-		System.out.println("Buscando líneas del pedido solicitado ...");
+		System.out.println("Buscando lï¿½neas del pedido solicitado ...");
 		Connection c = ConnectionManager.getConnection();
 			List<LineaPedido> lineas = dao.findByPedido(c,1);
 			
@@ -48,7 +43,7 @@ public class LineaPedidoDAOTest {
 		
 		Connection c = ConnectionManager.getConnection();
 		
-		LineaPedidoId id = new LineaPedidoId();
+		LineaPedido id = new LineaPedido();
 		id.setIdPedido(1);
 		id.setIdContenido(1);
 		dao.delete(c, id);

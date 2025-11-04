@@ -2,7 +2,6 @@ package com.david.training.dao;
 
 
 import java.sql.Connection;
-import java.util.List;
 
 import com.david.training.exceptions.DataException;
 import com.david.training.exceptions.DuplicateInstanceException;
@@ -28,8 +27,8 @@ public interface ContenidoDAO {
 	public long delete (Connection c, Integer id)
 			throws InstanceNotFoundException, DataException;
 	
-	public Results<Contenido> findLista(Connection connection, String email, String idioma, int startIndex, int count) 
-			throws InstanceNotFoundException, DataException;
+	Results<Contenido> findBiblioteca(Connection c,String email,String idioma,int offset, int limit) 
+			throws DataException;
 	
 	public Results<Contenido> findFavoritos(Connection connection, String email, String idioma, int startIndex, int count)
 		throws InstanceNotFoundException, DataException;
@@ -43,7 +42,7 @@ public interface ContenidoDAO {
 	public Results<Contenido> findAllByDate(Connection connection, String idioma, int startIndex, int count)
 			throws InstanceNotFoundException, DataException;
 	
-	public List<Contenido> findAllByVentas(Connection connection, String idioma)
+	public Results<Contenido> findAllByVentas(Connection connection, String idioma, int startIndex, int count)
 			throws InstanceNotFoundException, DataException;
 	
 }

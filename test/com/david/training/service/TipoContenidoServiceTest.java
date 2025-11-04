@@ -20,7 +20,6 @@ public class TipoContenidoServiceTest {
 
 	public void testFindAll() {
 		logger.info("Testing findAll ...");
-		int pageSize = 3; 	
 		try {
 			List<TipoContenido> results = null;
 			

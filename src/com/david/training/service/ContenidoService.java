@@ -1,7 +1,5 @@
 package com.david.training.service;
 
-import java.util.List;
-
 import com.david.training.exceptions.DataException;
 import com.david.training.exceptions.InstanceNotFoundException;
 import com.david.training.model.Contenido;
@@ -16,7 +14,7 @@ public interface ContenidoService {
 	//Lista de produtos marcados como favoritos 
 	public Results<Contenido> favoritos (String email, String idioma, int startIndex, int count)
 			throws DataException;
-	//Obtencion do precio descontado, e dicir o diñeiro que se rebaixa 
+	//Obtencion do precio descontado, e dicir o dinheiro que se rebaixa 
 	public void precioDescontado (Contenido c)
 			throws DataException;
 	//filtros de busqueda
@@ -35,6 +33,6 @@ public interface ContenidoService {
 	public Results<Contenido> findAllByDate (String idioma, int startIndex, int count)
 			throws DataException;
 
-	public List<Contenido> findAllByVentas (String idioma)
+	public Results<Contenido> findAllByVentas (String idioma, int startIndex, int count)
 			throws DataException;
 }

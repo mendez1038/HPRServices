@@ -8,10 +8,9 @@ import java.util.List;
 public  class Pedido extends AbstractValueObject{
 	
 	private Integer idPedido = null;
+	private String email = null;
 	private Date fechaPedido = null;
 	private Double precioTotal = null;
-	private String email = null;
-	
 	private List<LineaPedido> lineas = null;
 	
 	public Pedido() {
@@ -23,7 +22,7 @@ public  class Pedido extends AbstractValueObject{
 	}
 
 	public void setPrecioTotal(Double precioTotal) {
-		this.precioTotal = precioTotal;
+		this.precioTotal = (precioTotal != null) ? precioTotal : 0.0;
 	}
 
 	
@@ -59,12 +58,18 @@ public  class Pedido extends AbstractValueObject{
 		this.lineas = lineas;
 	}
 	
+	public void addLinea(LineaPedido lp) {
+	    if (!lineas.contains(lp)) {
+	        lineas.add(lp);
+	    }
+	}
 	
-//	@Override
-//	public String toString() {
-//		return "ID:"+idPedido+", Fecha:"+fechaPedido+", Precio:"+precioTotal+" realizado por:"+email;
-//		
-//	}
+	
+	@Override
+	public String toString() {
+		return "ID:"+idPedido+", Fecha:"+fechaPedido+", Precio:"+precioTotal+" realizado por:"+email;
+		
+	}
 
 
 

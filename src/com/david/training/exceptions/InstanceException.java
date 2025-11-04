@@ -1,8 +1,8 @@
 package com.david.training.exceptions;
 
-import com.david.training.exceptions.DataException;
-
 public abstract class InstanceException extends DataException {
+	
+	 private static final long serialVersionUID = 1L;
 
     private Object key;
     private String className;

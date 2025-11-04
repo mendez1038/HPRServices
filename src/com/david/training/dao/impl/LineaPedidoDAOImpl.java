@@ -1,6 +1,5 @@
 package com.david.training.dao.impl;
 
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,187 +16,116 @@ import com.david.training.exceptions.DataException;
 import com.david.training.exceptions.DuplicateInstanceException;
 import com.david.training.exceptions.InstanceNotFoundException;
 import com.david.training.model.LineaPedido;
-import com.david.training.model.LineaPedidoId;
-import com.david.training.model.Usuario;
 
+public class LineaPedidoDAOImpl implements LineaPedidoDAO {
 
+    private static final Logger logger = LogManager.getLogger(LineaPedidoDAOImpl.class);
 
-public class LineaPedidoDAOImpl implements LineaPedidoDAO{
+    @Override
+    public LineaPedido findById(Connection c, Integer idPedido, Integer idContenido)
+            throws InstanceNotFoundException, DataException {
+        logger.debug("Buscando linea de pedido: pedido={}, contenido={}", idPedido, idContenido);
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            String sql = "SELECT ID_PEDIDO, ID_CONTENIDO, PRECIO_UNIDAD FROM LINEAPEDIDO "
+                       + "WHERE ID_PEDIDO = ? AND ID_CONTENIDO = ?";
+            ps = c.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            ps.setInt(1, idPedido);
+            ps.setInt(2, idContenido);
+            rs = ps.executeQuery();
 
-	public static Logger logger = LogManager.getLogger(LineaPedidoDAOImpl.class);
-	public LineaPedidoDAOImpl() {
-		
-	}
-	@Override
-	public LineaPedido findById(Connection c, LineaPedidoId id) 
-			throws InstanceNotFoundException,DataException {
-		logger.debug("Id Linea Pedido = {}", id);
-		PreparedStatement preparedStatement = null;
-		ResultSet resultSet = null;
-		StringBuilder queryString = null;
-		try {  
-			queryString = new StringBuilder(
-					"SELECT LP.ID_PEDIDO, LP.ID_CONTENIDO, LP.PRECIO_UNIDAD " + 
-					"FROM LINEAPEDIDO LP  " +
-					"WHERE LP.ID_PEDIDO = ? AND LP.ID_CONTENIDO = ? ");
+            if (!rs.next()) {
+                throw new InstanceNotFoundException(
+                    "LineaPedido not found (" + idPedido + "," + idContenido + ")",
+                    LineaPedido.class.getName());
+            }
 
-			preparedStatement = c.prepareStatement(queryString.toString(),
-					ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            return loadNext(rs);
 
-			int i = 1;                
-			preparedStatement.setInt(i++, id.getIdPedido());
-			preparedStatement.setInt(i++, id.getIdContenido());
+        } catch (SQLException e) {
+            logger.warn(e.getMessage(), e);
+            throw new DataException(e);
+        } finally {
+            JDBCUtils.closeResultSet(rs);
+            JDBCUtils.closeStatement(ps);
+        }
+    }
 
-			resultSet = preparedStatement.executeQuery();
+    @Override
+    public List<LineaPedido> findByPedido(Connection c, Integer idPedido) throws DataException {
+        logger.debug("Buscando líneas del pedido {}", idPedido);
+        List<LineaPedido> results = new ArrayList<>();
+        try (PreparedStatement ps = c.prepareStatement(
+                "SELECT ID_PEDIDO, ID_CONTENIDO, PRECIO_UNIDAD FROM LINEAPEDIDO WHERE ID_PEDIDO = ?",
+                ResultSet.TYPE_SCROLL_INSENSITIVE,
+                ResultSet.CONCUR_READ_ONLY)) {
 
-			LineaPedido lp = null;
+            ps.setInt(1, idPedido);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    results.add(loadNext(rs));
+                }
+            }
+        } catch (SQLException e) {
+            logger.warn(e.getMessage(), e);
+            throw new DataException(e);
+        }
+        return results;
+    }
 
-			if (resultSet.next()) {
-				lp = loadNext( resultSet);				
-			} else {
-				throw new InstanceNotFoundException("PedidoDetails not found", Usuario.class.getName());
-				
-			}
+    @Override
+    public LineaPedido create(Connection c, LineaPedido lp)
+            throws DuplicateInstanceException, DataException {
+        logger.debug("Creando línea de pedido: {}", lp);
+        try (PreparedStatement ps = c.prepareStatement(
+                "INSERT INTO LINEAPEDIDO(ID_PEDIDO, ID_CONTENIDO, PRECIO_UNIDAD) VALUES (?, ?, ?)")) {
 
-			return lp;
+            int i = 1;
+            ps.setInt(i++, lp.getIdPedido());
+            ps.setInt(i++, lp.getIdContenido());
+            ps.setDouble(i++, lp.getPrecioUnidad());
 
-		} catch (SQLException e) {
-			logger.warn(e.getMessage(),e);
-			throw new DataException(e);
-		} finally {            
-			JDBCUtils.closeResultSet(resultSet);
-			JDBCUtils.closeStatement(preparedStatement);
-		}  
+            ps.executeUpdate();
+            return lp;
 
-	}	
+        } catch (SQLException e) {
+            if ("23000".equals(e.getSQLState())) { // clave duplicada
+                throw new DuplicateInstanceException(
+                    "LineaPedido(" + lp.getIdPedido() + "," + lp.getIdContenido() + ")",
+                    LineaPedido.class.getName());
+            }
+            logger.warn(e.getMessage(), e);
+            throw new DataException(e);
+        }
+    }
 
-	@Override
-	public List<LineaPedido> findByPedido(Connection c,  Integer idPedido) 
-			throws DataException {
-		logger.debug("Id = {}", idPedido);
-		PreparedStatement preparedStatement = null;
-		ResultSet resultSet = null;
-		StringBuilder queryString = null;
-		try {
-			queryString = new StringBuilder(
-					"SELECT LP.ID_PEDIDO, LP.ID_CONTENIDO, LP.PRECIO_UNIDAD " + 
-					"FROM LINEAPEDIDO LP " +
-					"INNER JOIN PEDIDO P "+
-					"ON LP.ID_PEDIDO = P.ID_PEDIDO AND P.ID_PEDIDO = ? ");
+    @Override
+    public long delete(Connection c, LineaPedido id)
+            throws InstanceNotFoundException, DataException {
+        logger.debug("Borrando línea de pedido: {}", id);
+        try (PreparedStatement ps = c.prepareStatement(
+                "DELETE FROM LINEAPEDIDO WHERE ID_PEDIDO = ? AND ID_CONTENIDO = ?")) {
 
-			preparedStatement = c.prepareStatement(queryString.toString(),
-					ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            ps.setInt(1, id.getIdPedido());
+            ps.setInt(2, id.getIdContenido());
+            int removed = ps.executeUpdate();
 
-			int i = 1;                
-			preparedStatement.setInt(i++, idPedido);
+            if (removed == 0) {
+                throw new InstanceNotFoundException(id, LineaPedido.class.getName());
+            }
+            return removed;
+        } catch (SQLException e) {
+            logger.warn(e.getMessage(), e);
+            throw new DataException(e);
+        }
+    }
 
-			resultSet = preparedStatement.executeQuery();
-
-			List<LineaPedido> results = new ArrayList<LineaPedido>();  
-			LineaPedido lp = null;
-
-			while (resultSet.next()) {
-				lp = loadNext (resultSet);
-				results.add(lp);
-			}
-			return results;
-
-		} catch (SQLException e) {
-			logger.warn(e.getMessage(),e);
-			throw new DataException(e);
-		} finally {
-			JDBCUtils.closeResultSet(resultSet);
-			JDBCUtils.closeStatement(preparedStatement);
-		}
-	}
-
-	@Override
-	public LineaPedido create(Connection c,  LineaPedido lp) 
-			throws DuplicateInstanceException, DataException {
-		logger.debug("Linea Pedido = {}", lp);
-		PreparedStatement preparedStatement = null;
-		ResultSet resultSet = null;
-		StringBuilder queryString = null;
-		try {          
-			queryString = new StringBuilder(
-					"INSERT INTO LINEAPEDIDO(ID_PEDIDO,ID_CONTENIDO,PRECIO_UNIDAD) "
-					+ "VALUES (?, ?, ?)");
-
-			preparedStatement = c.prepareStatement(queryString.toString());
-
-			int i = 1;     
-			preparedStatement.setInt(i++,lp.getIdPedido());
-			preparedStatement.setInt(i++,lp.getIdContenido());
-			preparedStatement.setDouble(i++,lp.getPrecioUnidad());
-
-			int insertedRows = preparedStatement.executeUpdate();
-
-			if (insertedRows == 0) {
-				throw new SQLException("Can not add row to table 'LINEAPEDIDO'");
-			}
-
-			return lp;
-		} catch (SQLException ex) {
-			logger.warn(ex.getMessage(),ex);
-			throw new DataException(ex);
-		} finally {
-			JDBCUtils.closeResultSet(resultSet);
-			JDBCUtils.closeStatement(preparedStatement);			
-		}
-	}
-
-	@Override
-	public long delete(Connection c, LineaPedidoId id) 
-			throws InstanceNotFoundException, DataException {
-		 logger.debug("Id linea pedido = {} ", id);
-		PreparedStatement preparedStatement = null;
-		StringBuilder queryString = null;
-		try {
-
-			queryString =	new StringBuilder(
-					"DELETE FROM LINEAPEDIDO " 
-					+ "WHERE ID_PEDIDO = ? AND ID_CONTENIDO = ? ");
-
-
-			preparedStatement = c.prepareStatement(queryString.toString());
-
-			int i = 1;
-			preparedStatement.setInt(i++, id.getIdPedido());
-			preparedStatement.setInt(i++,id.getIdContenido());
-
-			int removedRows = preparedStatement.executeUpdate();
-			if (removedRows == 0) {
-				throw new InstanceNotFoundException(id, LineaPedido.class.getName());
-			} 
-			return removedRows;
-
-		} catch (SQLException e) {
-			logger.warn(e.getMessage(),e);
-			throw new DataException(e);
-		} finally {
-			JDBCUtils.closeStatement(preparedStatement);
-		}
-	}
-
-	private LineaPedido loadNext( ResultSet resultSet) 
-	
-			throws DataException, SQLException {
-
-		int i = 1;
-
-
-		Integer idPedido = resultSet.getInt(i++);
-		Integer idContenido = resultSet.getInt(i++);
-		Double precioUnidad = resultSet.getDouble(i++);
-
-
-		LineaPedido lp = new LineaPedido();
-
-		lp.setIdPedido(idPedido);
-		lp.setIdContenido(idContenido);
-		lp.setPrecioUnidad(precioUnidad);
-
-
-		return lp;
-	}
+    private LineaPedido loadNext(ResultSet rs) throws SQLException {
+        LineaPedido lp = new LineaPedido();
+        lp.setIdPedido(rs.getInt("ID_PEDIDO"));
+        lp.setIdContenido(rs.getInt("ID_CONTENIDO"));
+        lp.setPrecioUnidad(rs.getDouble("PRECIO_UNIDAD"));
+        return lp;
+    }
 }

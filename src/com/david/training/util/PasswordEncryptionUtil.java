@@ -1,10 +1,12 @@
 package com.david.training.util;
 
+import java.util.function.Function;
+
 import org.jasypt.util.password.StrongPasswordEncryptor;
 
 /**
- * Utilidad para la encriptación y validación de contraseñas.
- * (Se podría implementar también como servicio...)
+ * Utilidad para la encriptaciï¿½n y validaciï¿½n de contraseï¿½as.
+ * (Se podrï¿½a implementar tambiï¿½n como servicio...)
  * 
  * Desacoplar siempre que sea posible de APIs de terceros.
  * 
@@ -28,6 +30,24 @@ public class PasswordEncryptionUtil {
 			// bad login!
 			return false;
 		}
+	}
+
+	// PasswordEncryptionUtil.java (aÃ±ade este helper)
+	public static boolean safeMatches(String plainPassword, String stored, Function<String, Void> onMigrate) {
+	    if (plainPassword == null || stored == null) return false;
+	    try {
+	        return checkPassword(plainPassword, stored); // Jasypt
+	    } catch (org.jasypt.exceptions.EncryptionOperationNotPossibleException ex) {
+	        // Posible legacy en texto plano
+	        if (plainPassword.equals(stored)) {
+	            // Migrar en caliente: re-hash y notificar al caller para actualizar BD
+	            if (onMigrate != null) {
+	                onMigrate.apply(encryptPassword(plainPassword));
+	            }
+	            return true;
+	        }
+	        return false;
+	    }
 	}
 
 

@@ -29,8 +29,10 @@ public interface UsuarioDAO {
 	public long countAll(Connection c) 
 			throws DataException;
 	
-	
-	
+	void updatePasswordHash(Connection c, String email, String nuevoHash) 
+			throws DataException;
+
+
 	//finByCriteria nombre,fecha,tel?
 
 }

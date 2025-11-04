@@ -2,6 +2,8 @@ package com.david.training.exceptions;
 
 public class MailException extends ServiceException {
 	
+	 private static final long serialVersionUID = 1L;
+	
 	public MailException() {
 		super();
 	}

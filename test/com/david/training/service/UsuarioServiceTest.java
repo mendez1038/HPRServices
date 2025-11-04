@@ -42,6 +42,8 @@ public class UsuarioServiceTest {
 		Usuario u = new Usuario();
 		String email= "dmendez1038@gmail.com";
 		String contrasena= "123456";
+		u.setContrasena(contrasena);
+		u.setEmail(email);
 		u = servicio.signIn(email,contrasena);
 
 		} catch (Exception e) {
@@ -59,7 +61,7 @@ public class UsuarioServiceTest {
 		u.setApellidos(null);
 		u.setGenero("F");
 		u.setFechaNacimiento(null);
-		//u.setFechaNacimiento(new SimpleDateFormat( "yyyyMMdd" ).parse( "19981003" ));
+		u.setFechaNacimiento(new SimpleDateFormat( "yyyyMMdd" ).parse( "19981003" ));
 		u.setTelefono(null);
 		u.setEmail("d.mendez_97@hotmail.com");
 		servicio.update(u);
@@ -75,7 +77,7 @@ public class UsuarioServiceTest {
 		try {
 		String email = "hh@h.com";
 		//servicio.exists(email); implementarlo en el service
-		servicio.delete(email);
+		servicio.eliminarCuenta(email, email);
 		System.out.println("Usuario eliminado con email "+email);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -104,7 +106,7 @@ public class UsuarioServiceTest {
 			}
 		}
 	
-	public void testAñadirFavoritos()   {
+	public void testAnadirFavoritos()   {
 		try {
 			Favorito f = new Favorito();
 			
@@ -112,7 +114,7 @@ public class UsuarioServiceTest {
 			f.setIdContenido(500);
 			f.setFavorito(true);
 			
-			servicioFavorito.añadirFavorito(f);
+			servicioFavorito.anadirFavorito(f);
 			System.out.println(f);
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -130,7 +132,7 @@ public class UsuarioServiceTest {
 			//test.testEditProfile();
 			test.testRemoveAccount();
 			//test.testEliminarFavoritos();
-			//test.testAñadirFavoritos();
+			//test.testAï¿½adirFavoritos();
 	}
 	
 }

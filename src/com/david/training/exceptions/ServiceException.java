@@ -1,6 +1,8 @@
 package com.david.training.exceptions;
 
 public class ServiceException extends BusinessException {
+	
+	 private static final long serialVersionUID = 1L;
        
 
 	public ServiceException() {

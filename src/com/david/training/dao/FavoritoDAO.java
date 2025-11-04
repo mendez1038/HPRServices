@@ -20,5 +20,11 @@ public interface FavoritoDAO {
 	
 	public Boolean existsFavorito( String email, Integer idContenido, Connection c)
 			throws DataException; 
+	
+	public Boolean esFavorito( String email, Integer idContenido, Connection c)
+			throws DataException; 
+	
+	int deleteByEmail(Connection c, String email) 
+			throws DataException;
 
 }

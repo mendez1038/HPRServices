@@ -34,7 +34,8 @@ public class ContenidoDAOTest {
 			throws Exception {
 			Connection connection = ConnectionManager.getConnection();
 			String idioma = "en";
-			Results<Contenido> contenidos = dao.findLista(connection, "AA@A.COM", idioma, 0, 0);
+			Results<Contenido> contenidos = dao.findBiblioteca(connection, "AA@A.COM", idioma, 0, 0);
+			contenidos.getTotal();
 			
 	}
 	
@@ -43,6 +44,7 @@ public class ContenidoDAOTest {
 		Connection connection = ConnectionManager.getConnection();
 		String idioma = "en";
 		Results<Contenido> contenidos = dao.findFavoritos(connection, "AA@A.COM", idioma, 0, 0);
+		contenidos.getTotal();
 		
 	}
 
@@ -94,14 +96,28 @@ public class ContenidoDAOTest {
 		
 	}
 	
+	
+	public void testUpdate() 
+		throws Exception{
+		Connection connection = ConnectionManager.getConnection();
+		String idioma = "es";
+		Integer idContenido = 1;
+		Contenido c= dao.findById(connection,idContenido,idioma);
+		dao.update(connection, c);
+		
+		
+	}
+	
+	
+	
 	public static void main(String args[]) {
 		try {
 			ContenidoDAOTest test = new ContenidoDAOTest();
-			test.testFindById();
+			//test.testFindById();
 			//test.testFindByTitulo();
 			//test.testCreate();
 			//test.testDelete();
-			//test.testFindFavoritos();
+			test.testFindFavoritos();
 			//test.testFindLista();
 		} catch (Exception c) {
 			c.printStackTrace();

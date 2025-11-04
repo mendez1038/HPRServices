@@ -5,6 +5,8 @@ import java.io.PrintWriter;
 
 public class MyCompanyException extends Exception {
 	
+	 private static final long serialVersionUID = 1L;
+	
 	private String errorCode = null;
 		
 	public MyCompanyException() {
