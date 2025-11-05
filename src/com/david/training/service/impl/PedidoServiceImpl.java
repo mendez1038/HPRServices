@@ -4,11 +4,13 @@ import com.david.training.dao.PedidoDAO;
 import com.david.training.dao.impl.ContenidoDAOImpl;
 import com.david.training.dao.util.ConnectionManager;
 import com.david.training.dao.util.JDBCUtils;
+import com.david.training.dao.ContenidoDAO;
 import com.david.training.dao.LineaPedidoDAO;
 import com.david.training.exceptions.DataException;
 import com.david.training.exceptions.InstanceNotFoundException;
 import com.david.training.model.Pedido;
 import com.david.training.model.PedidoCriteria;
+import com.david.training.model.Contenido;
 import com.david.training.model.LineaPedido;
 import com.david.training.service.PedidoService;
 import com.david.training.service.Results;
@@ -24,11 +26,13 @@ public class PedidoServiceImpl implements PedidoService {
 
     private final PedidoDAO pedidoDAO;
     private final LineaPedidoDAO lineaPedidoDAO;
+    private ContenidoDAO contenidoDAO = null;
     public static Logger logger = LogManager.getLogger(ContenidoDAOImpl.class);
 
     public PedidoServiceImpl(PedidoDAO pedidoDAO, LineaPedidoDAO lineaPedidoDAO) {
         this.pedidoDAO = pedidoDAO;
         this.lineaPedidoDAO = lineaPedidoDAO;
+        contenidoDAO = new ContenidoDAOImpl();
     }
 
     @Override
@@ -113,5 +117,85 @@ public class PedidoServiceImpl implements PedidoService {
             JDBCUtils.closeConnection(c, commit);
         }
     }
+    
+    @Override
+    public Pedido checkout(String email, java.util.List<Integer> idsContenido)
+            throws DataException {
+
+        logger.debug("checkout() -> email={}, ids={}", email, idsContenido);
+
+        if (idsContenido == null || idsContenido.isEmpty()) {
+            throw new DataException("El carrito está vacío");
+        }
+
+        boolean commit = false;
+        Connection c = null;
+
+        try {
+            c = ConnectionManager.getConnection();
+            c.setAutoCommit(false);
+
+            // Idioma da igual para el precio, pero si tu findById lo pide, usa "es" o lo que toque.
+            String idioma = "es";
+
+            // 1) Filtrar contenidos ya comprados
+            java.util.List<Integer> elegibles = new java.util.ArrayList<>();
+            for (Integer idContenido : idsContenido) {
+                if (!pedidoDAO.comprado(c, email, idContenido)) {
+                    elegibles.add(idContenido);
+                }
+            }
+
+            if (elegibles.isEmpty()) {
+                throw new DataException("Todos los productos del carrito ya están comprados.");
+            }
+
+            // 2) Calcular precios actuales y construir líneas
+            java.util.List<LineaPedido> lineas = new java.util.ArrayList<>();
+            double total = 0.0;
+
+            for (Integer idContenido : elegibles) {
+                // Cargas el contenido para obtener el precio actual
+                Contenido cont = contenidoDAO.findById(c, idContenido, idioma);
+                double precioUnidad;
+
+                if (cont.getPrecioDescontado() != null && cont.getPrecioDescontado() > 0) {
+                    precioUnidad = cont.getPrecioDescontado();
+                } else {
+                    precioUnidad = cont.getPrecio();
+                }
+
+                LineaPedido lp = new LineaPedido();
+                lp.setIdContenido(idContenido);
+                lp.setPrecioUnidad(precioUnidad);
+                lineas.add(lp);
+
+                total += precioUnidad;
+            }
+
+            if (lineas.isEmpty()) {
+                throw new DataException("No hay productos válidos para comprar.");
+            }
+
+            // 3) Crear el pedido y las líneas (tu PedidoDAO ya inserta las líneas)
+            Pedido p = new Pedido();
+            p.setEmail(email);
+            p.setFechaPedido(new java.util.Date());
+            p.setPrecioTotal(total);
+            p.setLineas(lineas);
+
+            p = pedidoDAO.create(c, p);
+
+            commit = true;
+            return p;
+
+        } catch (SQLException | InstanceNotFoundException e) {
+            logger.warn(e.getMessage(), e);
+            throw new DataException(e);
+        } finally {
+            JDBCUtils.closeConnection(c, commit);
+        }
+    }
+
 
 }
